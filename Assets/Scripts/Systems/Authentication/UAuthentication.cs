@@ -4,10 +4,11 @@ using UnityEngine;
 using Unity.Services.Core;
 using Unity.Services.Authentication;
 using System.Threading.Tasks;
+using Unity.Services.Economy;
 
 public class UAuthentication : MonoBehaviour
 {
-    private async void Start()
+    private async void Awake()
     {
         // UnityServices.InitializeAsync() will initialize all services that are subscribed to Core
         await UnityServices.InitializeAsync();
@@ -15,6 +16,12 @@ public class UAuthentication : MonoBehaviour
 
         SetupEvents();
         await SignInAnonymouslyAsync();
+        SyncConfigurationAsync();
+
+    }
+    private async void Start()
+    {
+        
     }
 
     private void SetupEvents()
@@ -40,6 +47,7 @@ public class UAuthentication : MonoBehaviour
         {
             Debug.Log("Player session could not be refreshed and expired.");
         };
+
     }
 
     private async Task SignInAnonymouslyAsync()
@@ -65,5 +73,11 @@ public class UAuthentication : MonoBehaviour
             Debug.LogException(ex);
         } 
 
+    }
+
+    public async void SyncConfigurationAsync()
+    {
+        await EconomyService.Instance.Configuration.SyncConfigurationAsync();
+        Debug.Log("Configuration sync finished");
     }
 }
