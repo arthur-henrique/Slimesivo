@@ -8,12 +8,25 @@ using Unity.Services.Economy.Model;
 
 public class CurrencyManager : MonoBehaviour
 {
-    long currentCoinAmount;
+    public static CurrencyManager instance = null;
+
+    // Currency Related Variables
+    long currentCoinAmount; // The amount of coinCurrency the player currently holds in a match
+    long currentCurrency; // The quantity of coinCurrency the player current has
     // Trocar pelo ID da moeda desejada
     public string coinCurrencyID = "TESTCURRENCY";
 
-    
-    // Gets the updated currentCoinAmount
+    private void Awake()
+    {
+        // Check if instance already exists
+        if (instance == null)
+        {
+            // If not, set instance to this
+            instance = this;
+        }
+    }
+
+    // Gets the updated currentCurrency
     public async void FetchCoinBalance()
     {
         if (!IsAuthenticationSignedIn())
@@ -34,8 +47,8 @@ public class CurrencyManager : MonoBehaviour
                 CurrencyDefinition currency = EconomyService.Instance.Configuration.GetCurrency(balance.CurrencyId);
                 if (currency.Id == coinCurrencyID)
                 {
-                    currentCoinAmount = balance.Balance;
-                    Debug.Log(currentCoinAmount);
+                    currentCurrency = balance.Balance;
+                    Debug.Log(currentCurrency);
                     Debug.Log($"{currency.Id}: {balance.Balance} ");
                     break;
                 }
@@ -53,12 +66,12 @@ public class CurrencyManager : MonoBehaviour
             return;
         }
         ;
-        currentCoinAmount += balanceToAdd;
-        PlayerBalance playerBalance = await EconomyService.Instance.PlayerBalances.SetBalanceAsync(coinCurrencyID, currentCoinAmount);
-        Debug.Log(currentCoinAmount);
+        currentCurrency += balanceToAdd;
+        PlayerBalance playerBalance = await EconomyService.Instance.PlayerBalances.SetBalanceAsync(coinCurrencyID, currentCurrency);
+        Debug.Log(currentCurrency);
     }
 
-        static bool IsAuthenticationSignedIn()
+    static bool IsAuthenticationSignedIn()
     {
         if (!AuthenticationService.Instance.IsSignedIn)
         {
@@ -67,5 +80,10 @@ public class CurrencyManager : MonoBehaviour
         }
 
         return true;
+    }
+
+    public void UpdateCoinAmount(int coinAmount)
+    {
+        currentCoinAmount += coinAmount;
     }
 }
