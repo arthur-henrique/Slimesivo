@@ -8,8 +8,14 @@ public class TouchManager : MonoBehaviour
     private PlayerInput playerInput;
     private float screenSide;
     private InputAction touchPositionAction;
-    private InputAction touchPressAction;
+    private InputAction _touchPressAction;
     private Player playerScript;
+
+    public InputAction touchPressAction
+    {
+        get { return _touchPressAction; }
+        set { _touchPressAction = value; }
+    }
     private void Awake()
     {
         Components();
@@ -20,26 +26,25 @@ public class TouchManager : MonoBehaviour
         playerInput = gameObject.GetComponent<PlayerInput>();
 
         touchPositionAction = playerInput.actions["TouchPosition"];
-        touchPressAction = playerInput.actions["TouchPress"];
+        _touchPressAction = playerInput.actions["TouchPress"];
         playerScript = GetComponent<Player>();
     }
     private void OnEnable()
     {
-        touchPressAction.performed += TouchPress;
+        _touchPressAction.performed += TouchPress;
     }
     private void OnDisable()
     {
-        touchPressAction.performed -= TouchPress;
+        _touchPressAction.performed -= TouchPress;
     }
 
     private void TouchPress(InputAction.CallbackContext context)
     {
-        //Vector3 position = Camera.main.ScreenToWorldPoint(touchPositionAction.ReadValue<Vector2>());
-        //position.z = 0;
-        //Debug.Log(position);
+       //Pega o valor do pixel onde o player clica e divide pelo valor total de pixeis da tela
         Vector2 value = touchPositionAction.ReadValue<Vector2>();
         screenSide = value.x / Camera.main.pixelWidth;
         
+        //Dai checa pra ver se foi esquerda ou direita, maior q 0.5 direita menor esquerda
         if(screenSide > 0.5)
         {
             playerScript.JumpRight();
@@ -51,7 +56,7 @@ public class TouchManager : MonoBehaviour
             Debug.Log("Esquerda");
         }
         
-        Debug.Log(screenSide);
+        
         
     }
 
