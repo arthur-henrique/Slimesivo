@@ -103,8 +103,7 @@ public class Player : MonoBehaviour
             isWallSliding = true;
             StartCoroutine(WallStickTimer());
             canJump = true;
-            isTouchingWall = true;
-            wallJump = true;
+            
             
             
         }
