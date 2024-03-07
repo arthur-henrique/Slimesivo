@@ -3,18 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static UnityEditor.Experimental.GraphView.GraphView;
+using UnityEngine.UI;
+using TMPro;
+using UnityEngine.EventSystems;
 
-public class PauseCanvasMenu : MonoBehaviour
+public class PauseCanvasMenu : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     public static bool gameIsPaused = false; //para acessar, basta colocar: if(PauseCanvasMenu.gameIsPaused == true)
     public GameObject pausePanel;
-    public GameObject backgroundPanel;
+    public GameObject optionsPanel;
+    public GameObject backgroundPanelForPause;
+    public GameObject backgroundPanelForPlaying;
     Animator anim;
-    private bool startResumeAnimation = false;
+    private float timer;
+    public TMP_Text timerText;
+    private bool resumeInProgress = false; //para tirar os multiplos cliques do resume
+    private bool canHidePanels = false; //para nao esconder no countdown
 
     void Awake()
     {
         anim = gameObject.GetComponent<Animator>();
+        pausePanel.SetActive(false);
+        optionsPanel.SetActive(false);
+        timerText.enabled = false;
+        backgroundPanelForPause.SetActive(false);
+        backgroundPanelForPlaying.SetActive(true);
     }
 
     void Update()
@@ -22,34 +35,39 @@ public class PauseCanvasMenu : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (gameIsPaused)
-            {
-                ResumeGame();
-            }
-            else
+            //if (gameIsPaused == true)
+            //{
+            //    ResumeGame();
+            //}
+            //faca isso com o botao, sem a tecla
+            if(gameIsPaused == false)
             {
                 PauseGame();
             }
         }
 
-
-
-
-        print(startResumeAnimation);
     }
 
     public void ResumeGame()
     {
-        startResumeAnimation = true;
-        StartCoroutine(DelayCoroutine(0.25f));//com o tempo de duracao da animacao fade out resume
+        if (resumeInProgress == false)
+        {
+            canHidePanels = false;
+            resumeInProgress = true;
+            anim.SetTrigger("ResumeTriggerAnimation");
+        }
     }
 
     public void PauseGame()
     {
-        backgroundPanel.SetActive(true);
+        canHidePanels = true;
+        anim.SetTrigger("PauseTriggerAnimation");
+        backgroundPanelForPause.SetActive(true);
         pausePanel.SetActive(true);
         Time.timeScale = 0f;
         gameIsPaused = true;
+
+        //if player tocar background, esconde ele
     }
 
     public void MainMenu()
@@ -59,30 +77,82 @@ public class PauseCanvasMenu : MonoBehaviour
     }
 
 
-    IEnumerator DelayCoroutine(float seconds)
+        
+    IEnumerator StartCountdownCoroutine(float seconds)
     {
-        if (startResumeAnimation)
+        while (timer > 0) //countdown
         {
-            anim.SetTrigger("ResumeTriggerAnimation");
-            yield return new WaitForSecondsRealtime(seconds);
-            pausePanel.SetActive(false);
-            //countdown
-            backgroundPanel.SetActive(false);
+            timerText.text = timer.ToString();
+            yield return new WaitForSecondsRealtime(1f);
+            timer -= 1f;
+        }
+
+        if (timer == 0)
+        {
+            timerText.enabled = false;
+            backgroundPanelForPause.SetActive(false);
+            resumeInProgress = false;
             Time.timeScale = 1f;
             gameIsPaused = false;
         }
 
-        else
+        //yield return null;
+    }
+        
+
+    public void EndingResumeAnimation()
+    {
+        timer = 3f; //quero 3 segundos no timer countdown
+        pausePanel.SetActive(false);
+        timerText.enabled = true;
+        StartCoroutine(StartCountdownCoroutine(timer));//countdown
+    }
+
+    //public void OnPointerDown(PointerEventData eventData)
+    //{
+    //    if (pausePanel.activeSelf && EventSystem.current.IsPointerOverGameObject())
+    //    {
+    //        print("Outside button");
+    //        backgroundPanelForPause.GetComponent<CanvasRenderer>().cull = true;
+    //    }
+    //}
+
+    private void CullAllChildrenAndParent(Transform parent, bool cull)
+    {
+        CanvasRenderer canvasRenderer = parent.GetComponent<CanvasRenderer>();
+        if (canvasRenderer != null)
         {
-            yield return null;
+            canvasRenderer.cull = cull; //Set the cull property of the parent
         }
 
-            startResumeAnimation = false;
+        foreach (Transform child in parent)
+        {
+            CanvasRenderer childCanvasRenderer = child.GetComponent<CanvasRenderer>();
+            if (childCanvasRenderer != null)
+            {
+                childCanvasRenderer.cull = cull; //Set the cull property of each child
+            }
+            CullAllChildrenAndParent(child, cull); //Recursively call the function for each child
+        }
     }
 
-    public void EndingPauseAnimation()
+    public void OnPointerDown(PointerEventData eventData)
     {
-
+        if (backgroundPanelForPause.activeSelf && EventSystem.current.IsPointerOverGameObject() && canHidePanels == true)
+        {
+            print("clicado");
+            CullAllChildrenAndParent(backgroundPanelForPause.transform, true); //Set cull to true for both parent and children
+        }
     }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        if (backgroundPanelForPause.GetComponent<CanvasRenderer>().cull == true && canHidePanels == true)
+        {
+            print("levantado");
+            CullAllChildrenAndParent(backgroundPanelForPause.transform, false);
+        }
+    }
+
 
 }
