@@ -17,6 +17,7 @@ public class PauseCanvasMenu : MonoBehaviour
     Animator anim;
     private float timer;
     public TMP_Text timerText;
+    public GameObject timerObject;
     private bool resumeInProgress = false; //para tirar os multiplos cliques do resume
     private bool canHidePanels = false; //para nao esconder no countdown
 
@@ -25,7 +26,8 @@ public class PauseCanvasMenu : MonoBehaviour
         anim = gameObject.GetComponent<Animator>();
         pausePanel.SetActive(false);
         optionsPanel.SetActive(false);
-        timerText.enabled = false;
+        timerObject.SetActive(true);
+        timerText.text = "";
         backgroundPanelForPause.SetActive(false);
         backgroundPanelForPlaying.SetActive(true);
     }
@@ -95,7 +97,7 @@ public class PauseCanvasMenu : MonoBehaviour
 
         if (timer == 0)
         {
-            timerText.enabled = false;
+            timerText.text = "";
             backgroundPanelForPause.SetActive(false);
             resumeInProgress = false;
             Time.timeScale = 1f;
@@ -110,7 +112,6 @@ public class PauseCanvasMenu : MonoBehaviour
     {
         timer = 3f; //quero 3 segundos no timer countdown
         pausePanel.SetActive(false);
-        timerText.enabled = true;
         StartCoroutine(StartCountdownCoroutine(timer));//countdown
     }
 
@@ -134,6 +135,7 @@ public class PauseCanvasMenu : MonoBehaviour
     }
     public void hideBackgroundPanel()
     {
+        if(canHidePanels == true)
             CullAllChildrenAndParent(backgroundPanelForPause.transform, true); //Set cull to true for both parent and children
     }
 
