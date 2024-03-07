@@ -14,7 +14,7 @@ public class PauseCanvasMenu : MonoBehaviour
 
     void Awake()
     {
-        anim = pausePanel.GetComponent<Animator>();
+        anim = gameObject.GetComponent<Animator>();
     }
 
     void Update()
@@ -78,6 +78,11 @@ public class PauseCanvasMenu : MonoBehaviour
         }
 
             startResumeAnimation = false;
+    }
+
+    public void EndingPauseAnimation()
+    {
+
     }
 
 }
