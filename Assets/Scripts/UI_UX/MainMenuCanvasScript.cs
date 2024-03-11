@@ -5,6 +5,7 @@ using UnityEngine;
 public class MainMenuCanvasScript : MonoBehaviour
 {
     public GameObject infinityButton, campaignButton, rightChangeButton, leftChangeButton, campaignMode;
+    
 
     void Awake()
     {
@@ -13,6 +14,7 @@ public class MainMenuCanvasScript : MonoBehaviour
         infinityButton.SetActive(true);
         campaignButton.SetActive(false);
         campaignMode.SetActive(false);
+     
     }
     public void ChangeModes()
     {
@@ -36,11 +38,13 @@ public class MainMenuCanvasScript : MonoBehaviour
     {
         print("carrega modo infinito - descomentar linha");
         //SceneManager.LoadScene(/*Index da cena do modo Infinito*/);
+        
     }
 
     public void CampaignMode()
     {
         campaignMode.SetActive (true);
+
     }
 
     public void ExitCampaignMode()
