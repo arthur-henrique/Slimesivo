@@ -59,6 +59,7 @@ public class UAuthentication : MonoBehaviour
 
             // Shows how to get player ID
             Debug.Log($"PlayerID: {AuthenticationService.Instance.PlayerId}");
+            InventoryManager.instance.FetchInventoryItems();
         }
         catch (AuthenticationException ex)
         {
