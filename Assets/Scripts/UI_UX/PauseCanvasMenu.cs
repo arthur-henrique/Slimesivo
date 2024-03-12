@@ -8,17 +8,17 @@ using UnityEngine.EventSystems;
 
 public class PauseCanvasMenu : MonoBehaviour
 {
+    [SerializeField] private GameObject pausePanel, optionsPanel, backgroundPanelForPause, backgroundPanelForPlaying, backgroundPanelForGameOver, timerObject, heart1, heart2, heart3;
+    [SerializeField] private TMP_Text timerText;
+
     public static bool gameIsPaused = false; //para acessar, basta colocar: if(PauseCanvasMenu.gameIsPaused == true)
-    public GameObject pausePanel;
-    public GameObject optionsPanel;
-    public GameObject backgroundPanelForPause;
-    public GameObject backgroundPanelForPlaying;
     Animator anim;
     private float timer;
-    public TMP_Text timerText;
-    public GameObject timerObject;
     private bool resumeInProgress = false; //para tirar os multiplos cliques do resume
     private bool canHidePanels = false; //para nao esconder no countdown
+
+
+    int quantoDeVida = 3; //SUBSTITUIR DEPOIS PELO INT DA VIDA DO PLAYER!!!!
 
     void Awake()
     {
@@ -28,35 +28,11 @@ public class PauseCanvasMenu : MonoBehaviour
         timerObject.SetActive(true);
         timerText.text = "";
         backgroundPanelForPause.SetActive(false);
+        backgroundPanelForGameOver.SetActive(false);
         backgroundPanelForPlaying.SetActive(true);
-    }
-
-    /*void Update()
-    {
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (gameIsPaused == true)
-            {
-                ResumeGame();
-            }
-            //faca isso com o botao, sem a tecla
-            if(gameIsPaused == false)
-            {
-                PauseGame();
-            }
-        }
-
-    }*/
-
-    public void ResumeGame()
-    {
-        if (resumeInProgress == false)
-        {
-            canHidePanels = false;
-            resumeInProgress = true;
-            anim.SetTrigger("ResumeTriggerAnimation");
-        }
+        heart1.SetActive(true);
+        heart2.SetActive(true);
+        heart3.SetActive(true);
     }
 
     public void PauseGame()
@@ -84,7 +60,29 @@ public class PauseCanvasMenu : MonoBehaviour
     }
 
 
-        
+    public void ResumeGame()
+    {
+        if (resumeInProgress == false)
+        {
+            canHidePanels = false;
+            resumeInProgress = true;
+            anim.SetTrigger("ResumeTriggerAnimation");
+        }
+    }
+    /// <summary>
+    /// Eh ativado com o evento da Timeline da animacao do ResumeGame() - Comeca a contagem regressiva
+    /// </summary>
+    public void EndingResumeAnimation()
+    {
+        timer = 3f; //quero 3 segundos no timer countdown
+        pausePanel.SetActive(false);
+        StartCoroutine(StartCountdownCoroutine(timer));//countdown
+    }
+    /// <summary>
+    /// Para mostrar a contagem regressiva de quando despausa o jogo
+    /// </summary>
+    /// <param name="seconds"></param>
+    /// <returns></returns>
     IEnumerator StartCountdownCoroutine(float seconds)
     {
         while (timer > 0) //countdown
@@ -105,15 +103,13 @@ public class PauseCanvasMenu : MonoBehaviour
 
         //yield return null;
     }
-        
 
-    public void EndingResumeAnimation()
-    {
-        timer = 3f; //quero 3 segundos no timer countdown
-        pausePanel.SetActive(false);
-        StartCoroutine(StartCountdownCoroutine(timer));//countdown
-    }
 
+    /// <summary>
+    /// Funcao de, enquanto pausado, deixar o dedo clicado fora do pop up da UI para aparecer o jogo
+    /// </summary>
+    /// <param name="parent"></param>
+    /// <param name="cull"></param>
     private void CullAllChildrenAndParent(Transform parent, bool cull)
     {
         CanvasRenderer canvasRenderer = parent.GetComponent<CanvasRenderer>();
@@ -137,11 +133,34 @@ public class PauseCanvasMenu : MonoBehaviour
         if(canHidePanels == true)
             CullAllChildrenAndParent(backgroundPanelForPause.transform, true); //Set cull to true for both parent and children
     }
-
     public void showBackgroundPanel()
     {
             CullAllChildrenAndParent(backgroundPanelForPause.transform, false);
     }
 
+
+    /// <summary>
+    /// Para mostrar na UI a quantidade de vida do player e ativar o Game Over Panel se tiver com vida 0
+    /// </summary>
+    public void OnDamageTaken()
+    {
+        if (quantoDeVida == 3)
+        {
+            heart1.SetActive(false);
+            quantoDeVida -= 1;
+        }
+        else if (quantoDeVida == 2)
+        {
+            heart2.SetActive(false);
+            quantoDeVida -= 1;
+        }
+        else if (quantoDeVida == 1)
+        {
+            heart3.SetActive(false);
+            //quantoDeVida -= 1;
+            backgroundPanelForGameOver.SetActive(true);
+        }
+        print (quantoDeVida);
+    }
 
 }

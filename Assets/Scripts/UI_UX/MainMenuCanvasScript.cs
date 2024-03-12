@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainMenuCanvasScript : MonoBehaviour
 {
-    public GameObject infinityButton, campaignButton, rightChangeButton, leftChangeButton, campaignMode;
+    [SerializeField] private GameObject infinityButton, campaignButton, rightChangeButton, leftChangeButton, campaignMode;
     
 
     void Awake()
@@ -44,7 +45,7 @@ public class MainMenuCanvasScript : MonoBehaviour
     public void CampaignMode()
     {
         campaignMode.SetActive (true);
-
+        //SceneManager.LoadScene(0);
     }
 
     public void ExitCampaignMode()
