@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenuCanvasScript : MonoBehaviour
 {
-    [SerializeField] private GameObject infinityButton, campaignButton, rightChangeButton, leftChangeButton, campaignMode;
+    [SerializeField] private GameObject infinityButton, campaignButton, rightChangeButton, leftChangeButton, campaignMode, storePagePanel, settingsButton;
     
 
     void Awake()
@@ -15,7 +16,9 @@ public class MainMenuCanvasScript : MonoBehaviour
         infinityButton.SetActive(true);
         campaignButton.SetActive(false);
         campaignMode.SetActive(false);
-     
+        storePagePanel.SetActive(false);
+        settingsButton.SetActive(true);
+
     }
     public void ChangeModes()
     {
@@ -42,14 +45,36 @@ public class MainMenuCanvasScript : MonoBehaviour
         
     }
 
-    public void CampaignMode()
+    public void EnterExitCampaignMode()
     {
-        campaignMode.SetActive (true);
+        if (campaignMode.activeSelf == true)
+            campaignMode.SetActive(false);
+        else
+            campaignMode.SetActive(true);
+
         //SceneManager.LoadScene(0);
     }
 
-    public void ExitCampaignMode()
+    public void EnterExitStorePage()
     {
-        campaignMode.SetActive(false);
+        if (storePagePanel.activeSelf == true)
+        {
+            settingsButton.SetActive(true);
+            storePagePanel.SetActive(false);
+        }
+        else
+        {
+            settingsButton.SetActive(false);
+            storePagePanel.SetActive(true);
+        }
+    }
+
+    /// <summary>
+    /// Somente para a barra de coletaveis, no botao de +
+    /// </summary>
+    public void OnlyEnterStorePage()
+    {
+        settingsButton.SetActive(false);
+        storePagePanel.SetActive(true);
     }
 }
