@@ -67,13 +67,13 @@ public class TouchManager : MonoBehaviour
         {
             _isFacingRight = true;
             playerScript.Jump();
-            Debug.Log("Direita");
+            
         }
         else
         {
             _isFacingRight = false;
             playerScript.Jump();
-            Debug.Log("Esquerda");
+            
         }
         
         

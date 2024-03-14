@@ -9,21 +9,27 @@ public class Player : MonoBehaviour
     [SerializeField] private float jumpForce;
     [SerializeField] private float sideForce;
     [SerializeField] private Transform groundCheck;
-    private int groundLayer;
+    [SerializeField] private LayerMask groundLayer;
     private bool isGrounded = true;
+    
 
     //components
-    private Rigidbody rig;
+    private Rigidbody2D rig;
     private TouchManager touchManager;
+    [SerializeField] private GameObject playerSprite;
 
     //Wall Slide
     private bool isWallSliding;
     [SerializeField] private float wallSlidingSpeed = 5f;
     [SerializeField] private Transform wallCheck;
     [SerializeField] private float wallStickTime;
+    [SerializeField] private float wallSlideTime;
+    [SerializeField] private float wallSlideSpeedMin;
+    [SerializeField] private float wallSlideSpeedMax;
+    private float wallSlideState;
     private bool isTouchingWall;
-    private int wallLayer;
-    private Collider[] arrColliders;
+    [SerializeField] private LayerMask wallLayer;
+    
 
     //Wall Jump
     private bool isWallJumping;
@@ -34,13 +40,14 @@ public class Player : MonoBehaviour
     private void Start()
     {
         Components();
-        wallLayer = LayerMask.NameToLayer("Wall");
-        groundLayer = LayerMask.NameToLayer("Ground");
+        
     }
+       
 
-    private void Update()
+    private void FixedUpdate()
     {
         WallStick();
+       
 
     }
 
@@ -54,39 +61,39 @@ public class Player : MonoBehaviour
 
     private void Components()
     {
-        rig = GetComponent<Rigidbody>();
+        rig = GetComponent<Rigidbody2D>();
         touchManager = GetComponent<TouchManager>();
     }
     public bool IsOnGround()
     {
-        arrColliders = Physics.OverlapSphere(groundCheck.position, 0.2f);
-        foreach (Collider c in arrColliders)
-        {
-            if (c.gameObject.layer == groundLayer)
-            {
-                return true;
-
-            }
-
-        }
-        return false;
+        return Physics2D.OverlapCircle(groundCheck.position, 0.3f, groundLayer);
     }
     public void Jump()
     {
+        ResetPlayerRotation();
         if (touchManager.isFacingRight && IsOnGround())
         {
+            
+            wallSlideState = 0;
+            rig.gravityScale = 1;
             rig.velocity = new Vector2(sideForce, jumpForce);
+            //  rig.AddForce.(sideForce, jumpForce, ForceMode2D.Impulse);  
             
 
         }
         else if(IsOnGround() && !touchManager.isFacingRight)
         {
+            playerSprite.transform.rotation = Quaternion.Euler(0, -180, 0);
+            wallSlideState = 0;
+            rig.gravityScale = 1;
             rig.velocity = new Vector2(-sideForce, jumpForce);
+            
         }
 
         if(!IsOnGround() && IsWalled())
         {
             WallJump();
+        
         }
 
 
@@ -99,27 +106,37 @@ public class Player : MonoBehaviour
     #region WallSlide
     private bool IsWalled()
     {
-        arrColliders = Physics.OverlapSphere(wallCheck.position, 0.6f);
-        foreach (Collider c in arrColliders)
-        {
-            if (c.gameObject.layer == wallLayer)
-            {
-                return true;
-
-            }
-
-        }
-        return false;
+        return Physics2D.OverlapCircle(wallCheck.position, 0.7f, wallLayer);
 
     }
 
     private void WallStick()
     {
+        Debug.Log(wallSlideState);
+        
         if (IsWalled() && !IsOnGround() && !isWallJumping)
         {
+            PlayerOrientationChecker();
             isWallSliding = true;
+            switch (wallSlideState)
+            {
+                case 0:
+                    StartCoroutine(WallStickTimer());
+                    break;
+                case 1:
+                    StartCoroutine(WallSlideMinTimer());
+                        break;
+                case 2:
+                    StartCoroutine(WallSlideMaxTimer());
+                    break;
+
+
+
+
+
+            }
             
-            StartCoroutine(WallStickTimer());
+            
             
             
             
@@ -133,28 +150,13 @@ public class Player : MonoBehaviour
 
        
     }
-    IEnumerator WallStickTimer()
-    {
-        float timer = 0;
-        rig.useGravity = false;
-        while (timer < wallStickTime)
-        {
-            
-                rig.velocity = new Vector2(0, 0);
-                timer += Time.deltaTime;
-                yield return null;
-            
-            
-           
-        }
-        rig.useGravity = true;
-        
-    }
+  
 
     private void WallJump()
     {
         StopAllCoroutines();
-        rig.useGravity = true;
+        wallSlideState = 0;
+        rig.gravityScale = 1;
         if (isWallSliding)
         {
             isWallJumping = false;
@@ -168,25 +170,100 @@ public class Player : MonoBehaviour
 
         if (wallJumpingCounter > 0f)
         {
+            ResetPlayerRotation();
             isWallJumping = true;
             wallJumpingCounter = 0;
             if (touchManager.isFacingRight)
             {
                 rig.velocity = new Vector2(sideForce, jumpForce);
-
+                
 
             }
             else if (!touchManager.isFacingRight)
             {
                 rig.velocity = new Vector2(-sideForce, jumpForce);
+                playerSprite.transform.rotation = Quaternion.Euler(0, -180, 0);
+
             }
+           
             Invoke(nameof(StopWallJump), wallJumpDurantion);
         }
     }
     private void StopWallJump()
     {
         isWallJumping = false;
+        
     }
-       
+
     #endregion
+    #region WallCoroutines
+    IEnumerator WallStickTimer()
+    {
+        float timer = 0;
+        rig.gravityScale = 0;
+        while (timer < wallStickTime)
+        {
+
+            rig.velocity = new Vector2(0, 0);
+            timer += Time.deltaTime;
+            yield return null;
+
+
+
+        }
+        rig.gravityScale = 1;
+        wallSlideState = 1;
+
+    }
+
+    IEnumerator WallSlideMinTimer()
+    {
+        float timer = 0;
+        
+        while (timer < wallSlideTime)
+        {
+            
+            rig.velocity = new Vector2(0, -1* wallSlideSpeedMin);
+            timer += Time.deltaTime;
+            yield return null;
+
+
+
+        }
+        wallSlideState = 2;
+
+    }
+    IEnumerator WallSlideMaxTimer()
+    {
+        rig.velocity = new Vector2(0, -1 * wallSlideSpeedMax);
+        yield return null;
+        
+    }
+
+
+
+
+
+    #endregion
+
+    #region RotationManager
+    private void PlayerOrientationChecker()
+    {
+
+        if (touchManager.isFacingRight)
+        {
+            playerSprite.transform.rotation = Quaternion.Euler(0, 0, 90);
+        }
+        else
+        {
+            playerSprite.transform.rotation = Quaternion.Euler(-180, 0, -90);
+        }
+    }
+
+    private void ResetPlayerRotation()
+    {
+        playerSprite.transform.rotation = Quaternion.Euler(0, 0, 0);
+    }
+    #endregion
+
 }
