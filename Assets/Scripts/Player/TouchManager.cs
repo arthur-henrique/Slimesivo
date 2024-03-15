@@ -13,8 +13,8 @@ public class TouchManager : MonoBehaviour
     private Player playerScript;
 
     //Direction
-    private float _rightCounter;
-    private float _leftCounter;
+    private float rightCounter;
+    private float leftCounter;
 
     private bool _isFacingRight;
 
@@ -65,15 +65,39 @@ public class TouchManager : MonoBehaviour
         //Dai checa pra ver se foi esquerda ou direita, maior q 0.5 direita menor esquerda
         if(screenSide > 0.5)
         {
-            _isFacingRight = true;
-            playerScript.Jump();
+            switch (rightCounter)
+            {
+                case 0:
+                    _isFacingRight = true;
+                    playerScript.Jump();
+                    rightCounter++;
+                    leftCounter = 0;
+                    break;
+                case 1:
+                    _isFacingRight = true;
+                    playerScript.JumpSameSide();
+                    break;
+                   
+            }
+           
             
         }
         else
         {
-            _isFacingRight = false;
-            playerScript.Jump();
-            
+            switch (leftCounter)
+            {
+                case 0:
+                    _isFacingRight = false;
+                    playerScript.Jump();
+                    rightCounter = 0;
+                    leftCounter++;
+                    break;
+                case 1:
+                    _isFacingRight = false;
+                    playerScript.JumpSameSide();
+                    break;
+                    
+            }
         }
         
         

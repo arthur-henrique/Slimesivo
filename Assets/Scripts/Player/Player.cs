@@ -10,12 +10,14 @@ public class Player : MonoBehaviour
     [SerializeField] private float sideForce;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
+    private float jumpSameSideTimer = 1f;
     private bool isGrounded = true;
     
 
     //components
     private Rigidbody2D rig;
     private TouchManager touchManager;
+    private PlayerStats playerStatsScript;
     [SerializeField] private GameObject playerSprite;
 
     //Wall Slide
@@ -63,6 +65,7 @@ public class Player : MonoBehaviour
     {
         rig = GetComponent<Rigidbody2D>();
         touchManager = GetComponent<TouchManager>();
+        playerStatsScript = GetComponent<PlayerStats>();
     }
     public bool IsOnGround()
     {
@@ -71,21 +74,19 @@ public class Player : MonoBehaviour
     public void Jump()
     {
         ResetPlayerRotation();
+        rig.gravityScale = 1;
+        wallSlideState = 0;
         if (touchManager.isFacingRight && IsOnGround())
         {
             
-            wallSlideState = 0;
-            rig.gravityScale = 1;
-            rig.velocity = new Vector2(sideForce, jumpForce);
-            //  rig.AddForce.(sideForce, jumpForce, ForceMode2D.Impulse);  
             
+            rig.velocity = new Vector2(sideForce, jumpForce);
+           
 
         }
         else if(IsOnGround() && !touchManager.isFacingRight)
         {
             playerSprite.transform.rotation = Quaternion.Euler(0, -180, 0);
-            wallSlideState = 0;
-            rig.gravityScale = 1;
             rig.velocity = new Vector2(-sideForce, jumpForce);
             
         }
@@ -95,16 +96,46 @@ public class Player : MonoBehaviour
             WallJump();
         
         }
+    }
+    public void JumpSameSide()
+    {
+        StopAllCoroutines();
+        ResetPlayerRotation();
+        isWallJumping = true;
+        if (touchManager.isFacingRight)
+        {
+
+            wallSlideState = 0;
+            rig.gravityScale = 1;
+            rig.velocity = new Vector2(rig.velocity.x, jumpForce );
+            
 
 
+        }
+        else 
+        {
+            playerSprite.transform.rotation = Quaternion.Euler(0, -180, 0);
+            wallSlideState = 0;
+            rig.gravityScale = 1;
+            rig.velocity = new Vector2(rig.velocity.x,jumpForce);
 
+        }
+        Invoke(nameof(StopJumpSameSide), jumpSameSideTimer);
+    }
+    
+   private void StopJumpSameSide()
+    {
+        isWallJumping = false;
 
     }
-   
+
+
+
+
     #endregion
 
-    #region WallSlide
-    private bool IsWalled()
+    #region WallSlide and WallJump
+    public bool IsWalled()
     {
         return Physics2D.OverlapCircle(wallCheck.position, 0.7f, wallLayer);
 
@@ -122,6 +153,7 @@ public class Player : MonoBehaviour
             {
                 case 0:
                     StartCoroutine(WallStickTimer());
+                    playerStatsScript.SaveCurrentPlayerPos();
                     break;
                 case 1:
                     StartCoroutine(WallSlideMinTimer());
