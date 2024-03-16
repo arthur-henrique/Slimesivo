@@ -8,7 +8,7 @@ public class TouchManager : MonoBehaviour
     private PlayerInput playerInput;
     private float screenSide;
     private InputAction touchPositionAction;
-    private InputAction _touchPressAction;
+    public InputAction _touchPressAction;
     
     private Player playerScript;
 
@@ -26,11 +26,7 @@ public class TouchManager : MonoBehaviour
 
    
 
-    public InputAction touchPressAction
-    {
-        get { return _touchPressAction; }
-        set { _touchPressAction = value; }
-    }
+
     private void Awake()
     {
         Components();
@@ -44,12 +40,12 @@ public class TouchManager : MonoBehaviour
         _touchPressAction = playerInput.actions["TouchPress"];
         playerScript = GetComponent<Player>();
     }
-    private void OnEnable()
+    public void OnEnable()
     {
         _touchPressAction.performed += TouchPress;
         
     }
-    private void OnDisable()
+    public void OnDisable()
     {
         _touchPressAction.performed -= TouchPress;
     }

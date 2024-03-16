@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
@@ -66,6 +67,7 @@ public class Player : MonoBehaviour
         rig = GetComponent<Rigidbody2D>();
         touchManager = GetComponent<TouchManager>();
         playerStatsScript = GetComponent<PlayerStats>();
+       
     }
     public bool IsOnGround()
     {
@@ -74,6 +76,7 @@ public class Player : MonoBehaviour
     public void Jump()
     {
         ResetPlayerRotation();
+        
         rig.gravityScale = 1;
         wallSlideState = 0;
         if (touchManager.isFacingRight && IsOnGround())
@@ -96,29 +99,27 @@ public class Player : MonoBehaviour
             WallJump();
         
         }
+        touchManager._touchPressAction.Disable();
     }
     public void JumpSameSide()
     {
         StopAllCoroutines();
         ResetPlayerRotation();
+        touchManager._touchPressAction.Disable();
         isWallJumping = true;
+        wallSlideState = 0;
+        rig.gravityScale = 1;
+        rig.velocity = new Vector2(rig.velocity.x, jumpForce);
+
         if (touchManager.isFacingRight)
         {
-
             wallSlideState = 0;
-            rig.gravityScale = 1;
-            rig.velocity = new Vector2(rig.velocity.x, jumpForce );
-            
-
 
         }
         else 
         {
             playerSprite.transform.rotation = Quaternion.Euler(0, -180, 0);
-            wallSlideState = 0;
-            rig.gravityScale = 1;
-            rig.velocity = new Vector2(rig.velocity.x,jumpForce);
-
+          
         }
         Invoke(nameof(StopJumpSameSide), jumpSameSideTimer);
     }
@@ -128,6 +129,10 @@ public class Player : MonoBehaviour
         isWallJumping = false;
 
     }
+            
+            
+
+
 
 
 
@@ -148,6 +153,7 @@ public class Player : MonoBehaviour
         if (IsWalled() && !IsOnGround() && !isWallJumping)
         {
             PlayerOrientationChecker();
+            touchManager._touchPressAction.Enable();
             isWallSliding = true;
             switch (wallSlideState)
             {
