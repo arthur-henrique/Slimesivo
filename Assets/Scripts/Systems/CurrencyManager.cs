@@ -85,5 +85,6 @@ public class CurrencyManager : MonoBehaviour
     public void UpdateCoinAmount(int coinAmount)
     {
         currentCoinAmount += coinAmount;
+        Debug.Log(currentCoinAmount);
     }
 }
