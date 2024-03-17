@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D rig;
     private TouchManager touchManager;
     private PlayerStats playerStatsScript;
+    [SerializeField] private Animator anim;
     [SerializeField] private GameObject playerSprite;
 
     //Wall Slide
@@ -67,6 +68,7 @@ public class Player : MonoBehaviour
         rig = GetComponent<Rigidbody2D>();
         touchManager = GetComponent<TouchManager>();
         playerStatsScript = GetComponent<PlayerStats>();
+        anim = playerSprite.GetComponent<Animator>();
     }
     public bool IsOnGround()
     {
@@ -79,17 +81,23 @@ public class Player : MonoBehaviour
         touchManager._touchPressAction.Disable();
         rig.gravityScale = 1;
         wallSlideState = 0;
+        anim.SetInteger("AnimParameter", 1);
+
+        playerStatsScript.isRepawning = false;
         if (touchManager.isFacingRight && IsOnGround())
         {
+            
             rig.velocity = new Vector2(sideForce, jumpForce);
            
 
         }
         else if(IsOnGround() && !touchManager.isFacingRight)
         {
-            playerSprite.transform.rotation = Quaternion.Euler(0, -180, 0);
-            rig.velocity = new Vector2(-sideForce, jumpForce);
             
+            
+            rig.velocity = new Vector2(-sideForce, jumpForce);
+            anim.SetInteger("AnimParameter", 2);
+
         }
 
         if(!IsOnGround() && IsWalled())
@@ -104,12 +112,13 @@ public class Player : MonoBehaviour
     {
         StopAllCoroutines();
         ResetPlayerRotation();
+        anim.SetInteger("AnimParameter", 1);
         touchManager._touchPressAction.Disable();
         isWallJumping = true;
+        playerStatsScript.isRepawning = false;
         if (!touchManager.isFacingRight)
         {
-
-            playerSprite.transform.rotation = Quaternion.Euler(0, -180, 0); ;
+            anim.SetInteger("AnimParameter", 2);
         }
        
         wallSlideState = 0;
@@ -148,7 +157,7 @@ public class Player : MonoBehaviour
             {
                 
                 touchManager._touchPressAction.Enable();
-                
+                 anim.SetInteger("AnimParameter", 3);
                 isWallSliding = true;
                 switch (wallSlideState)
                 {
@@ -181,7 +190,8 @@ public class Player : MonoBehaviour
             else
             {
                 isWallSliding = false;
-            }
+                
+             }
 
         
 
@@ -222,7 +232,8 @@ public class Player : MonoBehaviour
             else
             {
                 rig.velocity = new Vector2(-sideForce, jumpForce);
-                PlayerOrientationChecker();
+                anim.SetInteger("AnimParameter", 2);
+                
 
             }
            

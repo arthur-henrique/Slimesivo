@@ -7,7 +7,11 @@ public class Spikes : MonoBehaviour
     private PlayerStats playerStatsScript;
     private void OnTriggerEnter2D(Collider2D other)
     {
-        playerStatsScript = other.GetComponentInParent<PlayerStats>();
-        playerStatsScript.RespawnPlayer();
+        if(other.gameObject.tag == "Player")
+        {
+            playerStatsScript = other.GetComponentInParent<PlayerStats>();
+            playerStatsScript.RespawnPlayer();
+        }
+        
     }
 }

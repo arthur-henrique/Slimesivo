@@ -40,18 +40,20 @@ public class PlayerStats : MonoBehaviour
         //if(vidasPlayer <0)
         if (touchManagerScript.isFacingRight)
         {
-            touchManagerScript.rightCounter = 1;
-            touchManagerScript.leftCounter = 0;
-            gameObject.transform.position = respawnPos;            
+            touchManagerScript.rightCounter = 0;
+            touchManagerScript.leftCounter = 1;
+            gameObject.transform.position = respawnPos;
+            playerSprite.transform.rotation = Quaternion.Euler(0, -180, 90);
             Debug.Log("Chamou direita");
 
 
         }
         else
         {
-            touchManagerScript.rightCounter = 0;
-            touchManagerScript.leftCounter = 1;
+            touchManagerScript.rightCounter = 1;
+            touchManagerScript.leftCounter = 0;
             gameObject.transform.position = respawnPos;
+            playerSprite.transform.rotation = Quaternion.Euler(0, 0, 90);
             Debug.Log("Chamou esquerda");
 
         }
