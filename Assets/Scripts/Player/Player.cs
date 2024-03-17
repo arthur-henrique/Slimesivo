@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -23,7 +24,6 @@ public class Player : MonoBehaviour
     //Wall Slide
     private bool isWallSliding;
     [SerializeField] private float wallSlidingSpeed = 5f;
-    [SerializeField] private Transform wallCheck;
     [SerializeField] private float wallStickTime;
     [SerializeField] private float wallSlideTime;
     [SerializeField] private float wallSlideSpeedMin;
@@ -38,7 +38,8 @@ public class Player : MonoBehaviour
     private float wallJumpingCounter;
     private float wallJumpTime = 0.2f;
     private float wallJumpDurantion = 0.2f;
-    
+
+
     private void Start()
     {
         Components();
@@ -48,7 +49,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        WallStick();
+       WallStick();
        
 
     }
@@ -69,17 +70,17 @@ public class Player : MonoBehaviour
     }
     public bool IsOnGround()
     {
-        return Physics2D.OverlapCircle(groundCheck.position, 0.3f, groundLayer);
+        return Physics2D.OverlapCircle(groundCheck.position, 0.4f, groundLayer);
     }
     public void Jump()
     {
+        StopAllCoroutines();
         ResetPlayerRotation();
+        touchManager._touchPressAction.Disable();
         rig.gravityScale = 1;
         wallSlideState = 0;
         if (touchManager.isFacingRight && IsOnGround())
         {
-            
-            
             rig.velocity = new Vector2(sideForce, jumpForce);
            
 
@@ -96,36 +97,34 @@ public class Player : MonoBehaviour
             WallJump();
         
         }
+        playerStatsScript.isRepawning = false;    
+            
     }
     public void JumpSameSide()
     {
         StopAllCoroutines();
         ResetPlayerRotation();
+        touchManager._touchPressAction.Disable();
         isWallJumping = true;
-        if (touchManager.isFacingRight)
+        if (!touchManager.isFacingRight)
         {
 
-            wallSlideState = 0;
-            rig.gravityScale = 1;
-            rig.velocity = new Vector2(rig.velocity.x, jumpForce );
-            
-
-
+            playerSprite.transform.rotation = Quaternion.Euler(0, -180, 0); ;
         }
-        else 
-        {
-            playerSprite.transform.rotation = Quaternion.Euler(0, -180, 0);
-            wallSlideState = 0;
-            rig.gravityScale = 1;
-            rig.velocity = new Vector2(rig.velocity.x,jumpForce);
-
-        }
+       
+        wallSlideState = 0;
+        rig.gravityScale = 1;
+        rig.velocity = new Vector2(rig.velocity.x, jumpForce);
+     
         Invoke(nameof(StopJumpSameSide), jumpSameSideTimer);
     }
     
    private void StopJumpSameSide()
     {
         isWallJumping = false;
+            
+
+
 
     }
 
@@ -137,51 +136,60 @@ public class Player : MonoBehaviour
     #region WallSlide and WallJump
     public bool IsWalled()
     {
-        return Physics2D.OverlapCircle(wallCheck.position, 0.7f, wallLayer);
+        return Physics2D.OverlapCircle(gameObject.transform.position, 0.5f, wallLayer);
 
     }
-
+   
     private void WallStick()
     {
         Debug.Log(wallSlideState);
-        
-        if (IsWalled() && !IsOnGround() && !isWallJumping)
-        {
-            PlayerOrientationChecker();
-            isWallSliding = true;
-            switch (wallSlideState)
+       
+            if (IsWalled() && !IsOnGround() && !isWallJumping)
             {
-                case 0:
-                    StartCoroutine(WallStickTimer());
-                    playerStatsScript.SaveCurrentPlayerPos();
-                    break;
-                case 1:
-                    StartCoroutine(WallSlideMinTimer());
+                
+                touchManager._touchPressAction.Enable();
+                
+                isWallSliding = true;
+                switch (wallSlideState)
+                {
+                    case 0:
+                        StartCoroutine(WallStickTimer());
+                        playerStatsScript.SaveCurrentPlayerPos();
                         break;
-                case 2:
-                    StartCoroutine(WallSlideMaxTimer());
-                    break;
+                    case 1:
+                        StartCoroutine(WallSlideMinTimer());
+                        break;
+                    case 2:
+                        StartCoroutine(WallSlideMaxTimer());
+                        break;
+
+
+
+
+
+                }
+                 if (!playerStatsScript.isRepawning)
+                 {
+                    PlayerOrientationChecker();
+                   }
 
 
 
 
 
             }
-            
-            
-            
-            
-            
-            
-        }
-        else
-        {
-            isWallSliding = false;
-        }
+            else
+            {
+                isWallSliding = false;
+            }
+
+        
+
+
+    }
+      
        
 
-       
-    }
   
 
     private void WallJump()
@@ -211,10 +219,10 @@ public class Player : MonoBehaviour
                 
 
             }
-            else if (!touchManager.isFacingRight)
+            else
             {
                 rig.velocity = new Vector2(-sideForce, jumpForce);
-                playerSprite.transform.rotation = Quaternion.Euler(0, -180, 0);
+                PlayerOrientationChecker();
 
             }
            
@@ -229,6 +237,7 @@ public class Player : MonoBehaviour
 
     #endregion
     #region WallCoroutines
+  
     IEnumerator WallStickTimer()
     {
         float timer = 0;
@@ -288,7 +297,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            playerSprite.transform.rotation = Quaternion.Euler(-180, 0, -90);
+            playerSprite.transform.rotation = Quaternion.Euler(0, -180, 90);
         }
     }
 

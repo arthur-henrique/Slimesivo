@@ -8,13 +8,13 @@ public class TouchManager : MonoBehaviour
     private PlayerInput playerInput;
     private float screenSide;
     private InputAction touchPositionAction;
-    private InputAction _touchPressAction;
+    [HideInInspector] public InputAction _touchPressAction;
     
     private Player playerScript;
 
     //Direction
-    private float rightCounter;
-    private float leftCounter;
+   [HideInInspector] public float rightCounter;
+   [HideInInspector] public float leftCounter;
 
     private bool _isFacingRight;
 
@@ -26,11 +26,7 @@ public class TouchManager : MonoBehaviour
 
    
 
-    public InputAction touchPressAction
-    {
-        get { return _touchPressAction; }
-        set { _touchPressAction = value; }
-    }
+
     private void Awake()
     {
         Components();
