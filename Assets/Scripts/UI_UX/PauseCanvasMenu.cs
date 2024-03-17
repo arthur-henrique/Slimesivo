@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 
 public class PauseCanvasMenu : MonoBehaviour
 {
-    [SerializeField] private GameObject pausePanel, optionsPanel, backgroundPanelForPause, backgroundPanelForPlaying, backgroundPanelForGameOver, timerObject, heart1, heart2, heart3;
+    [SerializeField] private GameObject pausePanel, optionsPanel, backgroundPanelForPause, backgroundPanelForPlaying, backgroundPanelForWinning, backgroundPanelForGameOver, timerObject, heart1, heart2, heart3;
     [SerializeField] private TMP_Text timerText;
 
     public static bool gameIsPaused = false; //para acessar, basta colocar: if(PauseCanvasMenu.gameIsPaused == true)
@@ -29,6 +29,7 @@ public class PauseCanvasMenu : MonoBehaviour
         timerText.text = "";
         backgroundPanelForPause.SetActive(false);
         backgroundPanelForGameOver.SetActive(false);
+        backgroundPanelForWinning.SetActive(false);
         backgroundPanelForPlaying.SetActive(true);
         heart1.SetActive(true);
         heart2.SetActive(true);
@@ -57,6 +58,12 @@ public class PauseCanvasMenu : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void NextLevel()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
 
@@ -163,4 +170,8 @@ public class PauseCanvasMenu : MonoBehaviour
         print (quantoDeVida);
     }
 
+    public void OnWinningLevel()
+    {
+        backgroundPanelForWinning.SetActive(true);
+    }
 }
