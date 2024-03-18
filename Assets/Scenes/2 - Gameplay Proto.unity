@@ -591,10 +591,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 3.5285099, y: 28.115458}
-      - {x: -4.2591476, y: 28.040379}
-      - {x: -4.321731, y: -3.7267156}
-      - {x: 3.6491606, y: -3.700947}
+    - - {x: 3.6133778, y: -3.7994895}
+      - {x: 3.58, y: 35.37}
+      - {x: -4.22, y: 35.37}
+      - {x: -4.2467923, y: -3.799489}
   m_UseDelaunayMesh: 0
 --- !u!4 &666570161
 Transform:
@@ -651,11 +651,11 @@ MonoBehaviour:
   m_Follow: {fileID: 418868484}
   m_Lens:
     FieldOfView: 60.000004
-    OrthographicSize: 6.94
+    OrthographicSize: 7.81
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
-    ModeOverride: 0
+    ModeOverride: 1
     LensShift: {x: 0, y: 0}
     GateFit: 2
     FocusDistance: 10
@@ -1282,12 +1282,12 @@ Camera:
   m_ShutterSpeed: 0.005
   m_Aperture: 16
   m_FocusDistance: 10
-  m_FocalLength: 50
+  m_FocalLength: 0.86602545
   m_BladeCount: 5
   m_Curvature: {x: 2, y: 11}
   m_BarrelClipping: 0.25
   m_Anamorphism: 0
-  m_SensorSize: {x: 36, y: 24}
+  m_SensorSize: {x: 1, y: 1}
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -1299,7 +1299,7 @@ Camera:
   far clip plane: 1000
   field of view: 60.000004
   orthographic: 1
-  orthographic size: 6.94
+  orthographic size: 7.81
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1324,7 +1324,7 @@ Transform:
   m_GameObject: {fileID: 1305462497}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 6.1099997, z: -10}
+  m_LocalPosition: {x: 0, y: 6.8391027, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2470,8 +2470,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spike
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2275854296116865480, guid: 1f8b0c9163ab3424ab9684630e455afc, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
