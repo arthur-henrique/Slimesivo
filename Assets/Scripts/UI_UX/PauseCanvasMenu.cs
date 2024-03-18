@@ -8,6 +8,8 @@ using UnityEngine.EventSystems;
 
 public class PauseCanvasMenu : MonoBehaviour
 {
+    public static PauseCanvasMenu instance;
+
     [SerializeField] private GameObject pausePanel, optionsPanel, backgroundPanelForPause, backgroundPanelForPlaying, backgroundPanelForWinning, backgroundPanelForGameOver, timerObject, heart1, heart2, heart3;
     [SerializeField] private TMP_Text timerText;
 
@@ -22,6 +24,11 @@ public class PauseCanvasMenu : MonoBehaviour
 
     void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
+
         anim = gameObject.GetComponent<Animator>();
         pausePanel.SetActive(false);
         optionsPanel.SetActive(false);
