@@ -182,10 +182,4 @@ public class HUDCanvasMenu : MonoBehaviour
         backgroundPanelForWinning.SetActive(true);
     }
 
-    public void PlayAd()
-    {
-        print("toca o Ad para ganhar recompensas");
-
-    }
-
 }
