@@ -6,14 +6,14 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
 
-public class PauseCanvasMenu : MonoBehaviour
+public class HUDCanvasMenu : MonoBehaviour
 {
-    public static PauseCanvasMenu instance;
+    public static HUDCanvasMenu instance;
 
-    [SerializeField] private GameObject pausePanel, optionsPanel, backgroundPanelForPause, backgroundPanelForPlaying, backgroundPanelForWinning, backgroundPanelForGameOver, timerObject, heart1, heart2, heart3;
+    [SerializeField] private GameObject pausePanel, optionsPanel, backgroundPanelForPause, backgroundPanelForPlaying, backgroundPanelForWinning, backgroundPanelForGameOver, timerObject, heart1, heart2, heart3, clapperboardIcon;
     [SerializeField] private TMP_Text timerText;
 
-    public static bool gameIsPaused = false; //para acessar, basta colocar: if(PauseCanvasMenu.gameIsPaused == true)
+    public static bool gameIsPaused = false; //para acessar, basta colocar: if(HUDCanvasMenu.gameIsPaused == true)
     Animator anim;
     private float timer;
     private bool resumeInProgress = false; //para tirar os multiplos cliques do resume
@@ -144,12 +144,12 @@ public class PauseCanvasMenu : MonoBehaviour
     }
     public void hideBackgroundPanel()
     {
-        if(canHidePanels == true)
+        if (canHidePanels == true)
             CullAllChildrenAndParent(backgroundPanelForPause.transform, true); //Set cull to true for both parent and children
     }
     public void showBackgroundPanel()
     {
-            CullAllChildrenAndParent(backgroundPanelForPause.transform, false);
+        CullAllChildrenAndParent(backgroundPanelForPause.transform, false);
     }
 
 
@@ -174,11 +174,18 @@ public class PauseCanvasMenu : MonoBehaviour
             //quantoDeVida -= 1;
             backgroundPanelForGameOver.SetActive(true);
         }
-        print (quantoDeVida);
+        print(quantoDeVida);
     }
 
     public void OnWinningLevel()
     {
         backgroundPanelForWinning.SetActive(true);
     }
+
+    public void PlayAd()
+    {
+        print("toca o Ad para ganhar recompensas");
+
+    }
+
 }
