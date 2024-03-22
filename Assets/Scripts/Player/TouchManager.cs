@@ -5,11 +5,16 @@ using UnityEngine.InputSystem;
 public class TouchManager : MonoBehaviour
 {
     //Input
+    private float counterWithoutInputs;
+    [SerializeField] private float timeToCallCameraUp;
     private PlayerInput playerInput;
     private float screenSide;
     private InputAction touchPositionAction;
     [HideInInspector] public InputAction _touchPressAction;
-    
+    private Vector2 value;
+
+    [SerializeField] private GameObject cameraManagerObj;
+    private CameraManager cameraManager;
     private Player playerScript;
 
     //Direction
@@ -31,11 +36,27 @@ public class TouchManager : MonoBehaviour
     {
         Components();
     }
+    private void FixedUpdate()
+    {
+        //if(value == Vector2.zero)
+        //{
+        //    counterWithoutInputs += Time.deltaTime;
+        //}
+        //else
+        //{
+        //    cameraManager.StopCameraUp();
+        //}
+
+        //if(counterWithoutInputs> timeToCallCameraUp)
+        //{
+        //    cameraManager.MoveCameraUp();
+        //}
+    }
     #region Inputs
     private void Components()
     {
         playerInput = gameObject.GetComponent<PlayerInput>();
-
+        cameraManager = cameraManagerObj.GetComponent<CameraManager>();
         touchPositionAction = playerInput.actions["TouchPosition"];
         _touchPressAction = playerInput.actions["TouchPress"];
         playerScript = GetComponent<Player>();
@@ -54,13 +75,14 @@ public class TouchManager : MonoBehaviour
     private void TouchPress(InputAction.CallbackContext context)
     {
        //Pega o valor do pixel onde o player clica e divide pelo valor total de pixeis da tela
-        Vector2 value = touchPositionAction.ReadValue<Vector2>();
+        value = touchPositionAction.ReadValue<Vector2>();
         screenSide = value.x / Camera.main.pixelWidth;
-        
+
         
         //Dai checa pra ver se foi esquerda ou direita, maior q 0.5 direita menor esquerda
         if(screenSide > 0.5)
         {
+
             switch (rightCounter)
             {
                 case 0:

@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
 
     //components
     private Rigidbody2D rig;
-    private TouchManager touchManager;
+    private TouchManager _touchManager;
     private PlayerStats playerStatsScript;
     [SerializeField] private Animator anim;
     [SerializeField] private GameObject playerSprite;
@@ -40,6 +40,12 @@ public class Player : MonoBehaviour
     private float wallJumpTime = 0.2f;
     private float wallJumpDurantion = 0.2f;
 
+    public TouchManager touchManager
+    {
+        get { return _touchManager; }
+        set { _touchManager = value; }
+    }
+
 
     private void Start()
     {
@@ -51,7 +57,6 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
        WallStick();
-       
 
     }
 
@@ -66,7 +71,7 @@ public class Player : MonoBehaviour
     private void Components()
     {
         rig = GetComponent<Rigidbody2D>();
-        touchManager = GetComponent<TouchManager>();
+        _touchManager = GetComponent<TouchManager>();
         playerStatsScript = GetComponent<PlayerStats>();
         anim = playerSprite.GetComponent<Animator>();
     }
@@ -78,20 +83,20 @@ public class Player : MonoBehaviour
     {
         StopAllCoroutines();
         ResetPlayerRotation();
-        touchManager._touchPressAction.Disable();
+        _touchManager._touchPressAction.Disable();
         rig.gravityScale = 1;
         wallSlideState = 0;
         anim.SetInteger("AnimParameter", 1);
 
         playerStatsScript.isRepawning = false;
-        if (touchManager.isFacingRight && IsOnGround())
+        if (_touchManager.isFacingRight && IsOnGround())
         {
             
             rig.velocity = new Vector2(sideForce, jumpForce);
            
 
         }
-        else if(IsOnGround() && !touchManager.isFacingRight)
+        else if(IsOnGround() && !_touchManager.isFacingRight)
         {
             
             
@@ -113,10 +118,10 @@ public class Player : MonoBehaviour
         StopAllCoroutines();
         ResetPlayerRotation();
         anim.SetInteger("AnimParameter", 1);
-        touchManager._touchPressAction.Disable();
+        _touchManager._touchPressAction.Disable();
         isWallJumping = true;
         playerStatsScript.isRepawning = false;
-        if (!touchManager.isFacingRight)
+        if (!_touchManager.isFacingRight)
         {
             anim.SetInteger("AnimParameter", 2);
         }
@@ -151,12 +156,11 @@ public class Player : MonoBehaviour
    
     private void WallStick()
     {
-        Debug.Log(wallSlideState);
        
             if (IsWalled() && !IsOnGround() && !isWallJumping)
             {
                 
-                touchManager._touchPressAction.Enable();
+                _touchManager._touchPressAction.Enable();
                  anim.SetInteger("AnimParameter", 3);
                 isWallSliding = true;
                 switch (wallSlideState)
@@ -177,10 +181,9 @@ public class Player : MonoBehaviour
 
 
                 }
-                 if (!playerStatsScript.isRepawning)
-                 {
+                 
                     PlayerOrientationChecker();
-                   }
+                   
 
 
 
@@ -223,7 +226,7 @@ public class Player : MonoBehaviour
             ResetPlayerRotation();
             isWallJumping = true;
             wallJumpingCounter = 0;
-            if (touchManager.isFacingRight)
+            if (_touchManager.isFacingRight)
             {
                 rig.velocity = new Vector2(sideForce, jumpForce);
                 
@@ -298,11 +301,15 @@ public class Player : MonoBehaviour
 
     #endregion
 
-    #region RotationManager
+    #region Rotation amd velocity Manager
+    public void ResetVelocityPlayer()
+    {
+        rig.velocity = new Vector2(0, 0);
+    }
     private void PlayerOrientationChecker()
     {
 
-        if (touchManager.isFacingRight)
+        if (_touchManager.isFacingRight)
         {
             playerSprite.transform.rotation = Quaternion.Euler(0, 0, 90);
         }

@@ -22,12 +22,16 @@ public class PlayerStats : MonoBehaviour
 
     public void SaveCurrentPlayerPos()
     {
-       // if (!DangerousRespawnPoint())
-        
+            if (!DangerousRespawnPoint())
+          {
+
             if (playerScript.IsOnGround() || playerScript.IsWalled())
             {
                 respawnPos = gameObject.transform.position;
             }
+          }
+        
+            
         
       
     }
@@ -36,14 +40,15 @@ public class PlayerStats : MonoBehaviour
     public void RespawnPlayer()
     {
         isRepawning = true;
-       
+
         //if(vidasPlayer <0)
+        playerScript.ResetVelocityPlayer();
         if (touchManagerScript.isFacingRight)
         {
             touchManagerScript.rightCounter = 0;
             touchManagerScript.leftCounter = 1;
             gameObject.transform.position = respawnPos;
-            playerSprite.transform.rotation = Quaternion.Euler(0, -180, 90);
+            touchManagerScript.isFacingRight = false;
             Debug.Log("Chamou direita");
 
 
@@ -53,7 +58,7 @@ public class PlayerStats : MonoBehaviour
             touchManagerScript.rightCounter = 1;
             touchManagerScript.leftCounter = 0;
             gameObject.transform.position = respawnPos;
-            playerSprite.transform.rotation = Quaternion.Euler(0, 0, 90);
+            touchManagerScript.isFacingRight = true;
             Debug.Log("Chamou esquerda");
 
         }
