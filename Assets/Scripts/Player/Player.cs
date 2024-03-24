@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
     private float jumpSameSideTimer = 1f;
-    private bool isGrounded = true;
+   
     
 
     //components
@@ -24,7 +24,6 @@ public class Player : MonoBehaviour
 
     //Wall Slide
     private bool isWallSliding;
-    [SerializeField] private float wallSlidingSpeed = 5f;
     [SerializeField] private float wallStickTime;
     [SerializeField] private float wallSlideTime;
     [SerializeField] private float wallSlideSpeedMin;

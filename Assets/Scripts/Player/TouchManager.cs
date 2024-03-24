@@ -13,8 +13,7 @@ public class TouchManager : MonoBehaviour
     [HideInInspector] public InputAction _touchPressAction;
     private Vector2 value;
 
-    [SerializeField] private GameObject cameraManagerObj;
-    private CameraManager cameraManager;
+    
     private Player playerScript;
 
     //Direction
@@ -36,27 +35,11 @@ public class TouchManager : MonoBehaviour
     {
         Components();
     }
-    private void FixedUpdate()
-    {
-        //if(value == Vector2.zero)
-        //{
-        //    counterWithoutInputs += Time.deltaTime;
-        //}
-        //else
-        //{
-        //    cameraManager.StopCameraUp();
-        //}
-
-        //if(counterWithoutInputs> timeToCallCameraUp)
-        //{
-        //    cameraManager.MoveCameraUp();
-        //}
-    }
+  
     #region Inputs
     private void Components()
     {
         playerInput = gameObject.GetComponent<PlayerInput>();
-        cameraManager = cameraManagerObj.GetComponent<CameraManager>();
         touchPositionAction = playerInput.actions["TouchPosition"];
         _touchPressAction = playerInput.actions["TouchPress"];
         playerScript = GetComponent<Player>();
