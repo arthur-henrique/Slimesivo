@@ -18,7 +18,7 @@ public class MainMenuCanvasScript : MonoBehaviour
         campaignMode.SetActive(false);
         storePagePanel.SetActive(false);
         settingsButton.SetActive(true);
-        leaderboardPanel.SetActive(false);
+        //leaderboardPanel.SetActive(false);
 
     }
     public void ChangeModes()

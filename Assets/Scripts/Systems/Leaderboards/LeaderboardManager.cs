@@ -51,16 +51,24 @@ public class LeaderboardManager : MonoBehaviour
         Debug.Log("Finished Fetch");
     }
 
-    public void GetScoresData(int pos, TMP_Text playersNick, TMP_Text playerScore)
+    public void GetScoresData(TMP_Text[] playersNick, TMP_Text[] playerScore)
     {
-        playersNick.text = nameEntries[pos];
-        playerScore.text = scoreEntries[pos].ToString();
+        print("GetScore");
+        for (int i = 0; i < scoreEntries.Count; i++)
+        {
+            playersNick[i].gameObject.SetActive(true);
+            playerScore[i].gameObject.SetActive(true);
+            playersNick[i].text = nameEntries[i].Substring(0, 6) + "...";
+            playerScore[i].text = scoreEntries[i].ToString();
+            print(playersNick[i].text);
+        }
+        
     }
 
     public async void GetPlayerRanking(string levelLeaderboardID, TMP_Text playersNick, TMP_Text playerScore, TMP_Text playerRank)
     {
         var scoresResponse = await LeaderboardsService.Instance.GetPlayerScoreAsync(levelLeaderboardID);
-        playersNick.text = scoresResponse.PlayerName;
+        playersNick.text = scoresResponse.PlayerName.Substring(0, 6) + "...";
         playerScore.text = scoresResponse.Score.ToString();
         playerRank.text = (scoresResponse.Rank + 1).ToString();
     }
