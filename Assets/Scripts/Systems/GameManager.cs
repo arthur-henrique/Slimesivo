@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +13,10 @@ public class GameManager : MonoBehaviour
     private int maxLivesAmount = 4;
     private bool isAlive = true;
     private bool needsToCheckAlive = false;
+
+    // Canvases
+    public GameObject pauseCanvasGO;
+    public HUDCanvasMenu pauseCanvas;
 
     void Awake()
     {
@@ -38,7 +43,10 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         livesAmount = 3;
-
+        //if (SceneManager.GetActiveScene().name == "1 - Main Menu")
+        //{
+        //    pauseCanvasGO.SetActive(false);
+        //}
     }
 
     private void Update()
@@ -56,6 +64,8 @@ public class GameManager : MonoBehaviour
                 isAlive = false;
                 // Calls the function that initializes the death sequence
                 Debug.Log("Player has Died");
+                Time.timeScale = 0f;
+                pauseCanvas.OnDeath();
             }
         }
     }
@@ -67,6 +77,7 @@ public class GameManager : MonoBehaviour
         if (livesAmount < maxLivesAmount)
         {
             livesAmount++;
+            pauseCanvas.OnHealing(livesAmount);
             Debug.Log("Recovered Health");
         }
         else
@@ -79,8 +90,29 @@ public class GameManager : MonoBehaviour
     public void TookDamage()
     {
         needsToCheckAlive = true;
+        pauseCanvas.OnDamageTaken(livesAmount);
         livesAmount--;
         Debug.Log("TookDamage()");
         // Initializes the sequence of updating the UI
+
     }
+
+    public void SceneLoad()
+    {
+        if (SceneManager.GetActiveScene().name == "1 - Main Menu")
+        {
+            pauseCanvasGO.SetActive(false);
+            print("0");
+        }
+        else
+        {
+            pauseCanvasGO.SetActive(true);
+            livesAmount = 3;
+            isAlive = true;
+            pauseCanvas.OnNewLevel();
+            Time.timeScale = 1f;
+        }
+    }
+
+    
 }

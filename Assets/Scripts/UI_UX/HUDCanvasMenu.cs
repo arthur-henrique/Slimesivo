@@ -20,7 +20,7 @@ public class HUDCanvasMenu : MonoBehaviour
     private bool canHidePanels = false; //para nao esconder no countdown
 
 
-    int quantoDeVida = 3; //SUBSTITUIR DEPOIS PELO INT DA VIDA DO PLAYER!!!!
+    //int quantoDeVida = 3; //SUBSTITUIR DEPOIS PELO INT DA VIDA DO PLAYER!!!!
 
     void Awake()
     {
@@ -57,13 +57,19 @@ public class HUDCanvasMenu : MonoBehaviour
 
     public void MainMenu()
     {
+        pausePanel.SetActive(false);
+        StartCoroutine(StartCountdownCoroutine(0f));
+        backgroundPanelForGameOver.SetActive(false);
         Time.timeScale = 1f;
         SceneManager.LoadScene(0);
     }
 
     public void Retry()
     {
-        Time.timeScale = 1f;
+        //Time.timeScale = 1f;
+        pausePanel.SetActive(false);
+        backgroundPanelForGameOver.SetActive(false);
+        StartCoroutine(StartCountdownCoroutine(0f));
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
@@ -156,29 +162,60 @@ public class HUDCanvasMenu : MonoBehaviour
     /// <summary>
     /// Para mostrar na UI a quantidade de vida do player e ativar o Game Over Panel se tiver com vida 0
     /// </summary>
-    public void OnDamageTaken()
+    public void OnDamageTaken(int quantoDeVida)
     {
         if (quantoDeVida == 3)
         {
             heart1.SetActive(false);
-            quantoDeVida -= 1;
+            //quantoDeVida -= 1;
         }
         else if (quantoDeVida == 2)
         {
             heart2.SetActive(false);
-            quantoDeVida -= 1;
+            //quantoDeVida -= 1;
         }
         else if (quantoDeVida == 1)
         {
             heart3.SetActive(false);
             //quantoDeVida -= 1;
-            backgroundPanelForGameOver.SetActive(true);
+            //backgroundPanelForGameOver.SetActive(true);
         }
         print(quantoDeVida);
+    }
+    public void OnHealing(int quantoDeVida)
+    {
+        if (quantoDeVida == 3)
+        {
+            heart1.SetActive(true);
+            //quantoDeVida -= 1;
+        }
+        else if (quantoDeVida == 2)
+        {
+            heart2.SetActive(true);
+            //quantoDeVida -= 1;
+        }
+        else if (quantoDeVida == 1)
+        {
+            heart3.SetActive(true);
+            //quantoDeVida -= 1;
+            //backgroundPanelForGameOver.SetActive(true);
+        }
+        print(quantoDeVida);
+    }
+    public void OnDeath()
+    {
+        backgroundPanelForGameOver.SetActive(true);
+    }
+    public void OnNewLevel()
+    {
+        heart1.SetActive(true);
+        heart2.SetActive(true);
+        heart3.SetActive(true);
     }
 
     public void OnWinningLevel()
     {
+        backgroundPanelForGameOver.SetActive(false);
         backgroundPanelForWinning.SetActive(true);
     }
 

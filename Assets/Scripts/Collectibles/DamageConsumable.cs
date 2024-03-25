@@ -7,6 +7,6 @@ public class DamageConsumable : MonoBehaviour, IConsumable
     public void Consume()
     {
         GameManager.instance.TookDamage();
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
 }
