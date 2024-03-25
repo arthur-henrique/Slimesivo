@@ -33,10 +33,15 @@ public class LevelSelection : MonoBehaviour
 
         #endregion
 
-        if (PlayerPrefs.GetInt(previousLevelName) > 0)
+        if (PlayerPrefs.GetInt(previousLevelName) > 0 || previousLevelName == "Level_000") //o OR eh para o nivel 1 somente
         {
             unlocked = true;
         }
+        else
+        {
+            unlocked = false;
+        }
+
     }
 
     /// <summary>
