@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "1 - Main Menu")
         {
             pauseCanvasGO.SetActive(false);
-            print("0");
+            Time.timeScale = 1f;
         }
         else
         {

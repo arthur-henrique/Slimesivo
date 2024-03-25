@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using TMPro;
 using Unity.Services.Leaderboards;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class LeaderboardManager : MonoBehaviour
@@ -32,7 +33,7 @@ public class LeaderboardManager : MonoBehaviour
 
     public async void FetchScores(string levelLeaderboardID)
     {
-
+        Debug.Log("Started Fetch");
         var options = new GetScoresOptions
         {
             Offset = 0, // Start at the beginning of the leaderboard
@@ -41,24 +42,34 @@ public class LeaderboardManager : MonoBehaviour
         };
 
         var scoresResponse = await LeaderboardsService.Instance.GetScoresAsync(levelLeaderboardID, options);
-
+        scoreEntries.Clear();
+        nameEntries.Clear();
         foreach (var item in scoresResponse.Results)
         {
             scoreEntries.Add(item.Score);
             nameEntries.Add(item.PlayerName);
         }
+        Debug.Log("Finished Fetch");
     }
 
-    public void GetScoresData(int pos, TMP_Text playersNick, TMP_Text playerScore)
+    public void GetScoresData(TMP_Text[] playersNick, TMP_Text[] playerScore)
     {
-        playersNick.text = nameEntries[pos];
-        playerScore.text = scoreEntries[pos].ToString();
+        
+        for (int i = 0; i < scoreEntries.Count; i++)
+        {
+            playersNick[i].gameObject.SetActive(true);
+            playerScore[i].gameObject.SetActive(true);
+            playersNick[i].text = nameEntries[i].Substring(0, 6) + "...";
+            playerScore[i].text = scoreEntries[i].ToString();
+            print(playersNick[i].text);
+        }
+        
     }
 
     public async void GetPlayerRanking(string levelLeaderboardID, TMP_Text playersNick, TMP_Text playerScore, TMP_Text playerRank)
     {
         var scoresResponse = await LeaderboardsService.Instance.GetPlayerScoreAsync(levelLeaderboardID);
-        playersNick.text = scoresResponse.PlayerName;
+        playersNick.text = scoresResponse.PlayerName.Substring(0, 6) + "...";
         playerScore.text = scoresResponse.Score.ToString();
         playerRank.text = (scoresResponse.Rank + 1).ToString();
     }

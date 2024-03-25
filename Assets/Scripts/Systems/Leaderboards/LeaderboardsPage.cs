@@ -13,15 +13,21 @@ public class LeaderboardsPage : MonoBehaviour
     [SerializeField] TMP_Text playerScore;
     [SerializeField] TMP_Text playerRank;
 
-
-    public void SetUpLeaderboard()
+    public void Awake()
     {
+        print("LBPage");
         for (int i = 0; i < nameTexts.Length; i++)
         {
-            LeaderboardManager.instance.GetScoresData(i, nameTexts[i], scoreTexts[i]);
+            nameTexts[i].gameObject.SetActive(false);
+            scoreTexts[i].gameObject.SetActive(false);
         }
-
+        gameObject.SetActive(false);
+    }
+    public void SetUpLeaderboard()
+    {
         LeaderboardManager.instance.GetPlayerRanking(leaderboardID, playerNick, playerScore, playerRank);
+        LeaderboardManager.instance.GetScoresData(nameTexts, scoreTexts);
+
     }
 
 }

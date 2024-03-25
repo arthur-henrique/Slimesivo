@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class MainMenuCanvasScript : MonoBehaviour
 {
     [SerializeField] private GameObject infinityButton, campaignButton, rightChangeButton, leftChangeButton, campaignMode, storePagePanel, settingsButton, leaderboardPanel;
-    
+    [SerializeField] private LeaderboardsPage leaderboardPage;
 
     void Awake()
     {
@@ -18,7 +18,7 @@ public class MainMenuCanvasScript : MonoBehaviour
         campaignMode.SetActive(false);
         storePagePanel.SetActive(false);
         settingsButton.SetActive(true);
-        leaderboardPanel.SetActive(false);
+        //leaderboardPanel.SetActive(false);
 
     }
     public void ChangeModes()
@@ -82,9 +82,15 @@ public class MainMenuCanvasScript : MonoBehaviour
     public void EnterExitLeaderboardPanel()
     {
         if(leaderboardPanel.activeSelf == false)
-        leaderboardPanel.SetActive(true);
+        {
+            leaderboardPanel.SetActive(true);
+            leaderboardPage.SetUpLeaderboard();
+        }
         else
+        {
             leaderboardPanel.SetActive(false);
+
+        }
     }
 
 }
