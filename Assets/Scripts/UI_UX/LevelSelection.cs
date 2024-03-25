@@ -10,7 +10,6 @@ public class LevelSelection : MonoBehaviour
     public Image lockImage;
     public GameObject[] stars;
     private string previousLevelName;
-    private int previousLevelIndex;
 
     private void Update()
     {
@@ -18,43 +17,23 @@ public class LevelSelection : MonoBehaviour
         UpdateLevelStatus(); //TODO: Move this later
     }
 
-    /*int GetSceneBuildIndex(string sceneName)
-    {
-        for (int i = 0; i < SceneManager.sceneCountInBuildSettings; i++)
-        {
-            string scenePath = SceneUtility.GetScenePathByBuildIndex(i);
-            string sceneNameInBuild = System.IO.Path.GetFileNameWithoutExtension(scenePath);
-
-            if (sceneNameInBuild == sceneName)
-            {
-                return i;
-            }
-        }
-
-        return -1; // Scene not found
-    }*/
-
     /// <summary>
     /// Status of the locked/unlocked level
     /// </summary>
     private void UpdateLevelStatus()
     {
-        #region Get the name and index of the previous level based on the name of this gameObject
+        #region Get the name of the previous level based on the name of this gameObject
 
         string[] objectNameNumber = gameObject.name.Split('_');
         int previousLevelIndex = int.Parse(objectNameNumber[1]) - 1;
         previousLevelName = objectNameNumber[0] + "_" + previousLevelIndex.ToString("000");
 
-        //previousLevelIndex = GetSceneBuildIndex(previousLevelName);
-
         #endregion
 
-        //if (PlayerPrefs.GetInt(previousLevelName) > 0)
-        //if (PlayerPrefs.GetInt(SceneManager.previousLevelName.buildIndex) > 0)
-        //if (PlayerPrefs.GetInt(GetBuildIndexByScenePath(string scenePath)) > 0)
-        //{
-        //    unlocked = true;
-        //}
+        if (PlayerPrefs.GetInt(previousLevelName) > 0)
+        {
+            unlocked = true;
+        }
     }
 
     /// <summary>
@@ -82,11 +61,11 @@ public class LevelSelection : MonoBehaviour
         }
     }
 
-    public void GoToLevel(int levelIndex)
+    public void GoToLevel()
     {
         if (unlocked)
         {
-            SceneManager.LoadScene("UI_Test_Level " + levelIndex); //TODO: MUDAR ESTE NOME DEPOIS
+            SceneManager.LoadScene(gameObject.name);
         }
     }
 }
