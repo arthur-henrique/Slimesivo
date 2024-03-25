@@ -13,10 +13,11 @@ public class LevelSelection : MonoBehaviour
 
     public Sprite starSprite;
 
-    private void Update()
+    private void Start()
     {
-        UpdateLevelImage(); //TODO: Move this later
-        UpdateLevelStatus(); //TODO: Move this later
+        UpdateLevelStatus();
+        UpdateLevelImage();
+
     }
 
     /// <summary>

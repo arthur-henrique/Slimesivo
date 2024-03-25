@@ -11,9 +11,9 @@ public class MapStarsTotalCount : MonoBehaviour
     [Tooltip("Quantos niveis existem no mapa")]
     [SerializeField] private int howManyLevelsInMap;
 
-    private void Update()
+    private void Start()
     {
-        TotalStarsCount(); //TODO: Tirar daqui
+        TotalStarsCount();
     }
 
     private void TotalStarsCount()
