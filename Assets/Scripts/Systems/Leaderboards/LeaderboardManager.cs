@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using TMPro;
 using Unity.Services.Leaderboards;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class LeaderboardManager : MonoBehaviour
@@ -32,7 +33,7 @@ public class LeaderboardManager : MonoBehaviour
 
     public async void FetchScores(string levelLeaderboardID)
     {
-
+        Debug.Log("Started Fetch");
         var options = new GetScoresOptions
         {
             Offset = 0, // Start at the beginning of the leaderboard
@@ -47,6 +48,7 @@ public class LeaderboardManager : MonoBehaviour
             scoreEntries.Add(item.Score);
             nameEntries.Add(item.PlayerName);
         }
+        Debug.Log("Finished Fetch");
     }
 
     public void GetScoresData(int pos, TMP_Text playersNick, TMP_Text playerScore)

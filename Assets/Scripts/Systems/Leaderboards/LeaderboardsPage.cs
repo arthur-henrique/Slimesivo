@@ -16,12 +16,12 @@ public class LeaderboardsPage : MonoBehaviour
 
     public void SetUpLeaderboard()
     {
+        LeaderboardManager.instance.GetPlayerRanking(leaderboardID, playerNick, playerScore, playerRank);
         for (int i = 0; i < nameTexts.Length; i++)
         {
             LeaderboardManager.instance.GetScoresData(i, nameTexts[i], scoreTexts[i]);
         }
 
-        LeaderboardManager.instance.GetPlayerRanking(leaderboardID, playerNick, playerScore, playerRank);
     }
 
 }
