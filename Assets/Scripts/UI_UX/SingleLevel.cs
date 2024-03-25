@@ -13,7 +13,6 @@ public class SingleLevel : MonoBehaviour
     {
         //currentLevelIndex = SceneManager.GetActiveScene().buildIndex;
         currentLevelName = SceneManager.GetActiveScene().name;
-        print(currentLevelName);
     }
     public void BackButton()
     {

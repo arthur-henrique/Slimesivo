@@ -11,9 +11,11 @@ public class LevelSelection : MonoBehaviour
     public GameObject[] stars;
     private string previousLevelName;
 
+    public Sprite starSprite;
+
     private void Update()
     {
-        UpdateLevelImage();
+        UpdateLevelImage(); //TODO: Move this later
         UpdateLevelStatus(); //TODO: Move this later
     }
 
@@ -57,6 +59,10 @@ public class LevelSelection : MonoBehaviour
             for (int i = 0; i < stars.Length; i++)
             {
                 stars[i].gameObject.SetActive(true);
+            }
+            for (int i = 0; i < PlayerPrefs.GetInt(gameObject.name); i++)
+            {
+                stars[i].gameObject.GetComponent<Image>().sprite = starSprite;
             }
         }
     }
