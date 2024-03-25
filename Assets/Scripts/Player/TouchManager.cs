@@ -5,8 +5,6 @@ using UnityEngine.InputSystem;
 public class TouchManager : MonoBehaviour
 {
     //Input
-    private float counterWithoutInputs;
-    [SerializeField] private float timeToCallCameraUp;
     private PlayerInput playerInput;
     private float screenSide;
     private InputAction touchPositionAction;

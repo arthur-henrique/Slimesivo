@@ -24,6 +24,8 @@ public class Player : MonoBehaviour
 
     //Wall Slide
     private bool isWallSliding;
+    [SerializeField] private float maxTimeToDie;
+    private float deathCounter;
     [SerializeField] private float wallStickTime;
     [SerializeField] private float wallSlideTime;
     [SerializeField] private float wallSlideSpeedMin;
@@ -56,7 +58,7 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
        WallStick();
-
+       CheckPlayerStillAlive();
     }
 
 
@@ -192,16 +194,33 @@ public class Player : MonoBehaviour
             else
             {
                 isWallSliding = false;
-                
-             }
-
-        
-
+               
+            }
+            
+       
 
     }
       
        
+    private void CheckPlayerStillAlive()
+    {
+        if (!IsWalled() && !IsOnGround())
+        {
+            deathCounter += Time.deltaTime;
+            
+        }
+        else
+        {
+            deathCounter = 0;
+        }
 
+        if (deathCounter > maxTimeToDie)
+        {
+            playerStatsScript.RespawnPlayer();
+            
+           
+        }
+    }
   
 
     private void WallJump()

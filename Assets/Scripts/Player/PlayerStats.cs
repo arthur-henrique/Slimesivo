@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro.Examples;
 using UnityEditor;
 using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
     private Vector2 respawnPos;
+
+    //Components
     private TouchManager touchManagerScript;
     private Player playerScript;
     [SerializeField] private GameObject playerSprite;
+    [SerializeField] private CameraController cameraController;
     [SerializeField] LayerMask damageableLayer;
     [HideInInspector] public bool isRepawning;
  
@@ -40,7 +44,7 @@ public class PlayerStats : MonoBehaviour
     public void RespawnPlayer()
     {
         isRepawning = true;
-
+        cameraController.MoveCameraToRespawn();
         //if(vidasPlayer <0)
         playerScript.ResetVelocityPlayer();
         if (touchManagerScript.isFacingRight)
@@ -49,7 +53,7 @@ public class PlayerStats : MonoBehaviour
             touchManagerScript.leftCounter = 1;
             gameObject.transform.position = respawnPos;
             touchManagerScript.isFacingRight = false;
-            Debug.Log("Chamou direita");
+            
 
 
         }
@@ -59,7 +63,31 @@ public class PlayerStats : MonoBehaviour
             touchManagerScript.leftCounter = 0;
             gameObject.transform.position = respawnPos;
             touchManagerScript.isFacingRight = true;
-            Debug.Log("Chamou esquerda");
+           
+
+        }
+    }
+    public void RespawnPlayerSameSide()
+    {
+        cameraController.MoveCameraToRespawn();
+        playerScript.ResetVelocityPlayer();
+        if (touchManagerScript.isFacingRight)
+        {
+            touchManagerScript.rightCounter = 1;
+            touchManagerScript.leftCounter = 0;
+            gameObject.transform.position = respawnPos;
+            touchManagerScript.isFacingRight = true;
+            
+
+
+        }
+        else
+        {
+            touchManagerScript.rightCounter = 0;
+            touchManagerScript.leftCounter = 1;
+            gameObject.transform.position = respawnPos;
+            touchManagerScript.isFacingRight = false;
+          
 
         }
     }
