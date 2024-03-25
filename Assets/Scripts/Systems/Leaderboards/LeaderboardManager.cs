@@ -49,17 +49,19 @@ public class LeaderboardManager : MonoBehaviour
         }
     }
 
-    public void GetScoresData(int pos, TextMeshPro playersNick, TextMeshPro playerScore)
+    public void GetScoresData(int pos, TMP_Text playersNick, TMP_Text playerScore)
     {
         playersNick.text = nameEntries[pos];
         playerScore.text = scoreEntries[pos].ToString();
     }
 
-    public async void GetPlayerRanking(string levelLeaderboardID, TextMeshPro playersNick, TextMeshPro playerScore, TextMeshPro playerRank)
+    public async void GetPlayerRanking(string levelLeaderboardID, TMP_Text playersNick, TMP_Text playerScore, TMP_Text playerRank)
     {
         var scoresResponse = await LeaderboardsService.Instance.GetPlayerScoreAsync(levelLeaderboardID);
         playersNick.text = scoresResponse.PlayerName;
         playerScore.text = scoresResponse.Score.ToString();
-        playerRank.text = scoresResponse.Rank.ToString();
+        playerRank.text = (scoresResponse.Rank + 1).ToString();
     }
+
+    
 }

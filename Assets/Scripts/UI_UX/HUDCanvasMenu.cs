@@ -60,6 +60,7 @@ public class HUDCanvasMenu : MonoBehaviour
         pausePanel.SetActive(false);
         StartCoroutine(StartCountdownCoroutine(0f));
         backgroundPanelForGameOver.SetActive(false);
+        backgroundPanelForWinning.SetActive(false);
         Time.timeScale = 1f;
         SceneManager.LoadScene(0);
     }
@@ -69,6 +70,7 @@ public class HUDCanvasMenu : MonoBehaviour
         //Time.timeScale = 1f;
         pausePanel.SetActive(false);
         backgroundPanelForGameOver.SetActive(false);
+        backgroundPanelForWinning.SetActive(false);
         StartCoroutine(StartCountdownCoroutine(0f));
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
@@ -211,10 +213,13 @@ public class HUDCanvasMenu : MonoBehaviour
         heart1.SetActive(true);
         heart2.SetActive(true);
         heart3.SetActive(true);
+        backgroundPanelForWinning.SetActive(false);
+        backgroundPanelForGameOver.SetActive(false);
     }
 
     public void OnWinningLevel()
     {
+        Time.timeScale = 0f;
         backgroundPanelForGameOver.SetActive(false);
         backgroundPanelForWinning.SetActive(true);
     }

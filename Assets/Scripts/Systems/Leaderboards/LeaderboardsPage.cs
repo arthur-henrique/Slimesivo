@@ -6,12 +6,12 @@ using UnityEngine;
 public class LeaderboardsPage : MonoBehaviour
 {
     public string leaderboardID;
-    [SerializeField] TextMeshPro[] nameTexts;
-    [SerializeField] TextMeshPro[] scoreTexts;
+    [SerializeField] TMP_Text[] nameTexts;
+    [SerializeField] TMP_Text[] scoreTexts;
 
-    [SerializeField] TextMeshPro playerNick;
-    [SerializeField] TextMeshPro playerScore;
-    [SerializeField] TextMeshPro playerRank;
+    [SerializeField] TMP_Text playerNick;
+    [SerializeField] TMP_Text playerScore;
+    [SerializeField] TMP_Text playerRank;
 
 
     public void SetUpLeaderboard()
