@@ -6,27 +6,36 @@ using UnityEngine.SceneManagement;
 public class SingleLevel : MonoBehaviour
 {
     private int currentStarNumber = 0;
-    private int currentLevelIndex;
+    private string currentLevelName;
+    //private int currentLevelIndex;
 
     private void Start()
     {
-        currentLevelIndex = SceneManager.GetActiveScene().buildIndex;
-        print(currentLevelIndex);
+        //currentLevelIndex = SceneManager.GetActiveScene().buildIndex;
+        currentLevelName = SceneManager.GetActiveScene().name;
+        print(currentLevelName);
     }
     public void BackButton()
     {
-        //SceneManager.LoadScene("UI_Test_Map");
-        PlayerPrefs.DeleteKey("Lv" + currentLevelIndex);
+        SceneManager.LoadScene("UI_Test_Map"); //TODO: MUDAR ESTE NOME DEPOIS
     }
 
     public void PressStarsButton(int _starsNumber)
     {
         currentStarNumber = _starsNumber;
-        if (currentStarNumber > PlayerPrefs.GetInt("Lv" + currentLevelIndex)) //vai salvar a pontuacao (estrelas) somente se for maior que a anterior
+        if (currentStarNumber > PlayerPrefs.GetInt(currentLevelName)) //vai salvar a pontuacao (estrelas) somente se for maior que a anterior
         {
-            PlayerPrefs.SetInt("Lv" + currentLevelIndex, _starsNumber);
+            PlayerPrefs.SetInt(currentLevelName, _starsNumber);
         }
-        print(PlayerPrefs.GetInt("Lv" + currentLevelIndex, _starsNumber));
+        print(PlayerPrefs.GetInt(currentLevelName, _starsNumber));
 
+    }
+
+    /// <summary>
+    /// Esta funcao serve apenas para testes, ela nao estara na versao final do jogo
+    /// </summary>
+    public void ResetStarsButton() //TODO: deletar esta funcao
+    {
+        PlayerPrefs.DeleteKey(currentLevelName);
     }
 }
