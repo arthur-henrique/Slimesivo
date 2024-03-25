@@ -42,7 +42,8 @@ public class LeaderboardManager : MonoBehaviour
         };
 
         var scoresResponse = await LeaderboardsService.Instance.GetScoresAsync(levelLeaderboardID, options);
-
+        scoreEntries.Clear();
+        nameEntries.Clear();
         foreach (var item in scoresResponse.Results)
         {
             scoreEntries.Add(item.Score);
@@ -53,7 +54,7 @@ public class LeaderboardManager : MonoBehaviour
 
     public void GetScoresData(TMP_Text[] playersNick, TMP_Text[] playerScore)
     {
-        print("GetScore");
+        
         for (int i = 0; i < scoreEntries.Count; i++)
         {
             playersNick[i].gameObject.SetActive(true);
