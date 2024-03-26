@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -17,6 +18,13 @@ public class GameManager : MonoBehaviour
     // Canvases
     public GameObject pauseCanvasGO;
     public HUDCanvasMenu pauseCanvas;
+
+    // Scores and More
+    [SerializeField]
+    public float playerBestScoreFloat;
+    public string _playerBestScore;
+    public string _playerNick;
+    public string _playerRank;
 
     void Awake()
     {
@@ -43,7 +51,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         livesAmount = 3;
-        //if (SceneManager.GetActiveScene().name == "1 - Main Menu")
+        //if (SceneManager.GetActiveScene().name == "1 - Main Menu" || SceneManager.GetActiveScene().name == "SystemTesting")
         //{
         //    pauseCanvasGO.SetActive(false);
         //}
@@ -97,9 +105,16 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void GetPlayerRanking(TMP_Text playersNick, TMP_Text playerScore, TMP_Text playerRank)
+    {
+        playersNick.text = _playerNick;
+        playerScore.text = _playerBestScore;
+        playerRank.text = _playerRank;
+    }
+
     public void SceneLoad()
     {
-        if (SceneManager.GetActiveScene().name == "1 - Main Menu")
+        if (SceneManager.GetActiveScene().name == "1 - Main Menu" || SceneManager.GetActiveScene().name == "SystemTesting")
         {
             pauseCanvasGO.SetActive(false);
             Time.timeScale = 1f;

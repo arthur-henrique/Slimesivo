@@ -25,9 +25,12 @@ public class LeaderboardsPage : MonoBehaviour
     }
     public void SetUpLeaderboard()
     {
-        LeaderboardManager.instance.GetPlayerRanking(leaderboardID, playerNick, playerScore, playerRank);
+        GameManager.instance.GetPlayerRanking(playerNick, playerScore, playerRank);
         LeaderboardManager.instance.GetScoresData(nameTexts, scoreTexts);
-
+    }
+    public void SetUpPlayerRank()
+    {
+        GameManager.instance.GetPlayerRanking(playerNick, playerScore, playerRank);
     }
 
 }

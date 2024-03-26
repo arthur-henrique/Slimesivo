@@ -5,10 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
+    [SerializeField]
+    private LeaderboardsPage lbPage;
     public void Start()
     {
         GameManager.instance.SceneLoad();
         StartCoroutine(FetchLeaderScores());
+        StartCoroutine(FetchPlayerScores());
     }
     public void LoadScene(string sceneName)
     {
@@ -18,6 +21,15 @@ public class MainMenuManager : MonoBehaviour
     IEnumerator FetchLeaderScores()
     {
         yield return new WaitForSeconds(1);
+        LeaderboardManager.instance.GetPlayerRanking("Pontuacoes_Mais_Altas");
         LeaderboardManager.instance.FetchScores("Pontuacoes_Mais_Altas");
+        yield return new WaitForSeconds(1);
+        lbPage.SetUpPlayerRank();
+    }
+
+    IEnumerator FetchPlayerScores()
+    {
+        yield return new WaitForSeconds(1.5f);
+        lbPage.SetUpPlayerRank();
     }
 }

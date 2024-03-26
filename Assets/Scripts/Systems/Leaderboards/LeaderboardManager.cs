@@ -31,6 +31,13 @@ public class LeaderboardManager : MonoBehaviour
         }
     }
 
+    public async void NewScore(string levelLeaderboardID)
+    {
+            var playerEntry = await LeaderboardsService.Instance.AddPlayerScoreAsync(levelLeaderboardID, 0);
+            Debug.Log(JsonConvert.SerializeObject(playerEntry));
+
+    }
+
     public async void FetchScores(string levelLeaderboardID)
     {
         Debug.Log("Started Fetch");
@@ -66,12 +73,13 @@ public class LeaderboardManager : MonoBehaviour
         
     }
 
-    public async void GetPlayerRanking(string levelLeaderboardID, TMP_Text playersNick, TMP_Text playerScore, TMP_Text playerRank)
+    public async void GetPlayerRanking(string levelLeaderboardID)
     {
         var scoresResponse = await LeaderboardsService.Instance.GetPlayerScoreAsync(levelLeaderboardID);
-        playersNick.text = scoresResponse.PlayerName.Substring(0, 6) + "...";
-        playerScore.text = scoresResponse.Score.ToString();
-        playerRank.text = (scoresResponse.Rank + 1).ToString();
+        GameManager.instance._playerNick = scoresResponse.PlayerName.Substring(0, 6) + "...";
+        GameManager.instance.playerBestScoreFloat = (float)scoresResponse.Score;
+        GameManager.instance._playerBestScore = scoresResponse.Score.ToString();
+        GameManager.instance._playerRank = (scoresResponse.Rank + 1).ToString();
     }
 
     

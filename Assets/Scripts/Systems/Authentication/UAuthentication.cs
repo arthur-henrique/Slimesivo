@@ -5,6 +5,8 @@ using Unity.Services.Core;
 using Unity.Services.Authentication;
 using System.Threading.Tasks;
 using Unity.Services.Economy;
+using Unity.Services.Leaderboards;
+using Newtonsoft.Json;
 
 public class UAuthentication : MonoBehaviour
 {
@@ -79,6 +81,9 @@ public class UAuthentication : MonoBehaviour
     public async void SyncConfigurationAsync()
     {
         await EconomyService.Instance.Configuration.SyncConfigurationAsync();
+        var playerEntry = await LeaderboardsService.Instance.AddPlayerScoreAsync("Pontuacoes_Mais_Altas", 0);
+        Debug.Log(JsonConvert.SerializeObject(playerEntry));
         Debug.Log("Configuration sync finished");
+
     }
 }
