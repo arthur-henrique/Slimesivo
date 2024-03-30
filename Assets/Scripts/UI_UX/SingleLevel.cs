@@ -16,7 +16,7 @@ public class SingleLevel : MonoBehaviour
     }
     public void BackButton()
     {
-        SceneManager.LoadScene("UI_Test_Map"); //TODO: MUDAR ESTE NOME DEPOIS
+        SceneManager.LoadScene("CampaignMap"); //Nome da cena do mapa
     }
 
     public void PressStarsButton(int _starsNumber)

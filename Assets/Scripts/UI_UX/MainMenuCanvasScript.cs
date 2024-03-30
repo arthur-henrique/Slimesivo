@@ -6,16 +6,15 @@ using UnityEngine.UI;
 
 public class MainMenuCanvasScript : MonoBehaviour
 {
-    [SerializeField] private GameObject infinityButton, campaignButton, rightChangeButton, leftChangeButton, campaignMode, storePagePanel, settingsButton, leaderboardPanel;
+    [SerializeField] private GameObject infinityButton, campaignButton, rightChangeButton, leftChangeButton, storePagePanel, settingsButton, leaderboardPanel;
     [SerializeField] private LeaderboardsPage leaderboardPage;
 
     void Awake()
     {
         leftChangeButton.SetActive(false);
         rightChangeButton.SetActive(true);
-        infinityButton.SetActive(true);
-        campaignButton.SetActive(false);
-        campaignMode.SetActive(false);
+        infinityButton.SetActive(false);
+        campaignButton.SetActive(true);
         storePagePanel.SetActive(false);
         settingsButton.SetActive(true);
         //leaderboardPanel.SetActive(false);
@@ -26,16 +25,16 @@ public class MainMenuCanvasScript : MonoBehaviour
         if (infinityButton.activeSelf == true)
         {
             infinityButton.SetActive(false);
-            leftChangeButton.SetActive(true);
+            rightChangeButton.SetActive(true);
             campaignButton.SetActive(true);
-            rightChangeButton.SetActive(false);
+            leftChangeButton.SetActive(false);
         }
         else
         {
             campaignButton.SetActive(false);
-            rightChangeButton.SetActive(true);
+            leftChangeButton.SetActive(true);
             infinityButton.SetActive(true);
-            leftChangeButton.SetActive(false);
+            rightChangeButton.SetActive(false);
         }
     }
 
@@ -46,14 +45,9 @@ public class MainMenuCanvasScript : MonoBehaviour
         
     }
 
-    public void EnterExitCampaignMode()
+    public void GoToCampaignMapScene()
     {
-        if (campaignMode.activeSelf == true)
-            campaignMode.SetActive(false);
-        else
-            campaignMode.SetActive(true);
-
-        //SceneManager.LoadScene(0);
+        SceneManager.LoadScene("CampaignMap"); //Nome da cena do mapa
     }
 
     public void EnterExitStorePage()

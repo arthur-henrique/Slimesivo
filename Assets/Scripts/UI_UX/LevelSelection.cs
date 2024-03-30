@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class LevelSelection : MonoBehaviour
 {
     [SerializeField] private bool unlocked = false;
+    [SerializeField] private TMP_Text levelTextName;
     public Image lockImage;
     public GameObject[] stars;
     private string previousLevelName;
@@ -30,6 +32,7 @@ public class LevelSelection : MonoBehaviour
         string[] objectNameNumber = gameObject.name.Split('_');
         int previousLevelIndex = int.Parse(objectNameNumber[1]) - 1;
         previousLevelName = objectNameNumber[0] + "_" + previousLevelIndex.ToString("000");
+        levelTextName.text = objectNameNumber[0] + " " + int.Parse(objectNameNumber[1]);
 
         #endregion
 
