@@ -19,7 +19,7 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
     }
     private void Start()
     {
-        StartCoroutine(LoadTheAds());
+        //StartCoroutine(LoadTheAds());
     }
     public void InitializeAds()
     {
@@ -40,6 +40,8 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
     public void OnInitializationComplete()
     {
         Debug.Log("Unity Ads initialization complete.");
+        _example.LoadAd();
+        _interstitialAdExample.LoadAd();
     }
 
     public void OnInitializationFailed(UnityAdsInitializationError error, string message)
