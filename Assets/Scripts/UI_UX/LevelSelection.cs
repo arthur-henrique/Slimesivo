@@ -80,7 +80,12 @@ public class LevelSelection : MonoBehaviour
     {
         if (unlocked)
         {
-            SceneManager.LoadScene(gameObject.name);
+            LeanTween.scale(gameObject, gameObject.transform.localScale * 1.2f, 0.5f);
+            LeanTween.scale(gameObject, gameObject.transform.localScale, 0.1f).setDelay(0.5f).setOnComplete(GoToLevelTweenFinished);
         }
     }
-}
+    public void GoToLevelTweenFinished()
+    {
+            SceneManager.LoadScene(gameObject.name);
+    }
+ }

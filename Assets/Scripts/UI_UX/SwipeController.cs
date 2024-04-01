@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class SwipeController : MonoBehaviour, IEndDragHandler
 {
@@ -15,12 +16,14 @@ public class SwipeController : MonoBehaviour, IEndDragHandler
     [SerializeField] private GameObject map1;
     private float dragThreshold;
     [SerializeField] private int thresholdValue; //8 parece ser ideal
+    [SerializeField] Button previousButton, nextButton;
 
     private void Awake()
     {
         currentPage = 1;
         targetPos = mapPages.localPosition;
         dragThreshold = Screen.width / thresholdValue;
+        UpdateArrowButtons();
     }
 
     void Start()
@@ -53,6 +56,7 @@ public class SwipeController : MonoBehaviour, IEndDragHandler
     private void MovePage()
     {
         mapPages.LeanMoveLocal(targetPos, tweenTime).setEase(tweenType);
+        UpdateArrowButtons();
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -73,4 +77,21 @@ public class SwipeController : MonoBehaviour, IEndDragHandler
             MovePage();
         }
     }
+
+    private void UpdateArrowButtons()
+    {
+        previousButton.interactable = true;
+        nextButton.interactable = true;
+
+        if (currentPage == 1)
+        {
+            previousButton.interactable = false;
+        }
+        else if (currentPage == maxPage)
+        {
+            nextButton.interactable = false;
+        }
+    }
 }
+
+//se quiser deixar um botao ativo ou inativo, coloque o nome do botao .interactable = true; (ou false) --> pode tentar com .enabled = true;

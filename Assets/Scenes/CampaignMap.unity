@@ -745,7 +745,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 650, y: 0}
+  m_AnchoredPosition: {x: 643.37744, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1163152540
@@ -1407,6 +1407,8 @@ MonoBehaviour:
   tweenType: 6
   map1: {fileID: 595973096}
   thresholdValue: 8
+  previousButton: {fileID: 1914067890}
+  nextButton: {fileID: 1264145918}
 --- !u!1 &1914067888
 GameObject:
   m_ObjectHideFlags: 0
