@@ -12,6 +12,7 @@ public class CoinCollectible : MonoBehaviour, ICurrencyCollectible
 
     public void Collect()
     {
+        Debug.Log("Collected Coin");
         CurrencyManager.instance.UpdateCoinAmount(Value);
         Destroy(gameObject);
     }

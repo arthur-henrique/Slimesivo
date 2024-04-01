@@ -62,7 +62,7 @@ public class HUDCanvasMenu : MonoBehaviour
         backgroundPanelForGameOver.SetActive(false);
         backgroundPanelForWinning.SetActive(false);
         Time.timeScale = 1f;
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 
     public void Retry()
