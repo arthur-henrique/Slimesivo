@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
 public class SwipeController : MonoBehaviour, IEndDragHandler
 {
@@ -17,6 +18,7 @@ public class SwipeController : MonoBehaviour, IEndDragHandler
     private float dragThreshold;
     [SerializeField] private int thresholdValue; //8 parece ser ideal
     [SerializeField] Button previousButton, nextButton;
+    [SerializeField] private TMP_Text mapText;
 
     private void Awake()
     {
@@ -24,11 +26,12 @@ public class SwipeController : MonoBehaviour, IEndDragHandler
         targetPos = mapPages.localPosition;
         dragThreshold = Screen.width / thresholdValue;
         UpdateArrowButtons();
+        mapText.text = "Mapa " + currentPage.ToString();
     }
 
     void Start()
     {
-        var rectTransform = map1.GetComponent<RectTransform>();
+        var rectTransform = map1.GetComponent<RectTransform>(); //para saber o quanto a pagina tem que virar
         float width = rectTransform.rect.width;
         pageWidth = new Vector3(-width, 0, 0);
     } 
@@ -57,6 +60,7 @@ public class SwipeController : MonoBehaviour, IEndDragHandler
     {
         mapPages.LeanMoveLocal(targetPos, tweenTime).setEase(tweenType);
         UpdateArrowButtons();
+        mapText.text = "Mapa " + currentPage.ToString();
     }
 
     public void OnEndDrag(PointerEventData eventData)
