@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cef6f62757d63b54191ce0f2e056fefd
+guid: bd2cfbc814924f046bf65c7dec022cdb
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -45,7 +45,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -72,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -136,12 +136,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Group 2_0
+      name: Parede_0
       rect:
         serializedVersion: 2
-        x: 85
+        x: 0
         y: 0
-        width: 529
+        width: 93
         height: 3508
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -150,8 +150,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 467b726c3e5a79c469eddfcdbe7f6419
-      internalID: -683197294
+      spriteID: eb1e7ab5df33bc742ab305128810a041
+      internalID: -1284160879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Parede_1
+      rect:
+        serializedVersion: 2
+        x: 616
+        y: 0
+        width: 86
+        height: 3508
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac474c39dd436a1418c9416822f9f3cf
+      internalID: -1385080376
       vertices: []
       indices: 
       edges: []
@@ -160,14 +181,15 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Group 2_0: -683197294
+      Parede_0: -1284160879
+      Parede_1: -1385080376
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

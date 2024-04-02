@@ -25,6 +25,7 @@ public class ParallaxBackgound : MonoBehaviour
 
         if (Mathf.Abs(cameraTransform.position.y - transform.position.y) >= textureUnitySizeY)
         {
+            
             float offSetPositionY = (cameraTransform.position.y - transform.position.y) % textureUnitySizeY;
             transform.position = new Vector3(transform.position.x, cameraTransform.position.y + offSetPositionY);
         }
