@@ -20,6 +20,10 @@ public class SwipeController : MonoBehaviour, IEndDragHandler
     [SerializeField] Button previousButton, nextButton;
     [SerializeField] private TMP_Text mapText;
 
+    [SerializeField] private TMP_Text starsCountText;
+    [Tooltip("Quantos niveis existem em cada mapa")]
+    [SerializeField] private int[] howManyLevelsInEachMap;
+
     private void Awake()
     {
         currentPage = 1;
@@ -27,6 +31,7 @@ public class SwipeController : MonoBehaviour, IEndDragHandler
         dragThreshold = Screen.width / thresholdValue;
         UpdateArrowButtons();
         mapText.text = "Mapa " + currentPage.ToString();
+        TotalStarsCount();
     }
 
     void Start()
@@ -61,6 +66,7 @@ public class SwipeController : MonoBehaviour, IEndDragHandler
         mapPages.LeanMoveLocal(targetPos, tweenTime).setEase(tweenType);
         UpdateArrowButtons();
         mapText.text = "Mapa " + currentPage.ToString();
+        TotalStarsCount();
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -95,6 +101,22 @@ public class SwipeController : MonoBehaviour, IEndDragHandler
         {
             nextButton.interactable = false;
         }
+    }
+
+    private void TotalStarsCount()
+    {
+        int previousTotalLevels = 0; //todos os niveis anteriores ao ultimo mapa
+        for (int i = currentPage-1; i > 0; i--)
+        {
+            previousTotalLevels += howManyLevelsInEachMap[i];
+        }
+
+        int currentStars = 0;
+        for (int i = 1; i <= howManyLevelsInEachMap[currentPage]; i++) //vai ser menor do que a quantidade de niveis no mapa
+        {
+            currentStars += PlayerPrefs.GetInt("Level_" + (i + previousTotalLevels).ToString("000"));
+        }
+        starsCountText.text = currentStars + "/" + howManyLevelsInEachMap[currentPage] * 3;
     }
 }
 
