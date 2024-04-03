@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class SingleLevel : MonoBehaviour
 {
+    //TODO: APAGAR ESTE SCRIPT DEPOIS - ELE SO SERVE PARA TESTES DOS NIVEIS DA CAMPANHA, MAS JA ESTA IMPLEMENTADO NO SCRIPT HudCanvasMenu
+    
     private int currentStarNumber = 0;
     private string currentLevelName;
     //private int currentLevelIndex;

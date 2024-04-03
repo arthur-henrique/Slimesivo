@@ -18,6 +18,10 @@ public class HUDCanvasMenu : MonoBehaviour
     private float timer;
     private bool resumeInProgress = false; //para tirar os multiplos cliques do resume
     private bool canHidePanels = false; //para nao esconder no countdown
+    private int currentStarNumber = 0;
+    private string currentLevelName;
+    public GameObject[] stars;
+    public Sprite starSprite;
 
 
     //int quantoDeVida = 3; //SUBSTITUIR DEPOIS PELO INT DA VIDA DO PLAYER!!!!
@@ -41,6 +45,7 @@ public class HUDCanvasMenu : MonoBehaviour
         heart1.SetActive(true);
         heart2.SetActive(true);
         heart3.SetActive(true);
+        currentLevelName = SceneManager.GetActiveScene().name;
     }
 
     public void PauseGame()
@@ -62,7 +67,7 @@ public class HUDCanvasMenu : MonoBehaviour
         backgroundPanelForGameOver.SetActive(false);
         backgroundPanelForWinning.SetActive(false);
         Time.timeScale = 1f;
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("1 - Main Menu"); //nome da cena do Main Menu
     }
 
     public void Retry()
@@ -223,5 +228,34 @@ public class HUDCanvasMenu : MonoBehaviour
         backgroundPanelForGameOver.SetActive(false);
         backgroundPanelForWinning.SetActive(true);
     }
+
+
+
+    #region Mostra quantas estrelas o Player conseguiu no nivel (principalmente visualmente)
+    public void PressStarsButton(int _starsNumber)
+    {
+        currentStarNumber = _starsNumber;
+        if (currentStarNumber > PlayerPrefs.GetInt(currentLevelName)) //vai salvar a pontuacao (estrelas) somente se for maior que a anterior
+        {
+            PlayerPrefs.SetInt(currentLevelName, _starsNumber);
+        }
+        print(PlayerPrefs.GetInt(currentLevelName, _starsNumber));
+
+        for (int i = 0; i < _starsNumber; i++)
+        {
+            stars[i].gameObject.GetComponent<Image>().sprite = starSprite;
+            print("aeee");
+        }
+    }
+
+    /// <summary>
+    /// Esta funcao serve apenas para testes, ela nao estara na versao final do jogo
+    /// </summary>
+    public void ResetStarsButton() //TODO: deletar esta funcao
+    {
+        PlayerPrefs.DeleteKey(currentLevelName);
+    }
+
+    #endregion
 
 }

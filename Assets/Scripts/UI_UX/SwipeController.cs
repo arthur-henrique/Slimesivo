@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class SwipeController : MonoBehaviour, IEndDragHandler
 {
@@ -117,6 +118,14 @@ public class SwipeController : MonoBehaviour, IEndDragHandler
             currentStars += PlayerPrefs.GetInt("Level_" + (i + previousTotalLevels).ToString("000"));
         }
         starsCountText.text = currentStars + "/" + howManyLevelsInEachMap[currentPage] * 3;
+    }
+
+
+
+
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene("1 - Main Menu");
     }
 }
 
