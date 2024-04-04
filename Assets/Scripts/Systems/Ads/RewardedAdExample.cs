@@ -62,7 +62,9 @@ public class RewardedAdExample : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
         {
             Debug.Log("Unity Ads Rewarded Ad Completed");
             // Grant a reward.
-            LeaderboardManager.instance.UpdateScores("Pontuacoes_Mais_Altas", GameManager.instance.playerBestScoreFloat, GameManager.instance.playerBestScoreFloat + 50f);
+            //LeaderboardManager.instance.UpdateScores("Pontuacoes_Mais_Altas", GameManager.instance.playerBestScoreFloat,
+            //GameManager.instance.playerBestScoreFloat + 50f);
+            CurrencyManager.instance.AdCoinMultiplier();
         }
     }
 

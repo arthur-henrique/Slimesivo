@@ -18,6 +18,7 @@ public class CurrencyManager : MonoBehaviour
 
     private void Awake()
     {
+        Random.Range(0, 100);
         // Check if instance already exists
         if (instance == null)
         {
@@ -87,5 +88,11 @@ public class CurrencyManager : MonoBehaviour
     {
         currentCoinAmount += coinAmount;
         Debug.Log("Current Coin Amount is: " +currentCoinAmount);
+    }
+
+    public void AdCoinMultiplier()
+    {
+        float randMult = Random.Range(1.5f, 2.3f);
+        currentCoinAmount = currentCoinAmount * (long)randMult ;
     }
 }
