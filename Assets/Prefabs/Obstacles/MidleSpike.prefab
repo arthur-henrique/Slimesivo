@@ -267,6 +267,7 @@ GameObject:
   - component: {fileID: 7068021510573429317}
   - component: {fileID: 5907504262497992851}
   - component: {fileID: 310058599497677009}
+  - component: {fileID: 5471027203041797322}
   m_Layer: 0
   m_Name: MidleSpike
   m_TagString: Untagged
@@ -391,6 +392,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 33b7969a49dda12468ba1f85720a5693, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5471027203041797322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4760885403650983150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68e1cb98226a2b94b89c751c9622b8a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5094881119712309055

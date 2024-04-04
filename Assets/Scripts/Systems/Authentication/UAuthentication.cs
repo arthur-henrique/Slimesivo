@@ -119,11 +119,12 @@ public class UAuthentication : MonoBehaviour
 
     IEnumerator LoginIntoTheGame()
     {
-        while (!AuthenticationService.Instance.IsSignedIn)
-        {
-            print("WaitingToSignIn");
-            yield return null;
-        }
+        //while (!AuthenticationService.Instance.IsSignedIn)
+        //{
+        //    print("WaitingToSignIn");
+        //    yield return null;
+        //}
+        yield return new WaitForSeconds(2);
         SceneManager.LoadScene("1 - Main Menu");
     }
 }

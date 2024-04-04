@@ -12,7 +12,7 @@ public class CurrencyManager : MonoBehaviour
 
     // Currency Related Variables
     long currentCoinAmount; // The amount of coinCurrency the player currently holds in a match
-    long currentCurrency; // The quantity of coinCurrency the player current has
+    public long currentCurrency; // The quantity of coinCurrency the player current has
     // Trocar pelo ID da moeda desejada
     public string coinCurrencyID = "TESTCURRENCY";
 
@@ -59,16 +59,17 @@ public class CurrencyManager : MonoBehaviour
         
     }
 
-    public async void SetBalance(int balanceToAdd)
+    public async void SetBalance()
     {
         if (!IsAuthenticationSignedIn())
         {
             return;
         }
         ;
-        currentCurrency += balanceToAdd;
+        currentCurrency += currentCoinAmount;
         PlayerBalance playerBalance = await EconomyService.Instance.PlayerBalances.SetBalanceAsync(coinCurrencyID, currentCurrency);
-        Debug.Log(currentCurrency);
+        //Debug.Log(currentCurrency);
+        currentCoinAmount = 0;
     }
 
     static bool IsAuthenticationSignedIn()

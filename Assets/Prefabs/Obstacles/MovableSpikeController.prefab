@@ -244,6 +244,7 @@ GameObject:
   - component: {fileID: 9145753276829352385}
   - component: {fileID: 2701427743746964322}
   - component: {fileID: 4858860387157256994}
+  - component: {fileID: 536925046421884670}
   m_Layer: 0
   m_Name: MovableSpikeVisual
   m_TagString: Untagged
@@ -368,6 +369,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 33b7969a49dda12468ba1f85720a5693, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &536925046421884670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3360586670779455803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68e1cb98226a2b94b89c751c9622b8a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5920853772296974210

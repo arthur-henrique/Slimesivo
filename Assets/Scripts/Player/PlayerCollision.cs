@@ -22,6 +22,10 @@ public class PlayerCollision : MonoBehaviour
                 return;
             }
         }
+        else if (collision.CompareTag("FinishLine"))
+        {
+            GameManager.instance.Victory();
+        }
         
     }
 }
