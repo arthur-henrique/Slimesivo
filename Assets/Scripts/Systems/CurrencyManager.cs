@@ -5,10 +5,15 @@ using Unity.Services.Economy;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
 using Unity.Services.Economy.Model;
+using TMPro;
 
 public class CurrencyManager : MonoBehaviour
 {
     public static CurrencyManager instance = null;
+    [SerializeField]
+    private TMP_Text coinText;
+    [SerializeField]
+    private TMP_Text tokenText;
 
     // Currency Related Variables
     long currentCoinAmount; // The amount of coinCurrency the player currently holds in a match
@@ -18,7 +23,6 @@ public class CurrencyManager : MonoBehaviour
 
     private void Awake()
     {
-        Random.Range(0, 100);
         // Check if instance already exists
         if (instance == null)
         {
@@ -87,6 +91,7 @@ public class CurrencyManager : MonoBehaviour
     public void UpdateCoinAmount(int coinAmount)
     {
         currentCoinAmount += coinAmount;
+        coinText.text = currentCoinAmount.ToString();
         Debug.Log("Current Coin Amount is: " +currentCoinAmount);
     }
 
