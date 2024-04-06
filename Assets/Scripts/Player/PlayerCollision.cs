@@ -14,7 +14,6 @@ public class PlayerCollision : MonoBehaviour
             if (currencyCollectible != null)
             {
                 currencyCollectible.Collect();
-                VibrationManager.Instance.CallVibration(10);
                 return;
             }
             else if (consumableCollectible != null)

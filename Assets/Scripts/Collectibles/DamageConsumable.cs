@@ -7,7 +7,6 @@ public class DamageConsumable : MonoBehaviour, IConsumable
     public void Consume()
     {
         GameManager.instance.TookDamage();
-        VibrationManager.Instance.CallVibration(200);
         //Destroy(gameObject);
     }
 }
