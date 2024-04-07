@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 public class TouchManager : MonoBehaviour
 {
+    [SerializeField] private LayerMask uiLayer;
+
     //Input
     private PlayerInput playerInput;
-    private float screenSide;
+    private float screenSideX;
     private InputAction touchPositionAction;
     [HideInInspector] public InputAction _touchPressAction;
     private Vector2 value;
@@ -57,50 +60,76 @@ public class TouchManager : MonoBehaviour
     {
        //Pega o valor do pixel onde o player clica e divide pelo valor total de pixeis da tela
         value = touchPositionAction.ReadValue<Vector2>();
-        screenSide = value.x / Camera.main.pixelWidth;
+        screenSideX = value.x / Camera.main.pixelWidth;
+        float  screenSideY = value.y / Camera.main.pixelHeight;
+
+
+        if (!PointerIsUIHit(value)) 
+            //Dai checa pra ver se foi esquerda ou direita, maior q 0.5 direita menor esquerda
+            if (screenSideX > 0.5)
+            {
+                
+                switch (rightCounter)
+                {
+                    case 0:
+                        _isFacingRight = true;
+                        playerScript.Jump();
+                        rightCounter++;
+                        leftCounter = 0;
+                        break;
+                    case 1:
+                        _isFacingRight = true;
+                        playerScript.JumpSameSide();
+                        break;
+
+                }
+
+
+            }
+            else
+            {
+                switch (leftCounter)
+                {
+                    case 0:
+                        _isFacingRight = false;
+                        playerScript.Jump();
+                        rightCounter = 0;
+                        leftCounter++;
+                        break;
+                    case 1:
+                        _isFacingRight = false;
+                        playerScript.JumpSameSide();
+                        break;
+
+                }
+            }
+
 
         
-        //Dai checa pra ver se foi esquerda ou direita, maior q 0.5 direita menor esquerda
-        if(screenSide > 0.5)
-        {
 
-            switch (rightCounter)
-            {
-                case 0:
-                    _isFacingRight = true;
-                    playerScript.Jump();
-                    rightCounter++;
-                    leftCounter = 0;
-                    break;
-                case 1:
-                    _isFacingRight = true;
-                    playerScript.JumpSameSide();
-                    break;
-                   
-            }
-           
-            
-        }
-        else
+
+    }
+    private bool PointerIsUIHit(Vector2 position)
+    {
+        PointerEventData pointer = new PointerEventData(EventSystem.current);
+        pointer.position = position;
+        List<RaycastResult> raycastResults = new List<RaycastResult>();
+
+        // UI Elements must have `picking mode` set to `position` to be hit
+        EventSystem.current.RaycastAll(pointer, raycastResults);
+
+        if (raycastResults.Count > 0)
         {
-            switch (leftCounter)
+            foreach (RaycastResult result in raycastResults)
             {
-                case 0:
-                    _isFacingRight = false;
-                    playerScript.Jump();
-                    rightCounter = 0;
-                    leftCounter++;
-                    break;
-                case 1:
-                    _isFacingRight = false;
-                    playerScript.JumpSameSide();
-                    break;
-                    
+                if (result.distance == 0 && ((1 << result.gameObject.layer) & uiLayer) != 0)
+                {
+                    return true;
+                }
             }
         }
-        
-        
-        
+
+        return false;
     }
 
     #endregion
