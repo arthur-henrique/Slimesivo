@@ -8,10 +8,13 @@ using TMPro;
 public class LevelSelection : MonoBehaviour
 {
     [SerializeField] private bool unlocked = false;
-    [SerializeField] private TMP_Text levelTextName;
+    [SerializeField] private TMP_Text levelTextName, levelTextName2;
+    [SerializeField] private GameObject popUpPanel;
     public Image lockImage;
     public GameObject[] stars;
+    public GameObject[] starsPopUp;
     private string previousLevelName;
+    
 
     public Sprite starSprite;
 
@@ -19,6 +22,7 @@ public class LevelSelection : MonoBehaviour
     {
         UpdateLevelStatus();
         UpdateLevelImage();
+        popUpPanel.SetActive(false);
 
     }
 
@@ -33,6 +37,7 @@ public class LevelSelection : MonoBehaviour
         int previousLevelIndex = int.Parse(objectNameNumber[1]) - 1;
         previousLevelName = objectNameNumber[0] + "_" + previousLevelIndex.ToString("000");
         levelTextName.text = objectNameNumber[0] + " " + int.Parse(objectNameNumber[1]);
+        levelTextName2.text = objectNameNumber[0] + " " + int.Parse(objectNameNumber[1]);
 
         #endregion
 
@@ -72,6 +77,24 @@ public class LevelSelection : MonoBehaviour
             for (int i = 0; i < PlayerPrefs.GetInt(gameObject.name); i++)
             {
                 stars[i].gameObject.GetComponent<Image>().sprite = starSprite;
+                starsPopUp[i].gameObject.GetComponent<Image>().sprite = starSprite;
+            }
+        }
+    }
+
+    public void ShowOrHideLevelStatistics()
+    {
+        if(unlocked)
+        {
+            if (popUpPanel.activeSelf == false)
+            {
+                popUpPanel.transform.position = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0);
+                gameObject.GetComponent<RectTransform>().SetAsLastSibling();
+                popUpPanel.SetActive(true);
+            }
+            else
+            {
+                popUpPanel.SetActive(false);
             }
         }
     }
@@ -84,8 +107,10 @@ public class LevelSelection : MonoBehaviour
             LeanTween.scale(gameObject, gameObject.transform.localScale, 0.1f).setDelay(0.5f).setOnComplete(GoToLevelTweenFinished);
         }
     }
-    public void GoToLevelTweenFinished()
+    private void GoToLevelTweenFinished()
     {
             SceneManager.LoadScene(gameObject.name);
     }
  }
+
+//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
