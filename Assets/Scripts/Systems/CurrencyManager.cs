@@ -17,6 +17,7 @@ public class CurrencyManager : MonoBehaviour
 
     // Currency Related Variables
     public long currentCoinAmount; // The amount of coinCurrency the player currently holds in a match
+    public long questCoinAmount;
     public long currentCurrency; // The quantity of coinCurrency the player current has
     // Trocar pelo ID da moeda desejada
     public string coinCurrencyID = "TESTCURRENCY";
@@ -72,9 +73,11 @@ public class CurrencyManager : MonoBehaviour
         }
         ;
         currentCurrency += currentCoinAmount;
+        currentCurrency += questCoinAmount;
         PlayerBalance playerBalance = await EconomyService.Instance.PlayerBalances.SetBalanceAsync(coinCurrencyID, currentCurrency);
         //Debug.Log(currentCurrency);
         currentCoinAmount = 0;
+        questCoinAmount = 0;
     }
 
     static bool IsAuthenticationSignedIn()
@@ -93,6 +96,11 @@ public class CurrencyManager : MonoBehaviour
         currentCoinAmount += coinAmount;
         coinText.text = currentCoinAmount.ToString();
         Debug.Log("Current Coin Amount is: " +currentCoinAmount);
+    }
+    public void QuestCoinReward(int coinAmount)
+    {
+        questCoinAmount += coinAmount;
+        Debug.Log("Quest Coin reward is: " + questCoinAmount);
     }
 
     public void AdCoinMultiplier()
