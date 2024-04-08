@@ -99,6 +99,7 @@ public class GameManager : MonoBehaviour
     {
         needsToCheckAlive = true;
         pauseCanvas.OnDamageTaken(livesAmount);
+        PlayableLevelManager.Instance.AddTimeHit();
         livesAmount--;
         Debug.Log("TookDamage()");
         // Initializes the sequence of updating the UI
@@ -122,6 +123,7 @@ public class GameManager : MonoBehaviour
         else
         {
             pauseCanvasGO.SetActive(true);
+            CurrencyManager.instance.currentCoinAmount = 0;
             livesAmount = 3;
             isAlive = true;
             pauseCanvas.OnNewLevel();
@@ -132,6 +134,7 @@ public class GameManager : MonoBehaviour
     public void Victory()
     {
         HUDCanvasMenu.instance.OnWinningLevel();
+        QuestManager.Instance.CheckQuests();
     }
     
 }

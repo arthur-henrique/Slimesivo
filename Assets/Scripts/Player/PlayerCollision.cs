@@ -14,6 +14,7 @@ public class PlayerCollision : MonoBehaviour
             if (currencyCollectible != null)
             {
                 currencyCollectible.Collect();
+                PlayableLevelManager.Instance.AddCoinCollected();
                 return;
             }
             else if (consumableCollectible != null)

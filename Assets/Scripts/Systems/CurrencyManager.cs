@@ -16,7 +16,7 @@ public class CurrencyManager : MonoBehaviour
     private TMP_Text tokenText;
 
     // Currency Related Variables
-    long currentCoinAmount; // The amount of coinCurrency the player currently holds in a match
+    public long currentCoinAmount; // The amount of coinCurrency the player currently holds in a match
     public long currentCurrency; // The quantity of coinCurrency the player current has
     // Trocar pelo ID da moeda desejada
     public string coinCurrencyID = "TESTCURRENCY";

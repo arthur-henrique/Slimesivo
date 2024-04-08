@@ -6167,7 +6167,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 322.57446, y: -191.00938}
+  m_AnchoredPosition: {x: 322.57446, y: -284.2617}
   m_SizeDelta: {x: 432.85352, y: 114.833}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &435948732
@@ -8414,6 +8414,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coinText: {fileID: 2009112037}
   tokenText: {fileID: 0}
+  currentCoinAmount: 0
   currentCurrency: 0
   coinCurrencyID: TESTCURRENCY
 --- !u!1 &623613017
@@ -18627,7 +18628,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 322.57446, y: -77.57271}
+  m_AnchoredPosition: {x: 322.57446, y: -108.656815}
   m_SizeDelta: {x: 266.79663, y: 107.6505}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1315429786
@@ -19395,7 +19396,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 322.57446, y: -425.06525}
+  m_AnchoredPosition: {x: 322.57446, y: -642.65393}
   m_SizeDelta: {x: 432.85352, y: 114.833}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1371974676
@@ -19735,7 +19736,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 322.57446, y: -542.09314}
+  m_AnchoredPosition: {x: 322.57446, y: -821.85004}
   m_SizeDelta: {x: 432.85352, y: 114.833}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1390494831
@@ -26172,7 +26173,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 322.57446, y: -308.0373}
+  m_AnchoredPosition: {x: 322.57446, y: -463.45782}
   m_SizeDelta: {x: 432.85352, y: 114.833}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1877409471
