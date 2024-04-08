@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance = null;
 
     // Health and Values associated to being alive
-    private int livesAmount = 0;
+    public int livesAmount = 0;
     private int maxLivesAmount = 4;
     private bool isAlive = true;
     private bool needsToCheckAlive = false;

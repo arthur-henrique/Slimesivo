@@ -1,11 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TimeLimitQuest : MonoBehaviour, IQuestSettable
 {
     [SerializeField]
-    float timeLimit;
+    int timeLimit;
+
+    void Start()
+    {
+        timeLimit = QuestingDictionary.Instance.questDictionary.TryGetValue(SceneManager.GetActiveScene().name + "_seconds", out timeLimit) ? timeLimit : 0;
+    }
 
     public bool CompletedQuest()
     {
