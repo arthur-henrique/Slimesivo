@@ -16,8 +16,8 @@ public class LevelSelection : MonoBehaviour
     private string previousLevelName;
 
     [SerializeField] private TMP_Text conditionSecondsText, conditionLivesLeftText, conditionCoinsText;
-    public float conditionSeconds;
-    public int conditionLivesLeft, conditionCoins;
+    //public float conditionSeconds;
+    [SerializeField] private int conditionLivesLeft, conditionCoins, conditionSeconds;
     [SerializeField] private bool isItAllCoins;
 
 
@@ -57,6 +57,9 @@ public class LevelSelection : MonoBehaviour
 
         conditionSecondsText.text = "Complete the level in " + conditionSeconds + " seconds";
 
+        QuestingDictionary.Instance.questDictionary.Add(gameObject.name + "_lives", conditionLivesLeft);
+        QuestingDictionary.Instance.questDictionary.Add(gameObject.name + "_coins", conditionCoins);
+        QuestingDictionary.Instance.questDictionary.Add(gameObject.name + "_seconds", (int)conditionSeconds);
        // PlayerPrefs.SetInt(gameObject.name + "_livesLeft", conditionLivesLeft);
        // PlayerPrefs.SetInt(gameObject.name + "_coins", conditionCoins);
        // PlayerPrefs.SetFloat(gameObject.name + "_seconds", conditionSeconds);
