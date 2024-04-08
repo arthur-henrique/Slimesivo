@@ -34,13 +34,16 @@ public class QuestManager : MonoBehaviour
                 // Call the function to red up / highlight the UI Elements
             }
         }
-        // Debug.Log("The player has completed: " + questsCompleted + " quests.");
+        Debug.Log("The player has completed: " + questsCompleted + " quests.");
         // Call the function to show the Stars to the hud depending on the number of stars
         GameManager.instance.pauseCanvas.PressStarsButton(questsCompleted);
+        AwardThePlayer();
+        //StartCoroutine(GrabTheRewards());
     }
 
     public void AwardThePlayer()
     {
+        print("Checking Results");
         if(questsCompleted < 1)
         {
             Debug.Log("No Quests Achieved");
@@ -79,5 +82,11 @@ public class QuestManager : MonoBehaviour
     {
         // Call the necessary Token Fragment function
         Debug.Log("Received a Token Fragment");
+    }
+
+    IEnumerator GrabTheRewards()
+    {
+        yield return new WaitForSeconds(0.1f);
+        AwardThePlayer();
     }
 }
