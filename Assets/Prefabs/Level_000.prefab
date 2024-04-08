@@ -358,7 +358,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5431117698834028252}
   m_Layer: 5
-  m_Name: Condition 3
+  m_Name: Condition 3 - Coins
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1789,8 +1789,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unlocked: 1
-  levelTextName: {fileID: 2226441623337492312}
-  levelTextName2: {fileID: 7460519482142587327}
+  levelTextName:
+  - {fileID: 2226441623337492312}
+  - {fileID: 7460519482142587327}
   popUpPanel: {fileID: 215272456808107562}
   lockImage: {fileID: 6890966983100468014}
   stars:
@@ -1801,6 +1802,13 @@ MonoBehaviour:
   - {fileID: 341660216878346055}
   - {fileID: 7448550003654592418}
   - {fileID: 4315141456280853644}
+  conditionSecondsText: {fileID: 6380416035270287408}
+  conditionLivesLeftText: {fileID: 1062017499860377977}
+  conditionCoinsText: {fileID: 5318092943341812640}
+  conditionSeconds: 0
+  conditionLivesLeft: 0
+  conditionCoins: 0
+  isItAllCoins: 0
   starSprite: {fileID: 21300000, guid: d6b9a0d2d413a124f98dca3dcec0466b, type: 3}
 --- !u!1 &6106024536766613248
 GameObject:
@@ -2020,7 +2028,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7354528495146817273}
   m_Layer: 5
-  m_Name: Condition 1
+  m_Name: Condition 1 - Seconds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2132,7 +2140,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7211713683469481118}
   m_Layer: 5
-  m_Name: Condition 2
+  m_Name: Condition 2 - Damage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2171,7 +2179,7 @@ GameObject:
   - component: {fileID: 5079767809043587189}
   - component: {fileID: 6380416035270287408}
   m_Layer: 5
-  m_Name: Text
+  m_Name: ConditionSecondsText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2380,7 +2388,7 @@ GameObject:
   - component: {fileID: 136099488445068749}
   - component: {fileID: 1062017499860377977}
   m_Layer: 5
-  m_Name: Text
+  m_Name: ConditionDamageText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2433,7 +2441,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Complete the level without taking damage
+  m_text: Complete the level with at least X lives left
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2514,7 +2522,7 @@ GameObject:
   - component: {fileID: 3456641895595096635}
   - component: {fileID: 5318092943341812640}
   m_Layer: 5
-  m_Name: Text
+  m_Name: ConditionCoinsText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

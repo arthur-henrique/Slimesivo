@@ -29,7 +29,6 @@ public class SingleLevel : MonoBehaviour
             PlayerPrefs.SetInt(currentLevelName, _starsNumber);
         }
         print(PlayerPrefs.GetInt(currentLevelName, _starsNumber));
-
     }
 
     /// <summary>
