@@ -28,12 +28,7 @@ public class LevelSelection : MonoBehaviour
         UpdateLevelStatus();
         UpdateLevelImage();
         popUpPanel.SetActive(false);
-    }
-
-    private void Update()
-    {
         SetConditions();
-        
     }
 
     private void SetConditions()
@@ -62,9 +57,9 @@ public class LevelSelection : MonoBehaviour
 
         conditionSecondsText.text = "Complete the level in " + conditionSeconds + " seconds";
 
-        PlayerPrefs.SetInt(gameObject.name, conditionLivesLeft);
-        PlayerPrefs.SetInt(gameObject.name, conditionCoins);
-        PlayerPrefs.SetFloat(gameObject.name, conditionSeconds);
+       // PlayerPrefs.SetInt(gameObject.name + "_livesLeft", conditionLivesLeft);
+       // PlayerPrefs.SetInt(gameObject.name + "_coins", conditionCoins);
+       // PlayerPrefs.SetFloat(gameObject.name + "_seconds", conditionSeconds);
     }
 
     /// <summary>
