@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
 
     //Jump variables
     [SerializeField] private float jumpForce;
-    [SerializeField] private float sideForce;
+    private float sideForce;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
     private float jumpSameSideTimer = 1f;
@@ -51,7 +51,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         Components();
-        
+        DefinePlayerSpeed();
     }
        
 
@@ -64,7 +64,15 @@ public class Player : MonoBehaviour
 
        
 
+    private void DefinePlayerSpeed()
+    {
+        float aspect = (float)Screen.width / Screen.height;
 
+        float worldHeight = Camera.main.orthographicSize * 2;
+
+        sideForce = worldHeight * aspect;
+        print(sideForce);
+    }
 
 
     #region Jump
