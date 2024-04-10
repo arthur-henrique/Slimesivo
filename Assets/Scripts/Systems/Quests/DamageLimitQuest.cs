@@ -13,6 +13,7 @@ public class DamageLimitQuest : MonoBehaviour, IQuestSettable
         {
             print("SucceedDamage");           
             print(PlayableLevelManager.Instance.timesHit);
+            //QuestingDictionary.Instance.clearedQuestDictionary[dicKey + "_" + keyInt] = true;
             return true;
         }
         else
@@ -20,5 +21,10 @@ public class DamageLimitQuest : MonoBehaviour, IQuestSettable
             print("FailedDamage");
             return false;
         }
+    }
+
+    public void SetQuestCompleteToPrefs(string dicKey, int keyInt)
+    {
+        PlayerPrefs.SetInt(dicKey + "_" + keyInt, 1);
     }
 }

@@ -33,6 +33,28 @@ public class LevelSelection : MonoBehaviour
 
     private void SetConditions()
     {
+
+        if (!QuestingDictionary.Instance.questDictionary.ContainsKey(gameObject.name + "_lives"))
+            QuestingDictionary.Instance.questDictionary.Add(gameObject.name + "_lives", conditionLivesLeft);
+        if (!QuestingDictionary.Instance.questDictionary.ContainsKey(gameObject.name + "_coins"))
+            QuestingDictionary.Instance.questDictionary.Add(gameObject.name + "_coins", conditionCoins);
+        if (!QuestingDictionary.Instance.questDictionary.ContainsKey(gameObject.name + "_seconds"))
+            QuestingDictionary.Instance.questDictionary.Add(gameObject.name + "_seconds", conditionSeconds);
+
+        // QuestCompleteToPlayerPrefs
+        // PlayerPrefs(String, [0 = false, 1 = true])
+        if (!PlayerPrefs.HasKey(gameObject.name + "_completed"))
+            PlayerPrefs.SetInt(gameObject.name + "_completed", 0);
+        if(!PlayerPrefs.HasKey(gameObject.name + "_maxStars"))
+            PlayerPrefs.SetInt(gameObject.name + "_maxStars", 0);
+        if (!PlayerPrefs.HasKey(gameObject.name + "_1"))
+            PlayerPrefs.SetInt(gameObject.name + "_1", 0);
+        if (!PlayerPrefs.HasKey(gameObject.name + "_2"))
+            PlayerPrefs.SetInt(gameObject.name + "_2", 0);
+        if (!PlayerPrefs.HasKey(gameObject.name + "_3"))
+            PlayerPrefs.SetInt(gameObject.name + "_3", 0);
+
+
         if (conditionLivesLeft >= 3)
         {
             conditionLivesLeftText.text = "Complete the level with full life";
@@ -57,12 +79,10 @@ public class LevelSelection : MonoBehaviour
 
         conditionSecondsText.text = "Complete the level in " + conditionSeconds + " seconds";
 
-        QuestingDictionary.Instance.questDictionary.Add(gameObject.name + "_lives", conditionLivesLeft);
-        QuestingDictionary.Instance.questDictionary.Add(gameObject.name + "_coins", conditionCoins);
-        QuestingDictionary.Instance.questDictionary.Add(gameObject.name + "_seconds", (int)conditionSeconds);
-       // PlayerPrefs.SetInt(gameObject.name + "_livesLeft", conditionLivesLeft);
-       // PlayerPrefs.SetInt(gameObject.name + "_coins", conditionCoins);
-       // PlayerPrefs.SetFloat(gameObject.name + "_seconds", conditionSeconds);
+        
+
+        // PlayerPrefs.SetInt(gameObject.name + "_coins", conditionCoins);
+        // PlayerPrefs.SetFloat(gameObject.name + "_seconds", conditionSeconds);
     }
 
     /// <summary>

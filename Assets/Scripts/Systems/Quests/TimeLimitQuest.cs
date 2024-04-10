@@ -19,6 +19,7 @@ public class TimeLimitQuest : MonoBehaviour, IQuestSettable
         {
             print("SucceedTime");
             print(PlayableLevelManager.Instance.timeSpent);
+            //QuestingDictionary.Instance.clearedQuestDictionary[dicKey + "_" + keyInt] = true;
             return true;
         }
         else
@@ -26,5 +27,11 @@ public class TimeLimitQuest : MonoBehaviour, IQuestSettable
             print("FailedTime");           
             return false;
         }
+
+    }
+
+    public void SetQuestCompleteToPrefs(string dicKey, int keyInt)
+    {
+        PlayerPrefs.SetInt(dicKey + "_" + keyInt, 1);
     }
 }

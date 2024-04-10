@@ -8,6 +8,8 @@ public class QuestingDictionary : MonoBehaviour
 
     [SerializeField]
     public Dictionary<string, int> questDictionary = new Dictionary<string, int>();
+    [SerializeField]
+    public Dictionary<string, bool> clearedQuestDictionary = new Dictionary<string, bool>();
 
     private void Awake()
     {

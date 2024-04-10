@@ -19,6 +19,7 @@ public class CoinCollectingQuest : MonoBehaviour, IQuestSettable
         {
             print("SucceedCoin");
             print(PlayableLevelManager.Instance.coinsCollected);
+            //QuestingDictionary.Instance.clearedQuestDictionary[dicKey+"_"+keyInt] = true;
             return true;
         }
         else
@@ -26,5 +27,10 @@ public class CoinCollectingQuest : MonoBehaviour, IQuestSettable
             print("FailedCoin");
             return false;
         }
+    }
+
+    public void SetQuestCompleteToPrefs(string dicKey, int keyInt)
+    {
+        PlayerPrefs.SetInt(dicKey + "_" + keyInt, 1);
     }
 }
