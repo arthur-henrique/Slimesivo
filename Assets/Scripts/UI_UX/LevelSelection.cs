@@ -9,10 +9,10 @@ public class LevelSelection : MonoBehaviour
 {
     [SerializeField] private bool unlocked = false;
     [SerializeField] private TMP_Text [] levelTextName;
-    [SerializeField] private GameObject popUpPanel;
-    public Image lockImage;
-    public GameObject[] stars;
-    public GameObject[] starsPopUp;
+    [SerializeField] private GameObject popUpPanel, starSeconds, starLives, starCoins;
+    [SerializeField] private Image lockImage, levelCompletedIndicator;
+    [SerializeField] private GameObject[] stars;
+    [SerializeField] private GameObject[] starsPopUp;
     private string previousLevelName;
 
     [SerializeField] private TMP_Text conditionSecondsText, conditionLivesLeftText, conditionCoinsText;
@@ -21,7 +21,7 @@ public class LevelSelection : MonoBehaviour
     [SerializeField] private bool isItAllCoins;
 
 
-    public Sprite starSprite;
+    [SerializeField] private Sprite starSprite;
 
     private void Start()
     {
@@ -139,6 +139,12 @@ public class LevelSelection : MonoBehaviour
                 starsPopUp[i].gameObject.GetComponent<Image>().sprite = starSprite;
             }
         }
+
+        if (PlayerPrefs.GetInt(gameObject.name + "_Completed") == 1)
+        {
+            levelCompletedIndicator.GetComponent<Image>().color = new Color(1, 1, 1, 1); //(Red, Green, Blue, Alpha) ou new Color32(255,255,225,100)
+        }
+        //if (PlayerPrefs.GetInt(gameObject.name + "_Completed") == 1)
     }
 
     public void ShowOrHideLevelStatistics()
@@ -156,6 +162,11 @@ public class LevelSelection : MonoBehaviour
                 popUpPanel.SetActive(false);
             }
         }
+
+
+
+        //PlayerPrefs.DeleteKey(gameObject.name + "_Completed"); //TODO: ATIVAR ISSO, DEPOIS APAGAR
+        print(PlayerPrefs.GetInt(gameObject.name + "_Completed"));
     }
 
     public void GoToLevel()

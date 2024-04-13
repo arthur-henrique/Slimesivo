@@ -29,6 +29,11 @@ public class SingleLevel : MonoBehaviour
             PlayerPrefs.SetInt(currentLevelName, _starsNumber);
         }
         print(PlayerPrefs.GetInt(currentLevelName, _starsNumber));
+
+        if(PlayerPrefs.GetInt(currentLevelName) > 0)
+        {
+            PlayerPrefs.SetInt(currentLevelName + "_Completed", 1);
+        }
     }
 
     /// <summary>
@@ -37,5 +42,6 @@ public class SingleLevel : MonoBehaviour
     public void ResetStarsButton() //TODO: deletar esta funcao
     {
         PlayerPrefs.DeleteKey(currentLevelName);
+        PlayerPrefs.DeleteKey(currentLevelName + "_Completed");
     }
 }
