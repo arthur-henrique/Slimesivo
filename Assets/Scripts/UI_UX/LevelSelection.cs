@@ -27,7 +27,7 @@ public class LevelSelection : MonoBehaviour
     // - ainda que algum possa ser removido: _lives, _coins, _hits
     // ex: _coins, _seconds, _hits
     // ex: _lives, _seconds, _hits
-    [SerializeField] private string[] questStrings;
+    [SerializeField] private List<string> questStrings = new List<string>();
     // Da mesma forma, o ideal seria padronizar os "condition" ints para se tornar os questValues abaixo - seguindo a mesma
     // ordem do modelo de ordem de quests
     [SerializeField] private int[] questValues;
@@ -52,7 +52,7 @@ public class LevelSelection : MonoBehaviour
         //    QuestingDictionary.Instance.questDictionary.Add(gameObject.name + "_coins", conditionCoins);
         //if (!QuestingDictionary.Instance.questDictionary.ContainsKey(gameObject.name + "_seconds"))
         //    QuestingDictionary.Instance.questDictionary.Add(gameObject.name + "_seconds", conditionSeconds);
-        for (int i = 0; i < questStrings.Length; i++)
+        for (int i = 0; i < questStrings.Count; i++)
         {
             if (!QuestingDictionary.Instance.questDictionary.ContainsKey(gameObject.name + questStrings[i]))
                 QuestingDictionary.Instance.questDictionary.Add(gameObject.name + questStrings[i], questValues[i]);
@@ -71,7 +71,7 @@ public class LevelSelection : MonoBehaviour
         if (!PlayerPrefs.HasKey(gameObject.name + "_3"))
             PlayerPrefs.SetInt(gameObject.name + "_3", 0);
 
-
+        
         if (conditionLivesLeft >= 3)
         {
             conditionLivesLeftText.text = "Complete the level with full life";
