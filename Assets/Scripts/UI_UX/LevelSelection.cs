@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using Unity.VisualScripting;
 
 public class LevelSelection : MonoBehaviour
 {
@@ -19,6 +20,17 @@ public class LevelSelection : MonoBehaviour
     //public float conditionSeconds;
     [SerializeField] private int conditionLivesLeft, conditionCoins, conditionSeconds;
     [SerializeField] private bool isItAllCoins;
+    // Para automatizar o sistema de instanciamento de quests e tornar a ordem das quests coerentes entre os sistemas
+    // colocar no inspector de cada fase os strings que representam o nome de cada quest após um "_"
+    // o ideal seria seguir a ordem por enquanto:_lives, _coins, _seconds, _hits
+    // Exemplo padrão: _lives, _coins, _seconds
+    // - ainda que algum possa ser removido: _lives, _coins, _hits
+    // ex: _coins, _seconds, _hits
+    // ex: _lives, _seconds, _hits
+    [SerializeField] private string[] questStrings;
+    // Da mesma forma, o ideal seria padronizar os "condition" ints para se tornar os questValues abaixo - seguindo a mesma
+    // ordem do modelo de ordem de quests
+    [SerializeField] private int[] questValues;
 
 
     [SerializeField] private Sprite starSprite;
@@ -34,12 +46,17 @@ public class LevelSelection : MonoBehaviour
     private void SetConditions()
     {
 
-        if (!QuestingDictionary.Instance.questDictionary.ContainsKey(gameObject.name + "_lives"))
-            QuestingDictionary.Instance.questDictionary.Add(gameObject.name + "_lives", conditionLivesLeft);
-        if (!QuestingDictionary.Instance.questDictionary.ContainsKey(gameObject.name + "_coins"))
-            QuestingDictionary.Instance.questDictionary.Add(gameObject.name + "_coins", conditionCoins);
-        if (!QuestingDictionary.Instance.questDictionary.ContainsKey(gameObject.name + "_seconds"))
-            QuestingDictionary.Instance.questDictionary.Add(gameObject.name + "_seconds", conditionSeconds);
+        //if (!QuestingDictionary.Instance.questDictionary.ContainsKey(gameObject.name + "_lives"))
+        //    QuestingDictionary.Instance.questDictionary.Add(gameObject.name + "_lives", conditionLivesLeft);
+        //if (!QuestingDictionary.Instance.questDictionary.ContainsKey(gameObject.name + "_coins"))
+        //    QuestingDictionary.Instance.questDictionary.Add(gameObject.name + "_coins", conditionCoins);
+        //if (!QuestingDictionary.Instance.questDictionary.ContainsKey(gameObject.name + "_seconds"))
+        //    QuestingDictionary.Instance.questDictionary.Add(gameObject.name + "_seconds", conditionSeconds);
+        for (int i = 0; i < questStrings.Length; i++)
+        {
+            if (!QuestingDictionary.Instance.questDictionary.ContainsKey(gameObject.name + questStrings[i]))
+                QuestingDictionary.Instance.questDictionary.Add(gameObject.name + questStrings[i], questValues[i]);
+        }
 
         // QuestCompleteToPlayerPrefs
         // PlayerPrefs(String, [0 = false, 1 = true])
@@ -140,7 +157,7 @@ public class LevelSelection : MonoBehaviour
             }
         }
 
-        if (PlayerPrefs.GetInt(gameObject.name + "_Completed") == 1)
+        if (PlayerPrefs.GetInt(gameObject.name + "_completed") == 1)
         {
             levelCompletedIndicator.GetComponent<Image>().color = new Color(1, 1, 1, 1); //(Red, Green, Blue, Alpha) ou new Color32(255,255,225,100)
         }

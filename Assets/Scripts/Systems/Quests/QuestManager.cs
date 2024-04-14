@@ -9,6 +9,8 @@ public class QuestManager : MonoBehaviour
 
 
     [SerializeField] GameObject[] questGameObjects;
+    [SerializeField] List<GameObject> activeQuests = new List<GameObject>();
+    string levelName;
     public int questsCompleted = 0;
     // Rewards
     [SerializeField] int coinToAward;
@@ -16,6 +18,27 @@ public class QuestManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        levelName = SceneManager.GetActiveScene().name;
+        if (QuestingDictionary.Instance.questDictionary.ContainsKey(levelName + "_lives"))
+        {
+            GameObject livesQuestPrefab = Instantiate(questGameObjects[0], gameObject.transform);
+            activeQuests.Add(livesQuestPrefab);
+        }
+        if (QuestingDictionary.Instance.questDictionary.ContainsKey(levelName + "_coins"))
+        {
+            GameObject coinsQuestPrefab = Instantiate(questGameObjects[1], gameObject.transform);
+            activeQuests.Add(coinsQuestPrefab);
+        }
+        if (QuestingDictionary.Instance.questDictionary.ContainsKey(levelName + "_seconds"))
+        {
+            GameObject secondsQuestPrefab = Instantiate(questGameObjects[2], gameObject.transform);
+            activeQuests.Add(secondsQuestPrefab);
+        }
+        if (QuestingDictionary.Instance.questDictionary.ContainsKey(levelName + "_hits"))
+        {
+            GameObject hitsQuestPrefab = Instantiate(questGameObjects[3], gameObject.transform);
+            activeQuests.Add(hitsQuestPrefab);
+        }
     }
     private void Start()
     {
@@ -23,11 +46,11 @@ public class QuestManager : MonoBehaviour
     }
     public void CheckQuests()
     {
-        if(PlayerPrefs.GetInt(SceneManager.GetActiveScene().name + "_completed") == 0)
-                PlayerPrefs.SetInt(SceneManager.GetActiveScene().name + "_completed", 1);
-        for (int i = 0; i < questGameObjects.Length; i++)
+        if(PlayerPrefs.GetInt(levelName + "_completed") == 0)
+                PlayerPrefs.SetInt(levelName + "_completed", 1);
+        for (int i = 0; i < activeQuests.Count; i++)
         {
-            if (questGameObjects[i].gameObject.GetComponent<IQuestSettable>().CompletedQuest())
+            if (activeQuests[i].gameObject.GetComponent<IQuestSettable>().CompletedQuest())
             {
                 AwardThePlayer(i);
                 questsCompleted++;
@@ -40,10 +63,10 @@ public class QuestManager : MonoBehaviour
         }
         Debug.Log("The player has completed: " + questsCompleted + " quests.");
         // Call the function to show the Stars to the hud depending on the number of stars
-        if (PlayerPrefs.GetInt(SceneManager.GetActiveScene().name + "_maxStars") < questsCompleted)
-            PlayerPrefs.SetInt(SceneManager.GetActiveScene().name + "_maxStars", questsCompleted);
+        if (PlayerPrefs.GetInt(levelName + "_maxStars") < questsCompleted)
+            PlayerPrefs.SetInt(levelName + "_maxStars", questsCompleted);
         GameManager.instance.pauseCanvas.PressStarsButton
-            (PlayerPrefs.GetInt(SceneManager.GetActiveScene().name + "_maxStars"));
+            (PlayerPrefs.GetInt(levelName + "_maxStars"));
         
         //StartCoroutine(GrabTheRewards());
     }
@@ -56,15 +79,15 @@ public class QuestManager : MonoBehaviour
         //    Debug.Log("No Quests Achieved");
         //    return;
         //}
-        if(questCompleted == 0 && PlayerPrefs.GetInt(SceneManager.GetActiveScene().name + "_1") == 0)
+        if(questCompleted == 0 && PlayerPrefs.GetInt(levelName + "_1") == 0)
         {
             OneStarReward();
         }
-        else if(questCompleted == 1 && PlayerPrefs.GetInt(SceneManager.GetActiveScene().name + "_2") == 0)
+        else if(questCompleted == 1 && PlayerPrefs.GetInt(levelName + "_2") == 0)
         {
             TwoStarReward();
         }
-        else if (questCompleted == 2 && PlayerPrefs.GetInt(SceneManager.GetActiveScene().name + "_3") == 0)
+        else if (questCompleted == 2 && PlayerPrefs.GetInt(levelName + "_3") == 0)
         {
             ThreeStarReward();
         }
@@ -73,15 +96,15 @@ public class QuestManager : MonoBehaviour
     private void OneStarReward()
     {
         CurrencyManager.instance.UpdateCoinAmount(coinToAward);
-        questGameObjects[0].gameObject.GetComponent<IQuestSettable>().
-            SetQuestCompleteToPrefs(SceneManager.GetActiveScene().name, 1);
+        activeQuests[0].gameObject.GetComponent<IQuestSettable>().
+            SetQuestCompleteToPrefs(levelName, 1);
         Debug.Log("Received: " + coinToAward);
     }
 
     private void TwoStarReward()
     {
-        questGameObjects[1].gameObject.GetComponent<IQuestSettable>().
-            SetQuestCompleteToPrefs(SceneManager.GetActiveScene().name, 2);
+        activeQuests[1].gameObject.GetComponent<IQuestSettable>().
+            SetQuestCompleteToPrefs(levelName, 2);
 
         // Call the necessary EnergySystem.Replenish function
         Debug.Log("Recovered Energy");
@@ -89,8 +112,8 @@ public class QuestManager : MonoBehaviour
 
     private void ThreeStarReward()
     {
-        questGameObjects[2].gameObject.GetComponent<IQuestSettable>().
-            SetQuestCompleteToPrefs(SceneManager.GetActiveScene().name, 3);
+        activeQuests[2].gameObject.GetComponent<IQuestSettable>().
+            SetQuestCompleteToPrefs(levelName, 3);
 
         // Call the necessary Token Fragment function
         Debug.Log("Received a Token Fragment");

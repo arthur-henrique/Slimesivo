@@ -2326,6 +2326,46 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
+        type: 3}
+      propertyPath: questValues.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
+        type: 3}
+      propertyPath: questStrings.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
+        type: 3}
+      propertyPath: questValues.Array.data[0]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
+        type: 3}
+      propertyPath: questValues.Array.data[1]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
+        type: 3}
+      propertyPath: questValues.Array.data[2]
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
+        type: 3}
+      propertyPath: questStrings.Array.data[0]
+      value: _lives
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
+        type: 3}
+      propertyPath: questStrings.Array.data[1]
+      value: _coins
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
+        type: 3}
+      propertyPath: questStrings.Array.data[2]
+      value: _seconds
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
