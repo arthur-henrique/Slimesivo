@@ -47,7 +47,7 @@ public class MainMenuCanvasScript : MonoBehaviour
 
     public void GoToCampaignMapScene()
     {
-        SceneManager.LoadScene("CampaignMap"); //Nome da cena do mapa
+        SceneManager.LoadScene("2 - CampaignMap"); //Nome da cena do mapa
     }
 
     public void EnterExitStorePage()

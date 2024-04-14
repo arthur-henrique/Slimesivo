@@ -19,26 +19,28 @@ public class QuestManager : MonoBehaviour
     {
         Instance = this;
         levelName = SceneManager.GetActiveScene().name;
-        if (QuestingDictionary.Instance.questDictionary.ContainsKey(levelName + "_lives"))
-        {
-            GameObject livesQuestPrefab = Instantiate(questGameObjects[0], gameObject.transform);
-            activeQuests.Add(livesQuestPrefab);
-        }
         if (QuestingDictionary.Instance.questDictionary.ContainsKey(levelName + "_coins"))
         {
-            GameObject coinsQuestPrefab = Instantiate(questGameObjects[1], gameObject.transform);
+            GameObject coinsQuestPrefab = Instantiate(questGameObjects[0], gameObject.transform);
             activeQuests.Add(coinsQuestPrefab);
-        }
-        if (QuestingDictionary.Instance.questDictionary.ContainsKey(levelName + "_seconds"))
-        {
-            GameObject secondsQuestPrefab = Instantiate(questGameObjects[2], gameObject.transform);
-            activeQuests.Add(secondsQuestPrefab);
         }
         if (QuestingDictionary.Instance.questDictionary.ContainsKey(levelName + "_hits"))
         {
-            GameObject hitsQuestPrefab = Instantiate(questGameObjects[3], gameObject.transform);
+            GameObject hitsQuestPrefab = Instantiate(questGameObjects[1], gameObject.transform);
             activeQuests.Add(hitsQuestPrefab);
         }
+        if (QuestingDictionary.Instance.questDictionary.ContainsKey(levelName + "_lives"))
+        {
+            GameObject livesQuestPrefab = Instantiate(questGameObjects[2], gameObject.transform);
+            activeQuests.Add(livesQuestPrefab);
+        }
+       
+        if (QuestingDictionary.Instance.questDictionary.ContainsKey(levelName + "_seconds"))
+        {
+            GameObject secondsQuestPrefab = Instantiate(questGameObjects[3], gameObject.transform);
+            activeQuests.Add(secondsQuestPrefab);
+        }
+        
     }
     private void Start()
     {

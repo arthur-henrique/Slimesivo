@@ -236,6 +236,56 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
+        type: 3}
+      propertyPath: questValues.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
+        type: 3}
+      propertyPath: questValues.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
+        type: 3}
+      propertyPath: questValues.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
+        type: 3}
+      propertyPath: questValues.Array.data[2]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
+        type: 3}
+      propertyPath: questValues.Array.data[3]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
+        type: 3}
+      propertyPath: questsThatAreActive.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
+        type: 3}
+      propertyPath: questsThatAreActive.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
+        type: 3}
+      propertyPath: questsThatAreActive.Array.data[1]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
+        type: 3}
+      propertyPath: questsThatAreActive.Array.data[2]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
+        type: 3}
+      propertyPath: questsThatAreActive.Array.data[3]
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1706,6 +1756,51 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
+        type: 3}
+      propertyPath: questValues.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
+        type: 3}
+      propertyPath: questValues.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
+        type: 3}
+      propertyPath: questValues.Array.data[1]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
+        type: 3}
+      propertyPath: questValues.Array.data[2]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
+        type: 3}
+      propertyPath: questValues.Array.data[3]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
+        type: 3}
+      propertyPath: questsThatAreActive.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
+        type: 3}
+      propertyPath: questsThatAreActive.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
+        type: 3}
+      propertyPath: questsThatAreActive.Array.data[2]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
+        type: 3}
+      propertyPath: questsThatAreActive.Array.data[3]
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2329,7 +2424,7 @@ PrefabInstance:
     - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
         type: 3}
       propertyPath: questValues.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
         type: 3}
@@ -2339,17 +2434,27 @@ PrefabInstance:
     - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
         type: 3}
       propertyPath: questValues.Array.data[0]
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
-        type: 3}
-      propertyPath: questValues.Array.data[1]
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
         type: 3}
+      propertyPath: questValues.Array.data[1]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
+        type: 3}
       propertyPath: questValues.Array.data[2]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
+        type: 3}
+      propertyPath: questValues.Array.data[3]
       value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
+        type: 3}
+      propertyPath: conditionsTexts.Array.size
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
         type: 3}
@@ -2365,6 +2470,31 @@ PrefabInstance:
         type: 3}
       propertyPath: questStrings.Array.data[2]
       value: _seconds
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
+        type: 3}
+      propertyPath: questsThatAreActive.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
+        type: 3}
+      propertyPath: questsThatAreActive.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
+        type: 3}
+      propertyPath: questsThatAreActive.Array.data[1]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
+        type: 3}
+      propertyPath: questsThatAreActive.Array.data[2]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8718150434876397677, guid: 1f5a4c625dd213a479e9d39b228c062e,
+        type: 3}
+      propertyPath: questsThatAreActive.Array.data[3]
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
