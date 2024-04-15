@@ -43,6 +43,7 @@ public class PlayerStats : MonoBehaviour
 
     public void RespawnPlayer()
     {
+        
         isRepawning = true;
         cameraController.MoveCameraToRespawn();
         //if(vidasPlayer <0)

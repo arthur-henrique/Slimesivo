@@ -5,47 +5,59 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
-    //Jump variables
+    [Header("Jump variables")]
     [SerializeField] private float jumpForce;
     private float sideForce;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
     private float jumpSameSideTimer = 1f;
-   
-    
+
 
     //components
     private Rigidbody2D rig;
     private TouchManager _touchManager;
     private PlayerStats playerStatsScript;
-    [SerializeField] private Animator anim;
+    private Animator anim;
+    [Header("components")]
     [SerializeField] private GameObject playerSprite;
 
-    //Wall Slide
+   //wall slide
     private bool isWallSliding;
-    [SerializeField] private float maxTimeToDie;
     private float deathCounter;
+    [Header("Wall Slide variables")]
+    [Tooltip("Tempo que o player fica no estado parado na parede")]
     [SerializeField] private float wallStickTime;
-    [SerializeField] private float wallSlideTime;
+    [Tooltip("Tempo que o player fica no estado de deslizar mais lento na parede")]
+    [SerializeField] private float wallSlideFase1Time;
+    [Tooltip("Velocidade que o player desliza no estado mais lento")]
     [SerializeField] private float wallSlideSpeedMin;
+    [Tooltip("Velocidade que o player desliza no estado mais rapido")]
     [SerializeField] private float wallSlideSpeedMax;
     private float wallSlideState;
     private bool isTouchingWall;
     [SerializeField] private LayerMask wallLayer;
-    
 
-    //Wall Jump
+
     private bool isWallJumping;
     private float wallJumpingCounter;
     private float wallJumpTime = 0.2f;
     private float wallJumpDurantion = 0.2f;
+
+    [Header("Damage and respawn variables")]  
+    [SerializeField] private LayerMask damageLayer;
+    [Tooltip("Tempo que leva pro player respawnar depois que ele leva dano")]
+    [SerializeField] private float respawnTime;
+    [Tooltip("Tempo que leva pro player morrer se ele não encostar em nada")]
+    [SerializeField] private float maxTimeToDie;
+    private bool getHit;
+    private float hitCounter;
 
     public TouchManager touchManager
     {
         get { return _touchManager; }
         set { _touchManager = value; }
     }
+
 
 
     private void Start()
@@ -57,9 +69,16 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-       WallStick();
-       CheckPlayerStillAlive();
+        if (!getHit)
+        {
+            WallStick();
+            CheckPlayerStillAlive();
+        }
+       
     }
+            
+        
+          
 
 
        
@@ -71,7 +90,6 @@ public class Player : MonoBehaviour
         float worldHeight = Camera.main.orthographicSize * 2;
 
         sideForce = worldHeight * aspect;
-        print(sideForce);
     }
 
 
@@ -82,7 +100,8 @@ public class Player : MonoBehaviour
         rig = GetComponent<Rigidbody2D>();
         _touchManager = GetComponent<TouchManager>();
         playerStatsScript = GetComponent<PlayerStats>();
-        anim = playerSprite.GetComponent<Animator>();
+        anim = GetComponentInChildren<Animator>();
+         
     }
     public bool IsOnGround()
     {
@@ -159,8 +178,7 @@ public class Player : MonoBehaviour
     #region WallSlide and WallJump
     public bool IsWalled()
     {
-        return Physics2D.OverlapCircle(gameObject.transform.position, 0.5f, wallLayer);
-
+       return Physics2D.OverlapCircle(gameObject.transform.position, 0.5f, wallLayer);
     }
    
     private void WallStick()
@@ -301,7 +319,7 @@ public class Player : MonoBehaviour
     {
         float timer = 0;
         
-        while (timer < wallSlideTime)
+        while (timer < wallSlideFase1Time)
         {
             
             rig.velocity = new Vector2(0, -1* wallSlideSpeedMin);
@@ -350,5 +368,48 @@ public class Player : MonoBehaviour
         playerSprite.transform.rotation = Quaternion.Euler(0, 0, 0);
     }
     #endregion
+    #region Collision and Damage
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //Damage Detection
+        if (((1 << collision.gameObject.layer) & damageLayer) != 0)
+        {
+            if (hitCounter == 0)
+            {
+                hitCounter++;
 
+                Vector3 opositePosition = gameObject.transform.position * -1;
+
+                //Zera a velocidade atual e adiciona a nova
+                rig.velocity = Vector2.zero;
+                getHit = true;
+                if (gameObject.transform.position.x != 0)
+                {
+                    rig.AddForce(new Vector2(opositePosition.x * 2f, 5f), ForceMode2D.Impulse);
+                }
+                else 
+                {
+                    rig.AddForce(new Vector2(opositePosition.x * -2f, 5f), ForceMode2D.Impulse);
+                }
+                //Pra chamar o respawn do player
+                anim.SetInteger("AnimParameter", 4);
+                Invoke("ResetPlayer", respawnTime);
+            }
+            
+
+
+        }
+    }
+    private void ResetPlayer()
+    {  
+      getHit = false;
+        hitCounter--;
+      playerStatsScript.RespawnPlayer();
+    }
+    #endregion
 }
+            
+        
+       
+
+
