@@ -29,6 +29,7 @@ public class LevelSelection : MonoBehaviour
     // - ainda que algum possa ser removido: "_coins", "_lives", "_seconds"
 
     [NamedArray(new string[] { "Coins", "Hits", "Lives", "Seconds" })]
+
     public bool[] questsThatAreActive;
 
     // Lista de inteiros que representam a ordem das quests ativas
