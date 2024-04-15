@@ -16,7 +16,7 @@ public class LevelSelection : MonoBehaviour
     [SerializeField] private GameObject[] starsPopUp;
     private string previousLevelName;
 
-    [NamedArray(new string[] { "CoinsText", "HitsText", "LivesText", "SecondsText" })]
+    [NamedArray(new string[] { "CoinsText", "HitsText", "LivesText", "SecondsText", "ExtraText" })]
     [SerializeField] private TMP_Text[] conditionsTexts;
     //public float conditionSeconds;
     [SerializeField] private int conditionLivesLeft, conditionCoins, conditionSeconds;
@@ -29,7 +29,6 @@ public class LevelSelection : MonoBehaviour
     // - ainda que algum possa ser removido: "_coins", "_lives", "_seconds"
 
     [NamedArray(new string[] { "Coins", "Hits", "Lives", "Seconds" })]
-
     public bool[] questsThatAreActive;
 
     // Lista de inteiros que representam a ordem das quests ativas
@@ -109,15 +108,15 @@ public class LevelSelection : MonoBehaviour
         }
         // Second Quest = Hits
         // Third Quest = Lives
-        if (conditionLivesLeft >= 3)
+        if (questValues[2] >= 3)
         {
             conditionsTexts[2].text = "Complete the level with full life";
         }
-        else if (conditionLivesLeft == 2)
+        else if (questValues[2] == 2)
         {
             conditionsTexts[2].text = "Complete the level with at least 2 lives";
         }
-        else if (conditionLivesLeft == 1)
+        else if (questValues[2] == 1)
         {
             conditionsTexts[2].text = "Complete the level with at least 1 life";
         }
