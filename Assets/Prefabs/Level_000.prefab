@@ -1061,7 +1061,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 453.16663, y: -154.51326}
+  m_AnchoredPosition: {x: 453.16663, y: -46.450333}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &3402900630985735337
@@ -1737,12 +1737,14 @@ MonoBehaviour:
   - {fileID: 2226441623337492312}
   - {fileID: 7460519482142587327}
   popUpPanel: {fileID: 215272456808107562}
-  starSeconds: {fileID: 2379505429167654468}
-  starLives: {fileID: 1691379051353611396}
-  starCoins: {fileID: 2183955779135947374}
+  starEmptySprites:
+  - {fileID: 2183955779135947374}
+  - {fileID: 7900676355667121665}
+  - {fileID: 1691379051353611396}
+  - {fileID: 2379505429167654468}
   lockImage: {fileID: 6890966983100468014}
   levelCompletedIndicator: {fileID: 7928022539357956864}
-  stars:
+  starsShownInMap:
   - {fileID: 6488917560442315778}
   - {fileID: 1369188902656079965}
   - {fileID: 1542634977146199298}
@@ -1755,13 +1757,10 @@ MonoBehaviour:
   - {fileID: 3950794626750992669}
   - {fileID: 1062017499860377977}
   - {fileID: 6380416035270287408}
-  conditionLivesLeft: 0
-  conditionCoins: 0
-  conditionSeconds: 0
   isItAllCoins: 0
   questsThatAreActive: 00000000
   questValues: 00000000000000000000000000000000
-  starSprite: {fileID: 21300000, guid: d6b9a0d2d413a124f98dca3dcec0466b, type: 3}
+  starFullSprite: {fileID: 21300000, guid: d6b9a0d2d413a124f98dca3dcec0466b, type: 3}
 --- !u!1 &6106024536766613248
 GameObject:
   m_ObjectHideFlags: 0
@@ -2004,7 +2003,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 453.16663, y: -413.86426}
+  m_AnchoredPosition: {x: 453.16663, y: -219.35101}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7448550003654592418
@@ -2116,7 +2115,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 453.16663, y: -284.18878}
+  m_AnchoredPosition: {x: 453.16663, y: -89.67551}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7900676355667121665
@@ -2131,7 +2130,7 @@ GameObject:
   - component: {fileID: 8328901418402815515}
   - component: {fileID: 5025521445614368906}
   m_Layer: 5
-  m_Name: Hit Coins
+  m_Name: Star Hits
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

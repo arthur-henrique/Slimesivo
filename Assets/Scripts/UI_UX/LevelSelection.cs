@@ -10,16 +10,19 @@ public class LevelSelection : MonoBehaviour
 {
     [SerializeField] private bool unlocked = false;
     [SerializeField] private TMP_Text [] levelTextName;
-    [SerializeField] private GameObject popUpPanel, starSeconds, starLives, starCoins;
+    [SerializeField] private GameObject popUpPanel;
+    [NamedArray(new string[] { "Star Coins", "Star Hits", "Star Lives", "Star Seconds" })]
+    [SerializeField] GameObject[] starEmptySprites;
     [SerializeField] private Image lockImage, levelCompletedIndicator;
-    [SerializeField] private GameObject[] stars;
+    [NamedArray(new string[] { "Left Star", "Middle Star", "Right Star" })]
+    [SerializeField] private GameObject[] starsShownInMap;
     [SerializeField] private GameObject[] starsPopUp;
     private string previousLevelName;
 
-    [NamedArray(new string[] { "CoinsText", "HitsText", "LivesText", "SecondsText", "ExtraText" })]
+    [NamedArray(new string[] { "CoinsText", "HitsText", "LivesText", "SecondsText"})]
     [SerializeField] private TMP_Text[] conditionsTexts;
     //public float conditionSeconds;
-    [SerializeField] private int conditionLivesLeft, conditionCoins, conditionSeconds;
+    //[SerializeField] private int conditionLivesLeft, conditionCoins, conditionSeconds;
     [SerializeField] private bool isItAllCoins;
     // Para automatizar o sistema de instanciamento de quests e tornar a ordem das quests coerentes entre os sistemas
     // colocar no inspector de cada fase os strings que representam o nome de cada quest após um "_"
@@ -43,7 +46,7 @@ public class LevelSelection : MonoBehaviour
     [SerializeField] private int[] questValues;
 
 
-    [SerializeField] private Sprite starSprite;
+    [SerializeField] private Sprite starFullSprite;
 
     private void Start()
     {
@@ -97,33 +100,50 @@ public class LevelSelection : MonoBehaviour
 
 
         // Texts Aspects
+
         // First Quest = Coins
         if (isItAllCoins)
         {
-            conditionsTexts[0].text = "Complete the level collecting all " + questValues[0] + " coins";
+            conditionsTexts[0].text = "Complete the level collecting all " + questValues[0] + " coins"; //"all"
         }
         else
         {
             conditionsTexts[0].text = "Complete the level collecting " + questValues[0] + " coins";
         }
+
         // Second Quest = Hits
+        if (questValues[1] == 0)
+        {
+            conditionsTexts[1].text = "Complete the level without taking damage"; //"without"
+        }
+        else if (questValues[1] == 1)
+        {
+            conditionsTexts[1].text = "Complete the level without taking more than 1 hit"; //"singular"
+        }
+        else
+        {
+            conditionsTexts[1].text = "Complete the level without taking more than " + questValues[1] + "hits"; //"plural"
+        }
+
         // Third Quest = Lives
         if (questValues[2] >= 3)
         {
-            conditionsTexts[2].text = "Complete the level with full life";
+            conditionsTexts[2].text = "Complete the level with full life"; //"full"
         }
         else if (questValues[2] == 2)
         {
-            conditionsTexts[2].text = "Complete the level with at least 2 lives";
+            conditionsTexts[2].text = "Complete the level with at least 2 lives"; //"plural"
         }
         else if (questValues[2] == 1)
         {
-            conditionsTexts[2].text = "Complete the level with at least 1 life";
+            conditionsTexts[2].text = "Complete the level with at least 1 life"; //"singular"
         }
+
         // Forth Quest = Seconds
         conditionsTexts[3].text = "Complete the level in " + questValues[3] + " seconds";
 
         
+
 
         // PlayerPrefs.SetInt(gameObject.name + "_coins", conditionCoins);
         // PlayerPrefs.SetFloat(gameObject.name + "_seconds", conditionSeconds);
@@ -164,32 +184,48 @@ public class LevelSelection : MonoBehaviour
         {
             lockImage.gameObject.SetActive(true);
 
-            for (int i = 0; i < stars.Length; i++)
+            for (int i = 0; i < starsShownInMap.Length; i++)
             {
-                stars[i].gameObject.SetActive(false);
+                starsShownInMap[i].gameObject.SetActive(false);
             }
         }
         else
         {
             lockImage.gameObject.SetActive(false);
 
-            for (int i = 0; i < stars.Length; i++)
+            for (int i = 0; i < starsShownInMap.Length; i++)
             {
-                stars[i].gameObject.SetActive(true);
+                starsShownInMap[i].gameObject.SetActive(true);
             }
             for (int i = 0; i < PlayerPrefs.GetInt(gameObject.name); i++)
             {
-                stars[i].gameObject.GetComponent<Image>().sprite = starSprite;
-                starsPopUp[i].gameObject.GetComponent<Image>().sprite = starSprite;
+                starsShownInMap[i].gameObject.GetComponent<Image>().sprite = starFullSprite;
+                starsPopUp[i].gameObject.GetComponent<Image>().sprite = starFullSprite;
             }
         }
 
+        #region Para o Pop Up
+
         if (PlayerPrefs.GetInt(gameObject.name + "_completed") == 1)
         {
-            levelCompletedIndicator.GetComponent<Image>().color = new Color(1, 1, 1, 1); //(Red, Green, Blue, Alpha) ou new Color32(255,255,225,100)
+            levelCompletedIndicator.GetComponent<Image>().color = new Color(1, 1, 1, 1); //(Red, Green, Blue, Alpha) ou new Color32(255,255,255,100)
         }
         //if (PlayerPrefs.GetInt(gameObject.name + "_Completed") == 1)
+
+        for (int i = 0; i < questIndex.Count; i++)
+        {
+            int extra = i + 1;
+            if (PlayerPrefs.GetInt(gameObject.name + "_" + extra) > 0)
+            {
+                print(questIndex[i]);
+                starEmptySprites[questIndex[i]].gameObject.GetComponent<Image>().sprite = starFullSprite;
+            }
+
+        }
+
+        #endregion
     }
+
 
     public void ShowOrHideLevelStatistics()
     {
