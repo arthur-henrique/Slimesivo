@@ -50,20 +50,20 @@ public class PlayerStats : MonoBehaviour
         playerScript.ResetVelocityPlayer();
         if (touchManagerScript.isFacingRight)
         {
-            touchManagerScript.rightCounter = 0;
-            touchManagerScript.leftCounter = 1;
+            //touchManagerScript.rightCounter = 0;
+            //touchManagerScript.leftCounter = 1;
             gameObject.transform.position = respawnPos;
-            touchManagerScript.isFacingRight = false;
+            //touchManagerScript.isFacingRight = false;
             
 
 
         }
         else
         {
-            touchManagerScript.rightCounter = 1;
-            touchManagerScript.leftCounter = 0;
+            //touchManagerScript.rightCounter = 1;
+            //touchManagerScript.leftCounter = 0;
             gameObject.transform.position = respawnPos;
-            touchManagerScript.isFacingRight = true;
+            //touchManagerScript.isFacingRight = true;
            
 
         }

@@ -13,8 +13,10 @@ public class TouchManager : MonoBehaviour
     private InputAction touchPositionAction;
     [HideInInspector] public InputAction _touchPressAction;
     private Vector2 value;
+    private float _worldWidth;
 
-    
+
+
     private Player playerScript;
 
     //Direction
@@ -28,16 +30,27 @@ public class TouchManager : MonoBehaviour
         get { return _isFacingRight; }
         set { _isFacingRight = value; }
     }
-
+    public float worldWidth
+    {
+        get { return _worldWidth; } 
+        set { _worldWidth = value; }
+    }
    
 
 
     private void Awake()
     {
+        DefineWorldWidth();
         Components();
     }
   
     #region Inputs
+    void DefineWorldWidth()
+    { 
+       float aspect = (float)Screen.width / Screen.height;
+       float worldHeight = Camera.main.orthographicSize * 2;
+       _worldWidth = worldHeight * aspect;  
+    }
     private void Components()
     {
         playerInput = gameObject.GetComponent<PlayerInput>();
@@ -61,71 +74,56 @@ public class TouchManager : MonoBehaviour
        //Pega o valor do pixel onde o player clica e divide pelo valor total de pixeis da tela
         value = touchPositionAction.ReadValue<Vector2>();
         screenSideX = value.x / Camera.main.pixelWidth;
-        float  screenSideY = value.y / Camera.main.pixelHeight;
 
+                   
 
         if (!PointerIsUIHit(value)) 
             //Dai checa pra ver se foi esquerda ou direita, maior q 0.5 direita menor esquerda
             if (screenSideX > 0.5)
             {
-                
-                switch (rightCounter)
+                if((GetPlayerPositionInScreen(0.2f, true)))
                 {
-                    case 0:
-                        _isFacingRight = true;
-                        playerScript.JumpManager();
-                        rightCounter++;
-                        leftCounter = 0;
-                        break;
-                    case 1:
-                        if (playerScript.IsWalled())
-                        {
-                            _isFacingRight = true;
-                            playerScript.JumpSameSide();    
-                        }
-                        else
-                        {
-                            _isFacingRight = true;
-                            playerScript.JumpManager();
-                            leftCounter = 0;
-                        }
-                        break;
+                    _isFacingRight = true;
+                    playerScript.JumpSameSide();
                 }
-
+                else
+                {
+                    _isFacingRight = true;
+                    playerScript.JumpManager();
+                }
+               
 
             }
             else
             {
-                switch (leftCounter)
+                if (GetPlayerPositionInScreen(-0.2f,false))
                 {
-                    case 0:
-                        _isFacingRight = false;
-                        playerScript.JumpManager();
-                        rightCounter = 0;
-                        leftCounter++;
-                        break;
-                    case 1:
-                        if (playerScript.IsWalled())
-                        {
-                            _isFacingRight = false;
-                            playerScript.JumpSameSide();
-                        }
-                        else
-                        {
-                            _isFacingRight = false;
-                            playerScript.JumpManager();
-                            rightCounter = 0;
-                        }
-                        
-                        break;
-
+                    _isFacingRight = false;
+                    playerScript.JumpSameSide();
+                }
+                else
+                {
+                    _isFacingRight = false;
+                    playerScript.JumpManager();
+                    Debug.Log("esquerda");
                 }
             }
+    }
 
 
         
 
-
+    public bool GetPlayerPositionInScreen(float range, bool greaterOrLess)
+    {
+        if (greaterOrLess)
+        {
+            return gameObject.transform.position.x / _worldWidth > range;
+        }
+        else
+        {
+            return gameObject.transform.position.x / _worldWidth < range;
+        }
+        
     }
     private bool PointerIsUIHit(Vector2 position)
     {

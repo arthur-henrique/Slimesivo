@@ -289,13 +289,13 @@ public class Player : MonoBehaviour
             wallJumpingCounter = 0;
             if (_touchManager.isFacingRight)
             {
-                rig.velocity = new Vector2(sideForce, jumpForce);
+                rig.velocity = new Vector2(sideForce * 0.5f, jumpForce);
                 
 
             }
             else
             {
-                rig.velocity = new Vector2(-sideForce, jumpForce);
+                rig.velocity = new Vector2(-sideForce * 0.5f, jumpForce);
                 anim.SetInteger("AnimParameter", 2);
                 
 
@@ -387,7 +387,7 @@ public class Player : MonoBehaviour
     private void PlayerOrientationChecker()
     {
 
-        if (_touchManager.isFacingRight)
+        if (_touchManager.GetPlayerPositionInScreen(0.2f,true))
         {
             playerSprite.transform.rotation = Quaternion.Euler(0, 0, 90);
         }
@@ -412,13 +412,23 @@ public class Player : MonoBehaviour
             {
                 hitCounter++;
 
-                Vector3 opositePosition = collision.gameObject.transform.position - transform.position;
-                opositePosition = (opositePosition * -1).normalized;
-                Debug.Log(opositePosition);
+                Vector3 opositePosition = transform.position * -1;
+                  
                 //Zera a velocidade atual e adiciona a nova
                 rig.velocity = Vector2.zero;
                 getHit = true;
-                rig.AddForce(opositePosition * knockbackForce, ForceMode2D.Impulse);
+                if (_touchManager.GetPlayerPositionInScreen(-0.2f, false) || _touchManager.GetPlayerPositionInScreen(0.2f, true))
+                {
+                    Debug.Log(opositePosition.x);
+                    rig.AddForce(new Vector2(opositePosition.x * knockbackForce, 4), ForceMode2D.Impulse);
+                }
+                else
+                {
+                    Debug.Log(opositePosition.x);
+                    rig.AddForce(new Vector2(opositePosition.x * -knockbackForce, 4f), ForceMode2D.Impulse);
+                }
+               
+                
                 //Pra chamar o respawn do player
                 anim.SetInteger("AnimParameter", 4);
                 Invoke("ResetPlayer", respawnTime);
