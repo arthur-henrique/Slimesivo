@@ -47,9 +47,12 @@ public class LevelSelection : MonoBehaviour
 
 
     [SerializeField] private Sprite starFullSprite;
+    private GameObject[] objectsWithTag;
 
     private void Start()
     {
+        objectsWithTag = GameObject.FindGameObjectsWithTag("UI_Hide_Element_For_Pop_Up"); //TODO: pensar como fazer isso de uma maneira mais otimizada, pois isto esta sendo chamado para todas as instancias
+
         CheckActiveQuests();
         UpdateLevelStatus();
         UpdateLevelImage();
@@ -231,15 +234,23 @@ public class LevelSelection : MonoBehaviour
     {
         if(unlocked)
         {
-            if (popUpPanel.activeSelf == false)
+            if (popUpPanel.activeSelf == false) //Show
             {
                 popUpPanel.transform.position = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0);
                 gameObject.GetComponent<RectTransform>().SetAsLastSibling();
                 popUpPanel.SetActive(true);
+                foreach (GameObject obj in objectsWithTag)
+                {
+                    obj.SetActive(false);
+                }
             }
-            else
+            else //Hide
             {
                 popUpPanel.SetActive(false);
+                foreach (GameObject obj in objectsWithTag)
+                {
+                    obj.SetActive(true);
+                }
             }
         }
 
