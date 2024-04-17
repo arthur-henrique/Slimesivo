@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class MainMenuCanvasScript : MonoBehaviour
 {
-    [SerializeField] private GameObject infinityButton, campaignButton, rightChangeButton, leftChangeButton, storePagePanel, settingsButton, leaderboardPanel;
+    [SerializeField] private GameObject infinityButton, campaignButton, rightChangeButton, leftChangeButton, storePagePanel, settingsButton, leaderboardPanel, energyPanel;
+    [SerializeField] private GameObject[] purchaseSignButtons;
     [SerializeField] private LeaderboardsPage leaderboardPage;
 
     void Awake()
@@ -17,6 +18,7 @@ public class MainMenuCanvasScript : MonoBehaviour
         campaignButton.SetActive(true);
         storePagePanel.SetActive(false);
         settingsButton.SetActive(true);
+        energyPanel.SetActive(false);
         //leaderboardPanel.SetActive(false);
 
     }
@@ -52,24 +54,37 @@ public class MainMenuCanvasScript : MonoBehaviour
 
     public void EnterExitStorePage()
     {
-        if (storePagePanel.activeSelf == true)
+        if (storePagePanel.activeSelf == true) //exit
         {
             settingsButton.SetActive(true);
             storePagePanel.SetActive(false);
+            for (int i = 0; i < purchaseSignButtons.Length; i++)
+            {
+                purchaseSignButtons[i].SetActive(true);
+            }
         }
-        else
+        else //enter
         {
             settingsButton.SetActive(false);
             storePagePanel.SetActive(true);
+            for (int i = 0; i < purchaseSignButtons.Length; i++)
+            {
+                purchaseSignButtons[i].SetActive(false);
+            }
         }
     }
 
     /// <summary>
-    /// Somente para a barra de coletaveis, no botao de +
+    /// Somente para a barra de coletaveis, no botao de + (exceto a energia)
     /// </summary>
     public void OnlyEnterStorePage()
     {
+        energyPanel.SetActive(false);
         settingsButton.SetActive(false);
+        for (int i = 0; i < purchaseSignButtons.Length; i++)
+        {
+            purchaseSignButtons[i].SetActive(false);
+        }
         storePagePanel.SetActive(true);
     }
 
@@ -84,6 +99,18 @@ public class MainMenuCanvasScript : MonoBehaviour
         {
             leaderboardPanel.SetActive(false);
 
+        }
+    }
+
+    public void ShowOrHideEnergyPopUpPanel()
+    {
+        if (energyPanel.activeSelf == false)
+        {
+            energyPanel.SetActive(true);
+        }
+        else
+        {
+            energyPanel.SetActive(false);
         }
     }
 

@@ -10,18 +10,18 @@ public class HUDCanvasMenu : MonoBehaviour
 {
     public static HUDCanvasMenu instance;
 
-    [SerializeField] private GameObject pausePanel, optionsPanel, backgroundPanelForPause, backgroundPanelForPlaying, backgroundPanelForWinning, backgroundPanelForGameOver, timerObject, heart1, heart2, heart3, clapperboardIcon;
+    [SerializeField] private GameObject pausePanel, optionsPanel, backgroundPanelForPause, backgroundPanelForPlaying, pauseButton, backgroundPanelForWinning, backgroundPanelForGameOver, timerObject, heart1, heart2, heart3, clapperboardIcon;
     [SerializeField] private TMP_Text timerText;
 
     public static bool gameIsPaused = false; //para acessar, basta colocar: if(HUDCanvasMenu.gameIsPaused == true)
     Animator anim;
     private float timer;
     private bool resumeInProgress = false; //para tirar os multiplos cliques do resume
-    private bool canHidePanels = false; //para nao esconder no countdown
+    //private bool canHidePanels = false; //para nao esconder no countdown
     private int currentStarNumber = 0;
     private string currentLevelName;
-    public GameObject[] stars;
-    public Sprite starSprite;
+    [SerializeField] private GameObject[] stars;
+    [SerializeField] private Sprite starSprite;
 
 
     //int quantoDeVida = 3; //SUBSTITUIR DEPOIS PELO INT DA VIDA DO PLAYER!!!!
@@ -34,6 +34,30 @@ public class HUDCanvasMenu : MonoBehaviour
         }
 
         anim = gameObject.GetComponent<Animator>();
+        LevelUIPreparation();
+    }
+
+    #region To call everytime a new scene is loaded, since this canvas isnt destroyed
+
+    private void Start()
+    {
+        // Subscribe to the sceneLoaded event
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // This method will be called whenever a new scene is loaded
+        //Debug.Log("Scene loaded: " + scene.name);
+
+        // Call your function here
+        LevelUIPreparation();
+    }
+
+    #endregion
+
+    private void LevelUIPreparation()
+    {
         pausePanel.SetActive(false);
         optionsPanel.SetActive(false);
         timerObject.SetActive(true);
@@ -42,6 +66,7 @@ public class HUDCanvasMenu : MonoBehaviour
         backgroundPanelForGameOver.SetActive(false);
         backgroundPanelForWinning.SetActive(false);
         backgroundPanelForPlaying.SetActive(true);
+        pauseButton.SetActive(true);
         heart1.SetActive(true);
         heart2.SetActive(true);
         heart3.SetActive(true);
@@ -50,7 +75,8 @@ public class HUDCanvasMenu : MonoBehaviour
 
     public void PauseGame()
     {
-        canHidePanels = true;
+        pauseButton.SetActive(false);
+        //canHidePanels = true;
         anim.SetTrigger("PauseTriggerAnimation");
         backgroundPanelForPause.SetActive(true);
         pausePanel.SetActive(true);
@@ -91,7 +117,8 @@ public class HUDCanvasMenu : MonoBehaviour
     {
         if (resumeInProgress == false)
         {
-            canHidePanels = false;
+            pauseButton.SetActive(true);
+            //canHidePanels = false;
             resumeInProgress = true;
             anim.SetTrigger("ResumeTriggerAnimation");
         }
@@ -155,15 +182,15 @@ public class HUDCanvasMenu : MonoBehaviour
             CullAllChildrenAndParent(child, cull); //Recursively call the function for each child
         }
     }
-    public void hideBackgroundPanel()
-    {
-        if (canHidePanels == true)
-            CullAllChildrenAndParent(backgroundPanelForPause.transform, true); //Set cull to true for both parent and children
-    }
-    public void showBackgroundPanel()
-    {
-        CullAllChildrenAndParent(backgroundPanelForPause.transform, false);
-    }
+    //public void hideBackgroundPanel()
+    //{
+    //    if (canHidePanels == true)
+    //        CullAllChildrenAndParent(backgroundPanelForPause.transform, true); //Set cull to true for both parent and children
+    //}
+    //public void showBackgroundPanel()
+    //{
+    //    CullAllChildrenAndParent(backgroundPanelForPause.transform, false);
+    //}
 
 
     /// <summary>
@@ -211,6 +238,7 @@ public class HUDCanvasMenu : MonoBehaviour
     }
     public void OnDeath()
     {
+        pauseButton.SetActive(false);
         backgroundPanelForGameOver.SetActive(true);
     }
     public void OnNewLevel()
@@ -224,6 +252,7 @@ public class HUDCanvasMenu : MonoBehaviour
 
     public void OnWinningLevel()
     {
+        pauseButton.SetActive(false);
         Time.timeScale = 0f;
         backgroundPanelForGameOver.SetActive(false);
         backgroundPanelForWinning.SetActive(true);

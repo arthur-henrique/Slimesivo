@@ -173,12 +173,13 @@ public class EnergyManager : MonoBehaviour
     {
         if (currentEnergy >= maxEnergy)
         {
-            timerText.text = "Full";
+            //timerText.text = "Full";
+            timerText.text = "Your current Energy bar is full now. Do you want to buy more Energy?"; //can the value exceede the "maximum" energy count?
             return;
         }
 
         TimeSpan timeToRecharge = nextEnergyTime - DateTime.Now;
-        string timeText = string.Format("{0:D2}:{1:D2}", timeToRecharge.Minutes, timeToRecharge.Seconds);
+        string timeText = "Wait for " + string.Format("{0:D2}:{1:D2}", timeToRecharge.Minutes, timeToRecharge.Seconds) + " minutes to replenish 1 Energy. Do you want to buy more now?";
         timerText.text = timeText;
     }
 
