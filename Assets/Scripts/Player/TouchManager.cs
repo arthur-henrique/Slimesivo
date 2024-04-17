@@ -73,15 +73,23 @@ public class TouchManager : MonoBehaviour
                 {
                     case 0:
                         _isFacingRight = true;
-                        playerScript.Jump();
+                        playerScript.JumpManager();
                         rightCounter++;
                         leftCounter = 0;
                         break;
                     case 1:
-                        _isFacingRight = true;
-                        playerScript.JumpSameSide();
+                        if (playerScript.IsWalled())
+                        {
+                            _isFacingRight = true;
+                            playerScript.JumpSameSide();    
+                        }
+                        else
+                        {
+                            _isFacingRight = true;
+                            playerScript.JumpManager();
+                            leftCounter = 0;
+                        }
                         break;
-
                 }
 
 
@@ -92,13 +100,23 @@ public class TouchManager : MonoBehaviour
                 {
                     case 0:
                         _isFacingRight = false;
-                        playerScript.Jump();
+                        playerScript.JumpManager();
                         rightCounter = 0;
                         leftCounter++;
                         break;
                     case 1:
-                        _isFacingRight = false;
-                        playerScript.JumpSameSide();
+                        if (playerScript.IsWalled())
+                        {
+                            _isFacingRight = false;
+                            playerScript.JumpSameSide();
+                        }
+                        else
+                        {
+                            _isFacingRight = false;
+                            playerScript.JumpManager();
+                            rightCounter = 0;
+                        }
+                        
                         break;
 
                 }

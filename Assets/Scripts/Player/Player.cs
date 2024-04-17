@@ -6,6 +6,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [Header("Jump variables")]
+    [Tooltip("O quão alto o player pode pular no jump")]
     [SerializeField] private float jumpForce;
     private float sideForce;
     [SerializeField] private Transform groundCheck;
@@ -36,19 +37,34 @@ public class Player : MonoBehaviour
     private float wallSlideState;
     private bool isTouchingWall;
     [SerializeField] private LayerMask wallLayer;
-
-
     private bool isWallJumping;
     private float wallJumpingCounter;
     private float wallJumpTime = 0.2f;
-    private float wallJumpDurantion = 0.2f;
+    private float wallJumpDurantion = 0.1f;
+
+
+    //Double Jump
+    [Header("Double Jump variables")]
+    [Tooltip("Quantidade de pulos que o player pode dar no ar")]
+   
+    [SerializeField] private int doubleJumpMaxCounter;
+    private int doubleJumpCounter;
+     [Tooltip("O quão alto o player pode pular no double jump")]
+  
+    [SerializeField] private float doubleJumpForce;
+
+
 
     [Header("Damage and respawn variables")]  
     [SerializeField] private LayerMask damageLayer;
+    
     [Tooltip("Tempo que leva pro player respawnar depois que ele leva dano")]
     [SerializeField] private float respawnTime;
+    
     [Tooltip("Tempo que leva pro player morrer se ele não encostar em nada")]
     [SerializeField] private float maxTimeToDie;
+
+    [SerializeField] private float knockbackForce;
     private bool getHit;
     private float hitCounter;
 
@@ -107,11 +123,10 @@ public class Player : MonoBehaviour
     {
         return Physics2D.OverlapCircle(groundCheck.position, 0.4f, groundLayer);
     }
-    public void Jump()
+    public void JumpManager()
     {
         StopAllCoroutines();
         ResetPlayerRotation();
-        _touchManager._touchPressAction.Disable();
         rig.gravityScale = 1;
         wallSlideState = 0;
         anim.SetInteger("AnimParameter", 1);
@@ -119,15 +134,15 @@ public class Player : MonoBehaviour
         playerStatsScript.isRepawning = false;
         if (_touchManager.isFacingRight && IsOnGround())
         {
-            
+            _touchManager._touchPressAction.Disable();
             rig.velocity = new Vector2(sideForce, jumpForce);
            
 
         }
         else if(IsOnGround() && !_touchManager.isFacingRight)
         {
-            
-            
+
+            _touchManager._touchPressAction.Disable();
             rig.velocity = new Vector2(-sideForce, jumpForce);
             anim.SetInteger("AnimParameter", 2);
 
@@ -137,6 +152,11 @@ public class Player : MonoBehaviour
         {
             WallJump();
         
+        }
+
+        if(!IsOnGround() && !IsWalled() && doubleJumpCounter < doubleJumpMaxCounter)
+        {
+            DoubleJump();
         }
         playerStatsScript.isRepawning = false;    
             
@@ -156,7 +176,7 @@ public class Player : MonoBehaviour
        
         wallSlideState = 0;
         rig.gravityScale = 1;
-        rig.velocity = new Vector2(rig.velocity.x, jumpForce);
+        rig.velocity = new Vector2(rig.velocity.x, doubleJumpForce);
      
         Invoke(nameof(StopJumpSameSide), jumpSameSideTimer);
     }
@@ -164,10 +184,6 @@ public class Player : MonoBehaviour
    private void StopJumpSameSide()
     {
         isWallJumping = false;
-            
-
-
-
     }
 
 
@@ -188,7 +204,8 @@ public class Player : MonoBehaviour
             {
                 
                 _touchManager._touchPressAction.Enable();
-                 anim.SetInteger("AnimParameter", 3);
+                doubleJumpCounter = 0;
+                anim.SetInteger("AnimParameter", 3);
                 isWallSliding = true;
                 switch (wallSlideState)
                 {
@@ -293,6 +310,23 @@ public class Player : MonoBehaviour
         
     }
 
+    private void DoubleJump()
+    {
+        _touchManager._touchPressAction.Disable();
+        rig.velocity = Vector3.zero;
+        doubleJumpCounter++;
+        if (_touchManager.isFacingRight )
+        {
+            rig.velocity = new Vector2(sideForce, doubleJumpForce);
+        }
+        else 
+        {
+            rig.velocity = new Vector2(-sideForce, doubleJumpForce);
+            anim.SetInteger("AnimParameter", 2);
+
+        }
+    }
+
     #endregion
     #region WallCoroutines
   
@@ -378,19 +412,13 @@ public class Player : MonoBehaviour
             {
                 hitCounter++;
 
-                Vector3 opositePosition = gameObject.transform.position * -1;
-
+                Vector3 opositePosition = collision.gameObject.transform.position - transform.position;
+                opositePosition = (opositePosition * -1).normalized;
+                Debug.Log(opositePosition);
                 //Zera a velocidade atual e adiciona a nova
                 rig.velocity = Vector2.zero;
                 getHit = true;
-                if (gameObject.transform.position.x != 0)
-                {
-                    rig.AddForce(new Vector2(opositePosition.x * 2f, 5f), ForceMode2D.Impulse);
-                }
-                else 
-                {
-                    rig.AddForce(new Vector2(opositePosition.x * -2f, 5f), ForceMode2D.Impulse);
-                }
+                rig.AddForce(opositePosition * knockbackForce, ForceMode2D.Impulse);
                 //Pra chamar o respawn do player
                 anim.SetInteger("AnimParameter", 4);
                 Invoke("ResetPlayer", respawnTime);
