@@ -12,9 +12,9 @@ public class HUDCanvasMenu : MonoBehaviour
 
     [SerializeField] private GameObject pausePanel, optionsPanel, backgroundPanelForPause, backgroundPanelForPlaying, pauseButton, backgroundPanelForWinning, backgroundPanelForGameOver, timerObject, heart1, heart2, heart3, clapperboardIcon;
     [SerializeField] private TMP_Text timerText;
+    [SerializeField] private Button retryButton/*TODO: optionsButton*/;
 
     public static bool gameIsPaused = false; //para acessar, basta colocar: if(HUDCanvasMenu.gameIsPaused == true)
-    Animator anim;
     private float timer;
     private bool resumeInProgress = false; //para tirar os multiplos cliques do resume
     //private bool canHidePanels = false; //para nao esconder no countdown
@@ -33,7 +33,6 @@ public class HUDCanvasMenu : MonoBehaviour
             instance = this;
         }
 
-        anim = gameObject.GetComponent<Animator>();
         LevelUIPreparation();
     }
 
@@ -76,8 +75,10 @@ public class HUDCanvasMenu : MonoBehaviour
     public void PauseGame()
     {
         pauseButton.SetActive(false);
+        retryButton.enabled = true;
+        //TODO: optionsButton.enabled = true;
         //canHidePanels = true;
-        anim.SetTrigger("PauseTriggerAnimation");
+        //animacao de pausar
         backgroundPanelForPause.SetActive(true);
         pausePanel.SetActive(true);
         Time.timeScale = 0f;
@@ -99,10 +100,10 @@ public class HUDCanvasMenu : MonoBehaviour
     public void Retry()
     {
         //Time.timeScale = 1f;
-        pausePanel.SetActive(false);
-        backgroundPanelForGameOver.SetActive(false);
-        backgroundPanelForWinning.SetActive(false);
-        StartCoroutine(StartCountdownCoroutine(0f));
+        //pausePanel.SetActive(false);
+        //backgroundPanelForGameOver.SetActive(false);
+        //backgroundPanelForWinning.SetActive(false);
+        //StartCoroutine(StartCountdownCoroutine(0f));
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
@@ -113,25 +114,22 @@ public class HUDCanvasMenu : MonoBehaviour
     }
 
 
-    public void ResumeGame()
+    public void ResumeGame() //comeca a contagem regressiva
     {
         if (resumeInProgress == false)
         {
+            retryButton.enabled = false;
+            //TODO: optionsButton.enabled = false;
             pauseButton.SetActive(true);
             //canHidePanels = false;
             resumeInProgress = true;
-            anim.SetTrigger("ResumeTriggerAnimation");
+            timer = 3f; //quero 3 segundos no timer countdown
+            //animacao de despausar para o countdown
+            pausePanel.SetActive(false);
+            StartCoroutine(StartCountdownCoroutine(timer));//countdown
         }
     }
-    /// <summary>
-    /// Eh ativado com o evento da Timeline da animacao do ResumeGame() - Comeca a contagem regressiva
-    /// </summary>
-    public void EndingResumeAnimation()
-    {
-        timer = 3f; //quero 3 segundos no timer countdown
-        pausePanel.SetActive(false);
-        StartCoroutine(StartCountdownCoroutine(timer));//countdown
-    }
+
     /// <summary>
     /// Para mostrar a contagem regressiva de quando despausa o jogo
     /// </summary>
