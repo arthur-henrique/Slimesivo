@@ -4,6 +4,21 @@ using UnityEngine;
 
 public class PlayerCollision : MonoBehaviour
 {
+    public static PlayerCollision Instance;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+    public void DamageCollision(Collider2D collision)
+    {
+        IDamageDealer consumableCollectible = collision.gameObject.GetComponent<IDamageDealer>();
+        if (consumableCollectible != null)
+        {
+            consumableCollectible.Damage();
+            return;
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

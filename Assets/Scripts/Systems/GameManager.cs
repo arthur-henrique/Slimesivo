@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     // Static instance of GameManager which allows it to be accessed by any other script.
     public static GameManager instance = null;
 
+
     // Health and Values associated to being alive
     public int livesAmount = 0;
     private int maxLivesAmount = 4;
@@ -97,12 +98,16 @@ public class GameManager : MonoBehaviour
 
     public void TookDamage()
     {
-        needsToCheckAlive = true;
-        pauseCanvas.OnDamageTaken(livesAmount);
-        PlayableLevelManager.Instance.AddTimeHit();
-        livesAmount--;
-        Debug.Log("TookDamage()");
-        // Initializes the sequence of updating the UI
+        if(Player.Instance.hitCounter == 1)
+        {
+            needsToCheckAlive = true;
+            pauseCanvas.OnDamageTaken(livesAmount);
+            PlayableLevelManager.Instance.AddTimeHit();
+            livesAmount--;
+            Debug.Log("TookDamage()");
+            // Initializes the sequence of updating the UI
+        }
+
 
     }
 

@@ -5,13 +5,15 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public static Player Instance;
+
     [Header("Jump variables")]
     [Tooltip("O quão alto o player pode pular no jump")]
     [SerializeField] private float jumpForce;
     private float sideForce;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
-    private float jumpSameSideTimer = 1f;
+    [SerializeField] private float jumpSameSideTimer = 1f;
 
 
     //components
@@ -22,6 +24,7 @@ public class Player : MonoBehaviour
     [Header("components")]
     [SerializeField] private GameObject playerSprite;
     [SerializeField] private CameraController cameraController;
+    Collider2D playerCollider;
 
    //wall slide
     private bool isWallSliding;
@@ -67,7 +70,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private float knockbackForce;
     private bool getHit;
-    private float hitCounter;
+    public float hitCounter;
 
     public TouchManager touchManager
     {
@@ -76,7 +79,10 @@ public class Player : MonoBehaviour
     }
 
 
-
+    private void Awake()
+    {
+        Instance = this;
+    }
     private void Start()
     {
         Components();
@@ -118,6 +124,7 @@ public class Player : MonoBehaviour
         _touchManager = GetComponent<TouchManager>();
         playerStatsScript = GetComponent<PlayerStats>();
         anim = GetComponentInChildren<Animator>();
+        playerCollider = GetComponent<Collider2D>();
          
     }
     public bool IsOnGround()
@@ -295,13 +302,13 @@ public class Player : MonoBehaviour
             wallJumpingCounter = 0;
             if (_touchManager.isFacingRight)
             {
-                rig.velocity = new Vector2(sideForce * 0.5f, jumpForce);
+                rig.AddForce(new Vector2(sideForce , jumpForce * 0.8f),ForceMode2D.Impulse);
                 
 
             }
             else
             {
-                rig.velocity = new Vector2(-sideForce * 0.5f, jumpForce);
+                rig.AddForce(new Vector2(-sideForce , jumpForce * 0.8f), ForceMode2D.Impulse);
                 anim.SetInteger("AnimParameter", 2);
                 
 
@@ -416,7 +423,9 @@ public class Player : MonoBehaviour
         {
             if (hitCounter == 0)
             {
+                //playerCollider.enabled = false;
                 hitCounter++;
+                PlayerCollision.Instance.DamageCollision(collision);
 
                 Vector3 opositePosition = (transform.position - collision.gameObject.transform.position) * -1;
                 opositePosition = opositePosition.normalized;
@@ -448,7 +457,8 @@ public class Player : MonoBehaviour
     private void ResetPlayer()
     {  
       getHit = false;
-        hitCounter--;
+      playerCollider.enabled = true;
+      hitCounter--;
       playerStatsScript.RespawnPlayer();
     }
     #endregion
