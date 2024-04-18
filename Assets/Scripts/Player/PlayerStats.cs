@@ -45,7 +45,6 @@ public class PlayerStats : MonoBehaviour
     {
         
         isRepawning = true;
-        cameraController.MoveCameraToRespawn();
         //if(vidasPlayer <0)
         playerScript.ResetVelocityPlayer();
         if (touchManagerScript.isFacingRight)
@@ -67,30 +66,31 @@ public class PlayerStats : MonoBehaviour
            
 
         }
+        cameraController.MoveCameraToRespawn(respawnPos.y);
     }
     public void RespawnPlayerSameSide()
     {
-        cameraController.MoveCameraToRespawn();
         playerScript.ResetVelocityPlayer();
         if (touchManagerScript.isFacingRight)
         {
-            touchManagerScript.rightCounter = 1;
-            touchManagerScript.leftCounter = 0;
+            //touchManagerScript.rightCounter = 1;
+            //touchManagerScript.leftCounter = 0;
             gameObject.transform.position = respawnPos;
-            touchManagerScript.isFacingRight = true;
+            //touchManagerScript.isFacingRight = true;
             
 
 
         }
         else
         {
-            touchManagerScript.rightCounter = 0;
-            touchManagerScript.leftCounter = 1;
+            //touchManagerScript.rightCounter = 0;
+            //touchManagerScript.leftCounter = 1;
             gameObject.transform.position = respawnPos;
-            touchManagerScript.isFacingRight = false;
+            //touchManagerScript.isFacingRight = false;
           
 
         }
+        cameraController.MoveCameraToRespawn(respawnPos.y);
     }
 
     private bool DangerousRespawnPoint()

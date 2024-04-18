@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
     private Animator anim;
     [Header("components")]
     [SerializeField] private GameObject playerSprite;
+    [SerializeField] private CameraController cameraController;
 
    //wall slide
     private bool isWallSliding;
@@ -125,13 +126,18 @@ public class Player : MonoBehaviour
     }
     public void JumpManager()
     {
+        if (playerStatsScript.isRepawning)
+        {
+            cameraController.CameraSettingsReset();
+            playerStatsScript.isRepawning = false;
+        }
         StopAllCoroutines();
         ResetPlayerRotation();
         rig.gravityScale = 1;
         wallSlideState = 0;
         anim.SetInteger("AnimParameter", 1);
 
-        playerStatsScript.isRepawning = false;
+        
         if (_touchManager.isFacingRight && IsOnGround())
         {
             _touchManager._touchPressAction.Disable();
@@ -412,7 +418,8 @@ public class Player : MonoBehaviour
             {
                 hitCounter++;
 
-                Vector3 opositePosition = transform.position * -1;
+                Vector3 opositePosition = (transform.position - collision.gameObject.transform.position) * -1;
+                opositePosition = opositePosition.normalized;
                   
                 //Zera a velocidade atual e adiciona a nova
                 rig.velocity = Vector2.zero;
@@ -425,7 +432,7 @@ public class Player : MonoBehaviour
                 else
                 {
                     Debug.Log(opositePosition.x);
-                    rig.AddForce(new Vector2(opositePosition.x * -knockbackForce, 4f), ForceMode2D.Impulse);
+                    rig.AddForce(new Vector2(opositePosition.x * -knockbackForce, -4f), ForceMode2D.Impulse);
                 }
                
                 
