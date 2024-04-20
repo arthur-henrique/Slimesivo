@@ -8,6 +8,7 @@ public class EletricWireObstacle : MonoBehaviour
     [SerializeField] private int dealingDamageTime;
     //Visual Components
     [SerializeField] private SpriteRenderer sprite;
+    [SerializeField] private Collider2D collider;
     private enum EletricWireStates
     {
         Cooldown,
@@ -21,24 +22,15 @@ public class EletricWireObstacle : MonoBehaviour
         {
             case EletricWireStates.Cooldown:
                 StartCoroutine("CooldownTimer");
+                collider.enabled = false;
                 break;
             case EletricWireStates.DealingDamage:
                 StartCoroutine("DealingDamageTimer");
+                collider.enabled = true;
                 break;
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        Player playerChecker = collision.GetComponent<Player>();
-        if (playerChecker != null)
-        {
-            if (wireState == EletricWireStates.DealingDamage)
-            {
-                Debug.Log("Damage");
-            }
-        }
-    }
 
 
 
