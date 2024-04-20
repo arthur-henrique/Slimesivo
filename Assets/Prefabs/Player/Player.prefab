@@ -167,11 +167,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fe146808b3f7464e8cd1cf5eebf99b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 5
+  firstJumpForce: 5
   groundCheck: {fileID: 5718995810343491005}
   groundLayer:
     serializedVersion: 2
     m_Bits: 128
+  jumpSameSideTimer: 1
   playerSprite: {fileID: 6457546778788927930}
   cameraController: {fileID: 0}
   wallStickTime: 2
@@ -189,6 +190,7 @@ MonoBehaviour:
   respawnTime: 1
   maxTimeToDie: 3
   knockbackForce: 6
+  hitCounter: 0
 --- !u!114 &1620982679027179847
 MonoBehaviour:
   m_ObjectHideFlags: 0

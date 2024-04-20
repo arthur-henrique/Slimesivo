@@ -25,12 +25,12 @@ public class TouchManager : MonoBehaviour
 
     private bool _isFacingRight;
 
-    public bool isFacingRight
+    public bool IsFacingRight
     {
         get { return _isFacingRight; }
         set { _isFacingRight = value; }
     }
-    public float worldWidth
+    public float WorldWidth
     {
         get { return _worldWidth; } 
         set { _worldWidth = value; }
@@ -105,7 +105,7 @@ public class TouchManager : MonoBehaviour
                 {
                     _isFacingRight = false;
                     playerScript.JumpManager();
-                    Debug.Log("esquerda");
+                   
                 }
             }
     }

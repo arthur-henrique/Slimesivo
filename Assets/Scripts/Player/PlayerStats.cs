@@ -47,48 +47,26 @@ public class PlayerStats : MonoBehaviour
         isRepawning = true;
         //if(vidasPlayer <0)
         playerScript.ResetVelocityPlayer();
-        if (touchManagerScript.isFacingRight)
+        if (touchManagerScript.IsFacingRight)
         {
-            //touchManagerScript.rightCounter = 0;
-            //touchManagerScript.leftCounter = 1;
             gameObject.transform.position = respawnPos;
-            //touchManagerScript.isFacingRight = false;
-            
-
-
         }
         else
         {
-            //touchManagerScript.rightCounter = 1;
-            //touchManagerScript.leftCounter = 0;
             gameObject.transform.position = respawnPos;
-            //touchManagerScript.isFacingRight = true;
-           
-
         }
         cameraController.MoveCameraToRespawn(respawnPos.y);
     }
     public void RespawnPlayerSameSide()
     {
         playerScript.ResetVelocityPlayer();
-        if (touchManagerScript.isFacingRight)
+        if (touchManagerScript.IsFacingRight)
         {
-            //touchManagerScript.rightCounter = 1;
-            //touchManagerScript.leftCounter = 0;
-            gameObject.transform.position = respawnPos;
-            //touchManagerScript.isFacingRight = true;
-            
-
-
+            gameObject.transform.position = respawnPos;           
         }
         else
         {
-            //touchManagerScript.rightCounter = 0;
-            //touchManagerScript.leftCounter = 1;
             gameObject.transform.position = respawnPos;
-            //touchManagerScript.isFacingRight = false;
-          
-
         }
         cameraController.MoveCameraToRespawn(respawnPos.y);
     }

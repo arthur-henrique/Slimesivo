@@ -8,8 +8,8 @@ public class Player : MonoBehaviour
     public static Player Instance;
 
     [Header("Jump variables")]
-    [Tooltip("O quão alto o player pode pular no jump")]
-    [SerializeField] private float jumpForce;
+    [Tooltip("O quão alto o player pode pular no primeiro pulo")]
+    [SerializeField] private float firstJumpForce;
     private float sideForce;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
@@ -38,7 +38,13 @@ public class Player : MonoBehaviour
     [SerializeField] private float wallSlideSpeedMin;
     [Tooltip("Velocidade que o player desliza no estado mais rapido")]
     [SerializeField] private float wallSlideSpeedMax;
-    private float wallSlideState;
+    private enum WallSlideStates
+    {
+        WallStick,
+        WallSlideSlow,
+        WallSlideFast,
+    }
+    private WallSlideStates wallSlideStates = WallSlideStates.WallStick;
     private bool isTouchingWall;
     [SerializeField] private LayerMask wallLayer;
     private bool isWallJumping;
@@ -141,22 +147,22 @@ public class Player : MonoBehaviour
         StopAllCoroutines();
         ResetPlayerRotation();
         rig.gravityScale = 1;
-        wallSlideState = 0;
+        wallSlideStates = WallSlideStates.WallStick;
         anim.SetInteger("AnimParameter", 1);
 
         
-        if (_touchManager.isFacingRight && IsOnGround())
+        if (_touchManager.IsFacingRight && IsOnGround())
         {
             _touchManager._touchPressAction.Disable();
-            rig.velocity = new Vector2(sideForce, jumpForce);
+            rig.velocity = new Vector2(sideForce, firstJumpForce);
            
 
         }
-        else if(IsOnGround() && !_touchManager.isFacingRight)
+        else if(IsOnGround() && !_touchManager.IsFacingRight)
         {
 
             _touchManager._touchPressAction.Disable();
-            rig.velocity = new Vector2(-sideForce, jumpForce);
+            rig.velocity = new Vector2(-sideForce, firstJumpForce);
             anim.SetInteger("AnimParameter", 2);
 
         }
@@ -182,12 +188,12 @@ public class Player : MonoBehaviour
         _touchManager._touchPressAction.Disable();
         isWallJumping = true;
         playerStatsScript.isRepawning = false;
-        if (!_touchManager.isFacingRight)
+        if (!_touchManager.IsFacingRight)
         {
             anim.SetInteger("AnimParameter", 2);
         }
-       
-        wallSlideState = 0;
+
+        wallSlideStates = WallSlideStates.WallStick;
         rig.gravityScale = 1;
         rig.velocity = new Vector2(rig.velocity.x, doubleJumpForce);
      
@@ -220,16 +226,16 @@ public class Player : MonoBehaviour
                 doubleJumpCounter = 0;
                 anim.SetInteger("AnimParameter", 3);
                 isWallSliding = true;
-                switch (wallSlideState)
+                switch (wallSlideStates)
                 {
-                    case 0:
+                    case WallSlideStates.WallStick:
                         StartCoroutine(WallStickTimer());
                         playerStatsScript.SaveCurrentPlayerPos();
                         break;
-                    case 1:
+                    case WallSlideStates.WallSlideSlow:
                         StartCoroutine(WallSlideMinTimer());
                         break;
-                    case 2:
+                    case WallSlideStates.WallSlideFast:
                         StartCoroutine(WallSlideMaxTimer());
                         break;
 
@@ -281,9 +287,6 @@ public class Player : MonoBehaviour
 
     private void WallJump()
     {
-        StopAllCoroutines();
-        wallSlideState = 0;
-        rig.gravityScale = 1;
         if (isWallSliding)
         {
             isWallJumping = false;
@@ -300,18 +303,14 @@ public class Player : MonoBehaviour
             ResetPlayerRotation();
             isWallJumping = true;
             wallJumpingCounter = 0;
-            if (_touchManager.isFacingRight)
+            if (_touchManager.IsFacingRight)
             {
-                rig.AddForce(new Vector2(sideForce , jumpForce * 0.8f),ForceMode2D.Impulse);
-                
-
+                rig.AddForce(new Vector2(sideForce , firstJumpForce * 0.8f),ForceMode2D.Impulse);
             }
             else
             {
-                rig.AddForce(new Vector2(-sideForce , jumpForce * 0.8f), ForceMode2D.Impulse);
+                rig.AddForce(new Vector2(-sideForce , firstJumpForce * 0.8f), ForceMode2D.Impulse);
                 anim.SetInteger("AnimParameter", 2);
-                
-
             }
            
             Invoke(nameof(StopWallJump), wallJumpDurantion);
@@ -328,7 +327,7 @@ public class Player : MonoBehaviour
         _touchManager._touchPressAction.Disable();
         rig.velocity = Vector3.zero;
         doubleJumpCounter++;
-        if (_touchManager.isFacingRight )
+        if (_touchManager.IsFacingRight )
         {
             rig.velocity = new Vector2(sideForce, doubleJumpForce);
         }
@@ -358,7 +357,7 @@ public class Player : MonoBehaviour
 
         }
         rig.gravityScale = 1;
-        wallSlideState = 1;
+        wallSlideStates = WallSlideStates.WallSlideSlow;
 
     }
 
@@ -376,7 +375,7 @@ public class Player : MonoBehaviour
 
 
         }
-        wallSlideState = 2;
+        wallSlideStates = WallSlideStates.WallSlideFast;
 
     }
     IEnumerator WallSlideMaxTimer()
@@ -421,37 +420,39 @@ public class Player : MonoBehaviour
         //Damage Detection
         if (((1 << collision.gameObject.layer) & damageLayer) != 0)
         {
-            if (hitCounter == 0)
+            KnockbackPlayer(collision);
+        }
+    }
+
+    private void KnockbackPlayer(Collider2D obstacleCollision)
+    {
+        if (hitCounter == 0)
+        {
+            //playerCollider.enabled = false;
+            hitCounter++;
+            PlayerCollision.Instance.DamageCollision(obstacleCollision);
+
+            Vector3 opositePosition = (transform.position - obstacleCollision.gameObject.transform.position) * -1;
+            opositePosition = opositePosition.normalized;
+
+            //Zera a velocidade atual e adiciona a nova
+            rig.velocity = Vector2.zero;
+            getHit = true;
+            if (_touchManager.GetPlayerPositionInScreen(-0.2f, false) || _touchManager.GetPlayerPositionInScreen(0.2f, true))
             {
-                //playerCollider.enabled = false;
-                hitCounter++;
-                PlayerCollision.Instance.DamageCollision(collision);
-
-                Vector3 opositePosition = (transform.position - collision.gameObject.transform.position) * -1;
-                opositePosition = opositePosition.normalized;
-                  
-                //Zera a velocidade atual e adiciona a nova
-                rig.velocity = Vector2.zero;
-                getHit = true;
-                if (_touchManager.GetPlayerPositionInScreen(-0.2f, false) || _touchManager.GetPlayerPositionInScreen(0.2f, true))
-                {
-                    Debug.Log(opositePosition.x);
-                    rig.AddForce(new Vector2(opositePosition.x * knockbackForce, 4), ForceMode2D.Impulse);
-                }
-                else
-                {
-                    Debug.Log(opositePosition.x);
-                    rig.AddForce(new Vector2(opositePosition.x * -knockbackForce, -4f), ForceMode2D.Impulse);
-                }
-               
-                
-                //Pra chamar o respawn do player
-                anim.SetInteger("AnimParameter", 4);
-                Invoke("ResetPlayer", respawnTime);
+                Debug.Log(opositePosition.x);
+                rig.AddForce(new Vector2(opositePosition.x * knockbackForce, 4), ForceMode2D.Impulse);
             }
-            
+            else
+            {
+                Debug.Log(opositePosition.x);
+                rig.AddForce(new Vector2(opositePosition.x * -knockbackForce, -4f), ForceMode2D.Impulse);
+            }
 
 
+            //Pra chamar o respawn do player
+            anim.SetInteger("AnimParameter", 4);
+            Invoke("ResetPlayer", respawnTime);
         }
     }
     private void ResetPlayer()
