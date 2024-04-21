@@ -264,6 +264,7 @@ public class LevelSelection : MonoBehaviour
     {
         if (unlocked)
         {
+            EnergyManager.Instance.UseEnergy(1);
             //LeanTween.scale(gameObject, gameObject.transform.localScale * 1.2f, 0.5f);
             //LeanTween.scale(gameObject, gameObject.transform.localScale, 0.1f).setDelay(0.5f).setOnComplete(GoToLevelTweenFinished);
             LeanTween.scale(popUpPanel, popUpPanel.transform.localScale * 1.2f, 0.5f);

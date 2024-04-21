@@ -7,6 +7,8 @@ using UnityEngine.Networking;
 
 public class EnergyManager : MonoBehaviour
 {
+    public static EnergyManager Instance;
+
     [SerializeField] private TMP_Text energyText;
     [SerializeField] private TMP_Text timerText;
     [SerializeField] private Slider energySlider;
@@ -19,6 +21,11 @@ public class EnergyManager : MonoBehaviour
 
     private bool isRestoring = false;
 
+    private void Awake()
+    {
+        if(Instance == null)
+            Instance = this;
+    }
     private void Start()
     {
         if (!PlayerPrefs.HasKey("currentEnergy"))

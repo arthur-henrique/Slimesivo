@@ -9,8 +9,7 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField]
     private LeaderboardsPage lbPage;
 
-    [SerializeField]
-    private TMP_Text coinText;
+    
     public void Start()
     {
         GameManager.instance.SceneLoad();
@@ -27,9 +26,11 @@ public class MainMenuManager : MonoBehaviour
 
     IEnumerator FetchCoins()
     {
-        yield return new WaitForSeconds(0.25f);
-        coinText.text = CurrencyManager.instance.currentCurrency.ToString();
+        yield return new WaitForSeconds(0.5f);
+        GameManagerMainMenuCanvasScript.Instance.coinText.text = CurrencyManager.instance.currentCurrency.ToString();
         print("HasFetchedCoins");
+        print(GameManagerMainMenuCanvasScript.Instance.coinText.text);
+        print(CurrencyManager.instance.currentCurrency.ToString());
     }
     IEnumerator FetchLeaderScores()
     {
