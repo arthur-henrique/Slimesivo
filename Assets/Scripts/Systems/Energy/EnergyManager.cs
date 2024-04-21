@@ -70,7 +70,7 @@ public class EnergyManager : MonoBehaviour
     //}
 
     #endregion
-    public void UseEnergy(int amount)
+    public bool UseEnergy(int amount)
     {
         if(currentEnergy >= amount)
         {
@@ -84,13 +84,25 @@ public class EnergyManager : MonoBehaviour
                 }
             }
             StartCoroutine(RestoreEnergy());
+            return true;
         }
 
         else
         {
             Debug.Log("Not enough energy");
+            GameManagerMainMenuCanvasScript.Instance.ShowOrHideEnergyPopUpPanel();
+            return false;
         }
-    }   
+    }
+
+    public void AddEnergy(int amount)
+    {
+        currentEnergy += amount;
+        
+
+        UpdateEnergy();
+        Save();
+    }
 
 
 

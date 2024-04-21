@@ -105,6 +105,7 @@ public class QuestManager : MonoBehaviour
 
     private void TwoStarReward()
     {
+        EnergyManager.Instance.AddEnergy(1);
         activeQuests[1].gameObject.GetComponent<IQuestSettable>().
             SetQuestCompleteToPrefs(levelName, 2);
 
