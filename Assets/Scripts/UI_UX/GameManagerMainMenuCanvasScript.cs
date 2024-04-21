@@ -16,7 +16,8 @@ public class GameManagerMainMenuCanvasScript : MonoBehaviour
 
     void Awake()
     {
-        Instance = this;
+        if(Instance == null)
+            Instance = this;
         storePagePanel.SetActive(false);
         settingsButton.SetActive(true);
         energyPanel.SetActive(false);
