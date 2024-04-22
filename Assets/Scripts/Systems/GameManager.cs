@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
     public GameObject pauseCanvasGO;
     public HUDCanvasMenu pauseCanvas;
 
+    [SerializeField] private MinimapControl minimapControl;
+
     // Scores and More
     [SerializeField]
     public float playerBestScoreFloat;
@@ -140,6 +142,7 @@ public class GameManager : MonoBehaviour
             isAlive = true;
             pauseCanvas.OnNewLevel();
             Time.timeScale = 1f;
+            minimapControl.GetFinishLine();
         }
     }
 

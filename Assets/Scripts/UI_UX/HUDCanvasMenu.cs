@@ -242,6 +242,7 @@ public class HUDCanvasMenu : MonoBehaviour
     public void OnDeath()
     {
         pauseButton.SetActive(false);
+        GameManager.instance.mainMenuGO.SetActive(true);
         backgroundPanelForGameOver.SetActive(true);
     }
     public void OnNewLevel()
@@ -249,7 +250,7 @@ public class HUDCanvasMenu : MonoBehaviour
         heart1.SetActive(true);
         heart2.SetActive(true);
         heart3.SetActive(true);
-        GameManager.instance.mainMenuGO.SetActive(true);
+        
         backgroundPanelForWinning.SetActive(false);
         backgroundPanelForGameOver.SetActive(false);
     }
