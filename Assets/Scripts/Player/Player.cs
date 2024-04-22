@@ -278,9 +278,11 @@ public class Player : MonoBehaviour
 
         if (deathCounter > maxTimeToDie)
         {
+            hitCounter++;
+            GameManager.instance.TookDamage();
             playerStatsScript.RespawnPlayer();
-            
-           
+            ResetPlayer();
+
         }
     }
   
@@ -289,6 +291,7 @@ public class Player : MonoBehaviour
     {
         if (isWallSliding)
         {
+            deathCounter = 0;
             isWallJumping = false;
             wallJumpingCounter = wallJumpTime;
             CancelInvoke(nameof(StopWallJump));

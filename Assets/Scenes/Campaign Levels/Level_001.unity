@@ -5823,6 +5823,7 @@ MonoBehaviour:
   hideMenuChild: {fileID: 0}
   pauseCanvasGO: {fileID: 45430415}
   pauseCanvas: {fileID: 45430416}
+  minimapControl: {fileID: 0}
   playerBestScoreFloat: 0
   _playerBestScore: 
   _playerNick: 
@@ -10557,6 +10558,11 @@ PrefabInstance:
         type: 3}
       propertyPath: jumpForce
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2682705831866685873, guid: c81d557d2fcf8b14984c989be23dd044,
+        type: 3}
+      propertyPath: wallStickTime
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2682705831866685873, guid: c81d557d2fcf8b14984c989be23dd044,
         type: 3}
