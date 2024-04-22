@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float jumpSameSideTimer = 1f;
+    private bool isJumping;
 
 
     //components
@@ -120,7 +121,27 @@ public class Player : MonoBehaviour
 
         sideForce = worldHeight * aspect;
     }
+    private void CheckPlayerStillAlive()
+    {
+        if (!IsWalled() && !IsOnGround())
+        {
+            deathCounter += Time.deltaTime;
 
+        }
+        else
+        {
+            deathCounter = 0;
+        }
+
+        if (deathCounter > maxTimeToDie)
+        {
+            hitCounter++;
+            GameManager.instance.TookDamage();
+            ResetPlayer();
+            playerStatsScript.RespawnPlayer();
+
+        }
+    }
 
     #region Jump
 
@@ -144,6 +165,7 @@ public class Player : MonoBehaviour
             cameraController.CameraSettingsReset();
             playerStatsScript.isRepawning = false;
         }
+        isJumping = true;
         StopAllCoroutines();
         ResetPlayerRotation();
         rig.gravityScale = 1;
@@ -226,6 +248,7 @@ public class Player : MonoBehaviour
                 doubleJumpCounter = 0;
                 anim.SetInteger("AnimParameter", 3);
                 isWallSliding = true;
+                isJumping = false;
                 switch (wallSlideStates)
                 {
                     case WallSlideStates.WallStick:
@@ -253,38 +276,23 @@ public class Player : MonoBehaviour
 
 
             }
-            else
+            else if (IsOnGround() && !isJumping)
+            {
+                 anim.SetInteger("AnimParameter", 0);
+                 _touchManager._touchPressAction.Enable();
+                 isWallSliding = false;
+                 playerSprite.transform.rotation = Quaternion.Euler(0, 0, 0);
+
+             }
+        else
             {
                 isWallSliding = false;
-               
             }
             
        
 
     }
-      
-       
-    private void CheckPlayerStillAlive()
-    {
-        if (!IsWalled() && !IsOnGround())
-        {
-            deathCounter += Time.deltaTime;
-            
-        }
-        else
-        {
-            deathCounter = 0;
-        }
 
-        if (deathCounter > maxTimeToDie)
-        {
-            hitCounter++;
-            GameManager.instance.TookDamage();
-            playerStatsScript.RespawnPlayer();
-            ResetPlayer();
-
-        }
-    }
   
 
     private void WallJump()
@@ -431,7 +439,8 @@ public class Player : MonoBehaviour
     {
         if (hitCounter == 0)
         {
-            //playerCollider.enabled = false;
+            isJumping = false;
+            _touchManager._touchPressAction.Disable();
             hitCounter++;
             PlayerCollision.Instance.DamageCollision(obstacleCollision);
 

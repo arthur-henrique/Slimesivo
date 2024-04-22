@@ -1,4 +1,4 @@
-using System;
+ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
@@ -15,10 +15,24 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float newDeadzone;
     [SerializeField] private float newOffset = 0;
 
+    private Vector2 spawnPosition;
+
     private void Start()
     {
-         startOffset = vCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset;
+        StartCoroutine(DelayStart());
+    }
+    IEnumerator DelayStart()
+    {
+        float timer = 0.2f;
+        yield return new WaitForSeconds(timer);
+        startOffset = vCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset;
         startDeadzone = vCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_DeadZoneHeight;
+        spawnPosition = vCam.transform.position;
+    }
+
+    public bool CheckSpawnPosition()
+    {
+        return gameObject.transform.position.y > spawnPosition.y;
     }
     private void FixedUpdate()
     {
@@ -30,9 +44,14 @@ public class CameraController : MonoBehaviour
     }
     public void MoveCameraToRespawn(float positionToMove)
     {
-        gameObject.transform.position = new Vector3(0,positionToMove, 0);
-        vCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset.y = newOffset;
-        vCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_DeadZoneHeight = newDeadzone;
+        Debug.Log(CheckSpawnPosition());
+        
+        if (CheckSpawnPosition())
+        {
+            gameObject.transform.position = new Vector3(0, positionToMove, 0);
+            vCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset.y = newOffset;
+            vCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_DeadZoneHeight = newDeadzone;
+        }
     }
 
     public void CameraSettingsReset()

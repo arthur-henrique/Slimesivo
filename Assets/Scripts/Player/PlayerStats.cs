@@ -15,13 +15,20 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private CameraController cameraController;
     [SerializeField] LayerMask damageableLayer;
     [HideInInspector] public bool isRepawning;
+    private Vector3 startPlayerPosition;
  
 
-    private void Awake()
+    private void Start()
     {
+        StartCoroutine("DelayStart");
+    }
+    IEnumerator DelayStart()
+    {
+        float timer = 0.2f;
+        yield return new WaitForSeconds(timer);
         playerScript = GetComponent<Player>();
-        touchManagerScript= GetComponent<TouchManager>(); 
-       
+        touchManagerScript = GetComponent<TouchManager>();
+        startPlayerPosition = gameObject.transform.position;
     }
 
     public void SaveCurrentPlayerPos()
@@ -34,10 +41,6 @@ public class PlayerStats : MonoBehaviour
                 respawnPos = gameObject.transform.position;
             }
           }
-        
-            
-        
-      
     }
 
 
@@ -47,14 +50,22 @@ public class PlayerStats : MonoBehaviour
         isRepawning = true;
         //if(vidasPlayer <0)
         playerScript.ResetVelocityPlayer();
-        if (touchManagerScript.IsFacingRight)
+        if (cameraController.CheckSpawnPosition())
         {
-            gameObject.transform.position = respawnPos;
+            if (touchManagerScript.IsFacingRight)
+            {
+                gameObject.transform.position = respawnPos;
+            }
+            else
+            {
+                gameObject.transform.position = respawnPos;
+            }
         }
         else
         {
-            gameObject.transform.position = respawnPos;
+            gameObject.transform.position = startPlayerPosition;
         }
+       
         cameraController.MoveCameraToRespawn(respawnPos.y);
     }
     public void RespawnPlayerSameSide()
