@@ -17,7 +17,9 @@ public class GameManager : MonoBehaviour
     private bool needsToCheckAlive = false;
 
     // Canvases
-    public GameObject mainMenyGO;
+    public GameObject mainMenuGO;
+    public GameObject hideMenuChild;
+
     public GameObject pauseCanvasGO;
     public HUDCanvasMenu pauseCanvas;
 
@@ -123,13 +125,15 @@ public class GameManager : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "1 - Main Menu" || SceneManager.GetActiveScene().name == "SystemTesting")
         {
-            mainMenyGO.SetActive(true);
+            mainMenuGO.SetActive(true);
+            hideMenuChild.SetActive(true);
             pauseCanvasGO.SetActive(false);
             Time.timeScale = 1f;
         }
         else
         {
-            mainMenyGO.SetActive(false);
+            mainMenuGO.SetActive(false);
+            hideMenuChild.SetActive(false);
             pauseCanvasGO.SetActive(true);
             CurrencyManager.instance.currentCoinAmount = 0;
             livesAmount = 3;

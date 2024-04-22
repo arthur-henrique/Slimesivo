@@ -5819,7 +5819,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   livesAmount: 0
-  mainMenyGO: {fileID: 0}
+  mainMenuGO: {fileID: 0}
+  hideMenuChild: {fileID: 0}
   pauseCanvasGO: {fileID: 45430415}
   pauseCanvas: {fileID: 45430416}
   playerBestScoreFloat: 0
@@ -12853,9 +12854,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2046717868}
   - component: {fileID: 2046717869}
-  - component: {fileID: 2046717870}
   - component: {fileID: 2046717871}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: DamagePlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12922,18 +12922,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 8.08, y: 1}
   m_EdgeRadius: 0
---- !u!114 &2046717870
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2046717867}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c01c18c6e60d36e4b9a9eb5dfd164c60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2046717871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14112,7 +14100,7 @@ Transform:
   m_GameObject: {fileID: 2118619762255139302}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.864472, y: -6.960004, z: 8.45}
+  m_LocalPosition: {x: -3.38, y: -6.960004, z: 8.45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -18406,7 +18394,7 @@ Transform:
   m_GameObject: {fileID: 8454351750522947989}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.894472, y: -6.960004, z: 8.45}
+  m_LocalPosition: {x: 3.41, y: -6.960004, z: 8.45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

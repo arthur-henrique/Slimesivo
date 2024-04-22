@@ -249,6 +249,7 @@ public class HUDCanvasMenu : MonoBehaviour
         heart1.SetActive(true);
         heart2.SetActive(true);
         heart3.SetActive(true);
+        GameManager.instance.mainMenuGO.SetActive(true);
         backgroundPanelForWinning.SetActive(false);
         backgroundPanelForGameOver.SetActive(false);
     }
@@ -257,6 +258,7 @@ public class HUDCanvasMenu : MonoBehaviour
     {
         pauseButton.SetActive(false);
         Time.timeScale = 0f;
+        GameManager.instance.mainMenuGO.SetActive(true);
         backgroundPanelForGameOver.SetActive(false);
         backgroundPanelForWinning.SetActive(true);
     }
