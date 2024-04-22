@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class HealingConsumable : MonoBehaviour, IConsumable
 {
+    private bool _isConsumed = false;
     public void Consume()
     {
-        GameManager.instance.ConsumeHealing();
-        Destroy(gameObject);
+        if (!_isConsumed)
+        {
+            _isConsumed = true;
+            GameManager.instance.ConsumeHealing();
+            Destroy(gameObject);
+        }
+        
     }
 }

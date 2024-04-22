@@ -104,13 +104,18 @@ public class HUDCanvasMenu : MonoBehaviour
         //backgroundPanelForGameOver.SetActive(false);
         //backgroundPanelForWinning.SetActive(false);
         //StartCoroutine(StartCountdownCoroutine(0f));
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        if (EnergyManager.Instance.UseEnergy(1))
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        else
+            Debug.Log("Not enough energy to retry");
     }
 
     public void NextLevel()
     {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        if (EnergyManager.Instance.UseEnergy(1))
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        else
+            Debug.Log("Not enough energy to go to the next level");
     }
 
 
