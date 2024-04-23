@@ -19,6 +19,7 @@ public class CoinCollectingQuest : MonoBehaviour, IQuestSettable
         {
             print("SucceedCoin");
             print(PlayableLevelManager.Instance.coinsCollected);
+            QuestManager.Instance.questsCompleted++;
             SetQuestCompleteToPrefs(dicKey, keyInt);
             //QuestingDictionary.Instance.clearedQuestDictionary[dicKey+"_"+keyInt] = true;
             return true;

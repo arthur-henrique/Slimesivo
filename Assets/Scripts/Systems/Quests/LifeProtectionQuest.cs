@@ -20,6 +20,7 @@ public class LifeProtectionQuest : MonoBehaviour, IQuestSettable
         {
             print("SucceedLives");
             print(GameManager.instance.livesAmount);
+            QuestManager.Instance.questsCompleted++;
             SetQuestCompleteToPrefs(dicKey, keyInt);
             //QuestingDictionary.Instance.clearedQuestDictionary[dicKey + "_" + keyInt] = true;
             return true;

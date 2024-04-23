@@ -50,6 +50,12 @@ public class QuestManager : MonoBehaviour
     private void Start()
     {
         questsCompleted = 0;
+        for (int i = 1; i < activeQuests.Count+1; i++)
+        {
+            if(!PlayerPrefs.HasKey(levelName + "_" + i + "rewarded"))
+                PlayerPrefs.SetInt(levelName + "_"+ i + "rewarded", 0);
+
+        }
     }
     public void CheckQuests()
     {
@@ -59,8 +65,8 @@ public class QuestManager : MonoBehaviour
         {
             if (activeQuests[i].gameObject.GetComponent<IQuestSettable>().CompletedQuest(levelName, activeQuestsIndex[i]))
             {
-                
-                questsCompleted++;
+
+                print(questsCompleted);
                 // Call the function to green up / highlight the UI Elements
             }
             else
@@ -69,7 +75,7 @@ public class QuestManager : MonoBehaviour
             }
         }
 
-        AwardThePlayer(questsCompleted);
+        AwardThePlayer();
         Debug.Log("The player has completed: " + questsCompleted + " quests.");
         // Call the function to show the Stars to the hud depending on the number of stars
         if (PlayerPrefs.GetInt(levelName + "_maxStars") < questsCompleted)
@@ -80,52 +86,68 @@ public class QuestManager : MonoBehaviour
         //StartCoroutine(GrabTheRewards());
     }
 
-    public void AwardThePlayer(int questCompleted)
+    public void AwardThePlayer()
     {
         print("Checking Results");
-
-        for (int i = 1; i <= questCompleted; i++)
+        if (questsCompleted > PlayerPrefs.GetInt(levelName + "maxStars"))
         {
-            if (PlayerPrefs.GetInt(levelName + "_" + i) == 0)
+            switch (questsCompleted)
             {
-                switch (i)
-                {
-                    case 1:
-                        OneStarReward();
-                        break;
-                    case 2:
-                        TwoStarReward();
-                        break;
-                    case 3:
-                        ThreeStarReward();
-                        break;
-                }
+                case 1:
+                    OneStarReward();
+                    break;
+                case 2:
+                    OneStarReward();
+                    TwoStarReward();
+                    break;
+                case 3:
+                    OneStarReward();
+                    TwoStarReward();
+                    ThreeStarReward();
+                    break;
             }
+
         }
     }
 
     private void OneStarReward()
     {
-        CurrencyManager.instance.UpdateCoinAmount(coinToAward);
-        //activeQuests[0].gameObject.GetComponent<IQuestSettable>().SetQuestCompleteToPrefs(levelName, 1);
-        Debug.Log("Received: " + coinToAward);
+        if(PlayerPrefs.GetInt(levelName+ "_1rewarded") == 0)
+        {
+            PlayerPrefs.SetInt(levelName + "_1rewarded", 1);
+            CurrencyManager.instance.UpdateCoinAmount(coinToAward);
+            //activeQuests[0].gameObject.GetComponent<IQuestSettable>().SetQuestCompleteToPrefs(levelName, 1);
+            Debug.Log("Received: " + coinToAward);
+        }
+        
     }
 
     private void TwoStarReward()
     {
-        EnergyManager.Instance.AddEnergy(1);
-        //activeQuests[1].gameObject.GetComponent<IQuestSettable>().SetQuestCompleteToPrefs(levelName, 2);
+        if (PlayerPrefs.GetInt(levelName + "_2rewarded") == 0)
+        {
+            PlayerPrefs.SetInt(levelName + "_2rewarded", 1);
+            EnergyManager.Instance.AddEnergy(1);
+            //activeQuests[1].gameObject.GetComponent<IQuestSettable>().SetQuestCompleteToPrefs(levelName, 2);
 
-        // Call the necessary EnergySystem.Replenish function
-        Debug.Log("Recovered Energy");
+            // Call the necessary EnergySystem.Replenish function
+            Debug.Log("Recovered Energy");
+        }
+        
     }
 
     private void ThreeStarReward()
     {
-        //activeQuests[2].gameObject.GetComponent<IQuestSettable>().SetQuestCompleteToPrefs(levelName, 3);
+        if (PlayerPrefs.GetInt(levelName + "_3rewarded") == 0)
+        {
+            PlayerPrefs.SetInt(levelName + "_3rewarded", 1);
+            EnergyManager.Instance.AddEnergy(1);
+            //activeQuests[2].gameObject.GetComponent<IQuestSettable>().SetQuestCompleteToPrefs(levelName, 3);
 
-        // Call the necessary Token Fragment function
-        Debug.Log("Received a Token Fragment");
+            // Call the necessary Token Fragment function
+            Debug.Log("Received a Token Fragment");
+        }
+        
     }
 
     //IEnumerator GrabTheRewards()

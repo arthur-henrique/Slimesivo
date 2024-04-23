@@ -19,6 +19,7 @@ public class TimeLimitQuest : MonoBehaviour, IQuestSettable
         {
             print("SucceedTime");
             print(PlayableLevelManager.Instance.timeSpent);
+            QuestManager.Instance.questsCompleted++;
             SetQuestCompleteToPrefs(dicKey, keyInt);
             //QuestingDictionary.Instance.clearedQuestDictionary[dicKey + "_" + keyInt] = true;
             return true;

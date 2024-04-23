@@ -18,6 +18,7 @@ public class DamageLimitQuest : MonoBehaviour, IQuestSettable
         {
             print("SucceedDamage");           
             print(PlayableLevelManager.Instance.timesHit);
+            QuestManager.Instance.questsCompleted++;
             SetQuestCompleteToPrefs(dicKey, keyInt);
             //QuestingDictionary.Instance.clearedQuestDictionary[dicKey + "_" + keyInt] = true;
             return true;
