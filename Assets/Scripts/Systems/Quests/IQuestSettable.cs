@@ -1,5 +1,5 @@
 public interface IQuestSettable
 {
-    bool CompletedQuest();
+    bool CompletedQuest(string dicKey, int keyInt);
     void SetQuestCompleteToPrefs(string dicKey, int keyInt);
 }

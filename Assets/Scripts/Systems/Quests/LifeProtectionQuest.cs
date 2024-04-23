@@ -14,12 +14,13 @@ public class LifeProtectionQuest : MonoBehaviour, IQuestSettable
         print(livesToHave);
     }
 
-    public bool CompletedQuest()
+    public bool CompletedQuest(string dicKey, int keyInt)
     {
         if (livesToHave <= GameManager.instance.livesAmount)
         {
             print("SucceedLives");
             print(GameManager.instance.livesAmount);
+            SetQuestCompleteToPrefs(dicKey, keyInt);
             //QuestingDictionary.Instance.clearedQuestDictionary[dicKey + "_" + keyInt] = true;
             return true;
         }

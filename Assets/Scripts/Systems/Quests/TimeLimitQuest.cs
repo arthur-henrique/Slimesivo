@@ -13,12 +13,13 @@ public class TimeLimitQuest : MonoBehaviour, IQuestSettable
         timeLimit = QuestingDictionary.Instance.questDictionary.TryGetValue(SceneManager.GetActiveScene().name + "_seconds", out timeLimit) ? timeLimit : 0;
     }
 
-    public bool CompletedQuest()
+    public bool CompletedQuest(string dicKey, int keyInt)
     {
         if(timeLimit >= PlayableLevelManager.Instance.timeSpent)
         {
             print("SucceedTime");
             print(PlayableLevelManager.Instance.timeSpent);
+            SetQuestCompleteToPrefs(dicKey, keyInt);
             //QuestingDictionary.Instance.clearedQuestDictionary[dicKey + "_" + keyInt] = true;
             return true;
         }

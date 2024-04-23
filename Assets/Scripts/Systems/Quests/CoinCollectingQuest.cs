@@ -13,12 +13,13 @@ public class CoinCollectingQuest : MonoBehaviour, IQuestSettable
         coinsToCollect = QuestingDictionary.Instance.questDictionary.TryGetValue(SceneManager.GetActiveScene().name + "_coins", out coinsToCollect) ? coinsToCollect : 0;
     }
 
-    public bool CompletedQuest()
+    public bool CompletedQuest(string dicKey, int keyInt)
     {
         if (coinsToCollect <= PlayableLevelManager.Instance.coinsCollected)
         {
             print("SucceedCoin");
             print(PlayableLevelManager.Instance.coinsCollected);
+            SetQuestCompleteToPrefs(dicKey, keyInt);
             //QuestingDictionary.Instance.clearedQuestDictionary[dicKey+"_"+keyInt] = true;
             return true;
         }
