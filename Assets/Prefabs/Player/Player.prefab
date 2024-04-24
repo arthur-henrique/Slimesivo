@@ -113,15 +113,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   inputMode: 0
-  _touchPressAction:
-    m_Name: Touch Press
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 83dd9dbe-6e65-4997-961e-f081600c505b
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
+  minimunDistance: 0.2
+  maximumTime: 1
+  directionThreshold: 0.9
   rightCounter: 0
   leftCounter: 0
 --- !u!114 &2682705831866685873
@@ -301,7 +295,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -568097773, guid: 54464af9e470bc14daea6bc14192cecf, type: 3}
+  m_Sprite: {fileID: -1928527226, guid: 0f06c96a518808e4eb10c117e5f4182a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
