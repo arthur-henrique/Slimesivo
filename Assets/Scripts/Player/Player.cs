@@ -181,7 +181,7 @@ public class Player : MonoBehaviour
         
         if (_touchManager.IsFacingRight && IsOnGround())
         {
-            _touchManager._touchPressAction.Disable();
+            _touchManager.inputActions.Disable();
             rig.velocity = new Vector2(sideForce, firstJumpForce);
            
 
@@ -189,7 +189,7 @@ public class Player : MonoBehaviour
         else if(IsOnGround() && !_touchManager.IsFacingRight)
         {
 
-            _touchManager._touchPressAction.Disable();
+            _touchManager.inputActions.Disable();
             rig.velocity = new Vector2(-sideForce, firstJumpForce);
             anim.SetInteger("AnimParameter", 2);
 
@@ -213,7 +213,7 @@ public class Player : MonoBehaviour
         StopAllCoroutines();
         ResetPlayerRotation();
         anim.SetInteger("AnimParameter", 1);
-        _touchManager._touchPressAction.Disable();
+        _touchManager.inputActions.Disable();
         isWallJumping = true;
         playerStatsScript.isRepawning = false;
         if (!_touchManager.IsFacingRight)
@@ -249,8 +249,8 @@ public class Player : MonoBehaviour
        
             if (IsWalled() && !IsOnGround() && !isWallJumping)
             {
-                
-                _touchManager._touchPressAction.Enable();
+
+                _touchManager.inputActions.Enable();
                 doubleJumpCounter = 0;
                 anim.SetInteger("AnimParameter", 3);
                 isWallSliding = true;
@@ -285,7 +285,7 @@ public class Player : MonoBehaviour
             else if (IsOnGround() && !isJumping)
             {
                  anim.SetInteger("AnimParameter", 0);
-                 _touchManager._touchPressAction.Enable();
+                 _touchManager.inputActions.Enable();
                  isWallSliding = false;
                  playerSprite.transform.rotation = Quaternion.Euler(0, 0, 0);
 
@@ -341,7 +341,7 @@ public class Player : MonoBehaviour
 
     private void DoubleJump()
     {
-        _touchManager._touchPressAction.Disable();
+        _touchManager.inputActions.Disable();
         rig.velocity = Vector3.zero;
         doubleJumpCounter++;
         if (_touchManager.IsFacingRight )
@@ -446,7 +446,7 @@ public class Player : MonoBehaviour
         if (hitCounter == 0)
         {
             isJumping = false;
-            _touchManager._touchPressAction.Disable();
+            _touchManager.inputActions.Disable();
             hitCounter++;
             PlayerCollision.Instance.DamageCollision(obstacleCollision);
 

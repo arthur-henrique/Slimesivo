@@ -6,14 +6,37 @@ using UnityEngine.EventSystems;
 public class TouchManager : MonoBehaviour
 {
     [SerializeField] private LayerMask uiLayer;
+     private enum InputMode
+    {
+        Tap_Performed,
+        Tap_Release,
+        Swipe,
+
+    }
+
+    [SerializeField] private InputMode inputMode;
+    
+    //Swipe Variables in inspector
+    [Header("Swipe Variables")]
+    [Tooltip("Distancia minima para ser considerado um swipe")]
+    [SerializeField] private float minimunDistance = .2f;
+    [Tooltip("Tempo máximo para ser considerado um swipe")]
+    [SerializeField] private float maximumTime = 1f;
+    [Tooltip("O quão errado a linha vai detectar, tipo 0 vc pode fazer na maior diagonal que vai e 1 tem que ser perfeitamente na horizontal e vertical")]
+    [SerializeField, Range(0f, 1f)] private float directionThreshold = .9f;
+
+    //Swipe Variables hide
+    private Vector2 startPosition;
+    private float startTime;
+    private Vector2 endPosition;
+    private float endTime;
 
     //Input
-    private PlayerInput playerInput;
     private float screenSideX;
-    private InputAction touchPositionAction;
-    [HideInInspector] public InputAction _touchPressAction;
+    [HideInInspector] public PlayerTouchControls inputActions;
     private Vector2 value;
     private float _worldWidth;
+    private Camera mainCamera;
 
 
 
@@ -53,26 +76,100 @@ public class TouchManager : MonoBehaviour
     }
     private void Components()
     {
-        playerInput = gameObject.GetComponent<PlayerInput>();
-        touchPositionAction = playerInput.actions["TouchPosition"];
-        _touchPressAction = playerInput.actions["TouchPress"];
+        inputActions = new PlayerTouchControls();
         playerScript = GetComponent<Player>();
+        mainCamera = Camera.main;
     }
     private void OnEnable()
     {
-        _touchPressAction.performed += TouchPress;
+        switch (inputMode)
+        {
+            case InputMode.Tap_Performed:
+                inputActions.Touch.TouchPress.performed += TouchPress;
+                break;
+            case InputMode.Tap_Release:
+                inputActions.Touch.TouchPress.canceled += TouchPress;
+                break;
+            case InputMode.Swipe:
+                inputActions.Touch.PrimaryContact.started += ctx => StartTouchPrimary(ctx);
+                inputActions.Touch.PrimaryContact.canceled += ctx => EndTouchPrimary(ctx);
+                break;
+        }
+            
+       
+            
+        
+       
         
     }
     private void OnDisable()
     {
-        _touchPressAction.performed -= TouchPress;
+        inputActions.Touch.TouchPress.canceled -= TouchPress;
+        inputActions.Touch.TouchPress.performed -= TouchPress;
+    }
+    #endregion
+
+    #region Swipe
+    private void StartTouchPrimary(InputAction.CallbackContext context)
+    {
+        startPosition = ScreenToWorld(mainCamera, inputActions.Touch.PrimaryPosition.ReadValue<Vector2>());
+        startTime = (float)context.startTime; ;
+    }
+    private void EndTouchPrimary(InputAction.CallbackContext context)
+    {
+       endPosition = ScreenToWorld(mainCamera, inputActions.Touch.PrimaryPosition.ReadValue<Vector2>());
+        endTime = (float)context.time;
+
+        DetectSwipe();
     }
 
-    
+    private void DetectSwipe()
+    {
+        if(Vector3.Distance(startPosition, endPosition)>= minimunDistance && (endTime - startTime) <= maximumTime)
+        {
+            Debug.DrawLine(startPosition, endPosition, Color.red, 5f);
+            Vector3 direction = endPosition - startPosition;
+            Vector2 direction2D = new Vector2(direction.x, direction.y).normalized;
+            SwipeDirection(direction2D);
+        }
+    }
+    private void SwipeDirection(Vector2 direction)
+    {
+        if(Vector2.Dot(Vector2.right,direction) > directionThreshold)
+        {
+            Debug.Log("swipe Right");
+            _isFacingRight = true;
+            playerScript.JumpManager();
+        
+        }
+        else if (Vector2.Dot(Vector2.left, direction) > directionThreshold)
+        {
+            Debug.Log("swipe Left");
+            _isFacingRight = false;
+            playerScript.JumpManager();
+        }
+        else if (Vector2.Dot(Vector2.up, direction) > directionThreshold)
+        {
+            Debug.Log("swipe Up");
+            if ((GetPlayerPositionInScreen(0.2f, true)))
+            {
+                _isFacingRight = true;
+                playerScript.JumpSameSide();
+            }
+            else if (GetPlayerPositionInScreen(-0.2f, false))
+            {
+                _isFacingRight = false;
+                playerScript.JumpSameSide();
+            }
+        }
+    }
+    #endregion
+
+    #region TapInput
     private void TouchPress(InputAction.CallbackContext context)
     {
        //Pega o valor do pixel onde o player clica e divide pelo valor total de pixeis da tela
-        value = touchPositionAction.ReadValue<Vector2>();
+        value = inputActions.Touch.TouchPosition.ReadValue<Vector2>();
         screenSideX = value.x / Camera.main.pixelWidth;
 
                    
@@ -109,9 +206,14 @@ public class TouchManager : MonoBehaviour
                 }
             }
     }
+    #endregion
 
-
-        
+    #region Detection
+    private Vector3 ScreenToWorld(Camera camera, Vector3 position)
+    {
+        position.z = camera.nearClipPlane;
+        return camera.ScreenToWorldPoint(position);
+    }    
 
     public bool GetPlayerPositionInScreen(float range, bool greaterOrLess)
     {
@@ -148,7 +250,7 @@ public class TouchManager : MonoBehaviour
         return false;
     }
 
+  
     #endregion
-
 
 }
