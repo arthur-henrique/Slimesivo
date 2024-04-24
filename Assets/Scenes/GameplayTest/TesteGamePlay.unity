@@ -4907,7 +4907,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fe146808b3f7464e8cd1cf5eebf99b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstJumpForce: 5
+  firstJumpForce: 12
   groundCheck: {fileID: 4717658453486986004}
   groundLayer:
     serializedVersion: 2
@@ -4923,7 +4923,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   doubleJumpMaxCounter: 1
-  doubleJumpForce: 11
+  doubleJumpForce: 12
   damageLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -4931,6 +4931,7 @@ MonoBehaviour:
   maxTimeToDie: 3
   knockbackForce: 6
   hitCounter: 0
+  gravityMultiplyer: 5
 --- !u!4 &4717658453486986004
 Transform:
   m_ObjectHideFlags: 0

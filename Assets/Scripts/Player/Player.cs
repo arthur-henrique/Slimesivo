@@ -79,6 +79,10 @@ public class Player : MonoBehaviour
     private bool getHit;
     public float hitCounter;
 
+
+    //Gravity variables
+    private float originalGravity;
+    [SerializeField] private float gravityMultiplyer;
     public TouchManager touchManager
     {
         get { return _touchManager; }
@@ -126,6 +130,7 @@ public class Player : MonoBehaviour
         if (!IsWalled() && !IsOnGround())
         {
             deathCounter += Time.deltaTime;
+            rig.gravityScale += gravityMultiplyer * Time.deltaTime;
 
         }
         else
@@ -152,6 +157,7 @@ public class Player : MonoBehaviour
         playerStatsScript = GetComponent<PlayerStats>();
         anim = GetComponentInChildren<Animator>();
         playerCollider = GetComponent<Collider2D>();
+        originalGravity = rig.gravityScale;
          
     }
     public bool IsOnGround()
@@ -168,7 +174,7 @@ public class Player : MonoBehaviour
         isJumping = true;
         StopAllCoroutines();
         ResetPlayerRotation();
-        rig.gravityScale = 1;
+        rig.gravityScale = originalGravity;
         wallSlideStates = WallSlideStates.WallStick;
         anim.SetInteger("AnimParameter", 1);
 
@@ -216,7 +222,7 @@ public class Player : MonoBehaviour
         }
 
         wallSlideStates = WallSlideStates.WallStick;
-        rig.gravityScale = 1;
+        rig.gravityScale = originalGravity;
         rig.velocity = new Vector2(rig.velocity.x, doubleJumpForce);
      
         Invoke(nameof(StopJumpSameSide), jumpSameSideTimer);
