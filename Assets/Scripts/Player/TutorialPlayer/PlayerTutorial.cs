@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class PlayerTutorial : MonoBehaviour
 {
-    public static Player Instance;
+    public static PlayerTutorial Instance;
 
     [Header("Jump variables")]
     [Tooltip("O quão alto o player pode pular no primeiro pulo")]
@@ -19,12 +19,13 @@ public class Player : MonoBehaviour
 
     //components
     private Rigidbody2D rig;
-    private TouchManager _touchManager;
-    private PlayerStats playerStatsScript;
+    private TouchManagerTutorial _touchManager;
+    private PlayerStatsTutorial playerStatsScript;
     private Animator anim;
     [Header("components")]
     [SerializeField] private GameObject playerSprite;
     [SerializeField] private CameraController cameraController;
+    [SerializeField] private TutorialManager tutorialManagerScript;
     Collider2D playerCollider;
 
    //wall slide
@@ -84,7 +85,7 @@ public class Player : MonoBehaviour
     private float originalGravity;
     private bool canApplyGravity;
     [SerializeField] private float gravityMultiplyer;
-    public TouchManager touchManager
+    public TouchManagerTutorial touchManager
     {
         get { return _touchManager; }
         set { _touchManager = value; }
@@ -158,8 +159,8 @@ public class Player : MonoBehaviour
     private void Components()
     {
         rig = GetComponent<Rigidbody2D>();
-        _touchManager = GetComponent<TouchManager>();
-        playerStatsScript = GetComponent<PlayerStats>();
+        _touchManager = GetComponent<TouchManagerTutorial>();
+        playerStatsScript = GetComponent<PlayerStatsTutorial>();
         anim = GetComponentInChildren<Animator>();
         playerCollider = GetComponent<Collider2D>();
         originalGravity = rig.gravityScale;
@@ -208,7 +209,11 @@ public class Player : MonoBehaviour
 
         if(!IsOnGround() && !IsWalled() && doubleJumpCounter < doubleJumpMaxCounter)
         {
-            DoubleJump();
+           if(tutorialManagerScript.tutorialStages == TutorialManager.TutorialFases.Stage4)
+           {
+              DoubleJump();
+           }
+            
         }
         playerStatsScript.isRepawning = false;    
             
@@ -252,7 +257,6 @@ public class Player : MonoBehaviour
    
     private void WallStick()
     {
-       
             if (IsWalled() && !IsOnGround() && !isWallJumping)
             {
 
@@ -262,24 +266,22 @@ public class Player : MonoBehaviour
                 anim.SetInteger("AnimParameter", 3);
                 isWallSliding = true;
                 isJumping = false;
-                switch (wallSlideStates)
-                {
-                    case WallSlideStates.WallStick:
-                        StartCoroutine(WallStickTimer());
-                        playerStatsScript.SaveCurrentPlayerPos();
-                        break;
-                    case WallSlideStates.WallSlideSlow:
-                        StartCoroutine(WallSlideMinTimer());
-                        break;
-                    case WallSlideStates.WallSlideFast:
-                        StartCoroutine(WallSlideMaxTimer());
-                        break;
-
-
-
-
-
-                }
+                 
+                    switch (wallSlideStates)
+                    {
+                         case WallSlideStates.WallStick:
+                             StartCoroutine(WallStickTimer());
+                             playerStatsScript.SaveCurrentPlayerPos();
+                             break;
+                         case WallSlideStates.WallSlideSlow:
+                             StartCoroutine(WallSlideMinTimer());
+                             break;
+                         case WallSlideStates.WallSlideFast:
+                             StartCoroutine(WallSlideMaxTimer());
+                             break;
+                    }
+                 
+                
                  
                     PlayerOrientationChecker();
                    
@@ -297,12 +299,13 @@ public class Player : MonoBehaviour
                  playerSprite.transform.rotation = Quaternion.Euler(0, 0, 0);
 
              }
-        else
-            {
-                isWallSliding = false;
-            }
+              else
+              {
+                 isWallSliding = false;
+              }
             
-       
+    
+      
 
     }
 
@@ -380,9 +383,13 @@ public class Player : MonoBehaviour
 
 
         }
-        rig.gravityScale = 1;
-        wallSlideStates = WallSlideStates.WallSlideSlow;
-
+        if (tutorialManagerScript.tutorialStages == TutorialManager.TutorialFases.Stage4)
+        {
+            rig.gravityScale = 1;
+            wallSlideStates = WallSlideStates.WallSlideSlow;
+        }
+        
+         
     }
 
     IEnumerator WallSlideMinTimer()

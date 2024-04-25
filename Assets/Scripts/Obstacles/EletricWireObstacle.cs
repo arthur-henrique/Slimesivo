@@ -21,11 +21,11 @@ public class EletricWireObstacle : MonoBehaviour
         switch (wireState)
         {
             case EletricWireStates.Cooldown:
-                StartCoroutine("CooldownTimer");
+                StartCoroutine(CooldownTimer());
                 collider.enabled = false;
                 break;
             case EletricWireStates.DealingDamage:
-                StartCoroutine("DealingDamageTimer");
+                StartCoroutine(DealingDamageTimer());
                 collider.enabled = true;
                 break;
         }
