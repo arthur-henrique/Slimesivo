@@ -1339,6 +1339,7 @@ MonoBehaviour:
   - {fileID: 8158506478293464451, guid: a3fc6248ecb51da429e0d5bb71118336, type: 3}
   - {fileID: 4210125939579040936, guid: 71110a4eec2058e43989e7645b53851b, type: 3}
   activeQuests: []
+  activeQuestsIndex: 
   questsCompleted: 0
   coinToAward: 15
 --- !u!4 &107857647
@@ -10567,7 +10568,7 @@ PrefabInstance:
     - target: {fileID: 2682705831866685873, guid: c81d557d2fcf8b14984c989be23dd044,
         type: 3}
       propertyPath: firstJumpForce
-      value: 8
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 2682705831866685873, guid: c81d557d2fcf8b14984c989be23dd044,
         type: 3}
@@ -14106,7 +14107,7 @@ Transform:
   m_GameObject: {fileID: 2118619762255139302}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.38, y: -6.960004, z: 8.45}
+  m_LocalPosition: {x: -3.874, y: -6.960004, z: 8.45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -18400,7 +18401,7 @@ Transform:
   m_GameObject: {fileID: 8454351750522947989}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.41, y: -6.960004, z: 8.45}
+  m_LocalPosition: {x: 3.904, y: -6.960004, z: 8.45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
