@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerTutorial : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class PlayerTutorial : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float jumpSameSideTimer = 1f;
     private bool isJumping;
+    public bool canDoubleJump;
 
 
     //components
@@ -204,12 +206,20 @@ public class PlayerTutorial : MonoBehaviour
         if(!IsOnGround() && IsWalled())
         {
             WallJump();
-        
+            if (tutorialManagerScript.tutorialStages == TutorialManager.TutorialFases.Stage2)
+            {
+                canDoubleJump = true;
+            }
+            else if(tutorialManagerScript.tutorialStages == TutorialManager.TutorialFases.Stage1)
+            {
+                _touchManager.inputActions.Disable();
+            }
+
         }
 
         if(!IsOnGround() && !IsWalled() && doubleJumpCounter < doubleJumpMaxCounter)
         {
-           if(tutorialManagerScript.tutorialStages == TutorialManager.TutorialFases.Stage4)
+           if((int)tutorialManagerScript.tutorialStages < 4)
            {
               DoubleJump();
            }
@@ -351,10 +361,17 @@ public class PlayerTutorial : MonoBehaviour
 
     private void DoubleJump()
     {
+        if (canDoubleJump)
+        {
+            Time.timeScale = 1f;
+            Time.fixedDeltaTime = .02f;
+            tutorialManagerScript.tutorialStages = TutorialManager.TutorialFases.Stage3;
+            canDoubleJump = false;
+        }
         _touchManager.inputActions.Disable();
         rig.velocity = Vector3.zero;
         doubleJumpCounter++;
-        if (_touchManager.IsFacingRight )
+        if (_touchManager.IsFacingRight)
         {
             rig.velocity = new Vector2(sideForce, doubleJumpForce);
         }

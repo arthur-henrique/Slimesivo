@@ -21,8 +21,15 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private GameObject leftJumpsprite;
     [SerializeField] private GameObject rightJumpsprite;
     [SerializeField] private GameObject initialJumpSprite;
+    private Vector3 worldPosition;
+    private void Start()
+    {
+        DefineWorldWidth();
+    }
+
     void Update()
     {
+        Debug.Log((float)tutorialStages);
         switch (tutorialStages)
         {
             case TutorialFases.Stage1:
@@ -61,7 +68,21 @@ public class TutorialManager : MonoBehaviour
     }
     private void Stage2Parameters()
     {
-
+        if (playerTutorialScript.canDoubleJump)
+        {
+            float scale = 0.5f;
+            if (playerTutorialScript.gameObject.transform.position.x == worldPosition.x)
+            {
+                scale = 0;
+                Time.timeScale = scale;
+                Time.fixedDeltaTime = scale * .02f;
+            }
+            else
+            {
+                Time.timeScale = scale;
+                Time.fixedDeltaTime = scale * .02f;
+            }
+        }
     }
     private void Stage3Parameters()
     {
@@ -70,5 +91,10 @@ public class TutorialManager : MonoBehaviour
     private void Stage4Parameters()
     {
 
+    }
+    void DefineWorldWidth()
+    {
+        Vector3 screenPosition = new Vector3(Screen.width/2, Screen.height/2,0);
+        worldPosition = Camera.main.ScreenToWorldPoint(screenPosition);
     }
 }
