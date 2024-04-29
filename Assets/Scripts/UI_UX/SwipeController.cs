@@ -22,7 +22,8 @@ public class SwipeController : MonoBehaviour, IEndDragHandler
     [SerializeField] private TMP_Text mapText;
 
     [SerializeField] private TMP_Text starsCountText;
-    [Tooltip("Quantos niveis existem em cada mapa")]
+    //[Tooltip("Quantos niveis existem em cada mapa")]
+    [NamedArray(new string[] { "COLOCA 0 NESSE", "Map 1", "Map 2", "Map 3" })]
     [SerializeField] private int[] howManyLevelsInEachMap;
 
     private void Awake()
