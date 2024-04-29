@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEditor;
 
 public class SwipeController : MonoBehaviour, IEndDragHandler
 {
@@ -20,11 +21,36 @@ public class SwipeController : MonoBehaviour, IEndDragHandler
     [SerializeField] private int thresholdValue; //8 parece ser ideal
     [SerializeField] Button previousButton, nextButton;
     [SerializeField] private TMP_Text mapText;
-
     [SerializeField] private TMP_Text starsCountText;
+
     //[Tooltip("Quantos niveis existem em cada mapa")]
+    //[NamedArrayAttribute()]
     [NamedArray(new string[] { "COLOCA 0 NESSE", "Map 1", "Map 2", "Map 3" })]
     [SerializeField] private int[] howManyLevelsInEachMap;
+
+   /* #region para o Array do howManyLevelsInEachMap aparecer direito no Inspector
+    public class NamedArrayAttribute : PropertyAttribute
+    {
+        public NamedArrayAttribute() { }
+    }
+
+    [CustomPropertyDrawer(typeof(NamedArrayAttribute))]
+    public class NamedArrayDrawer : PropertyDrawer
+    {
+        public override void OnGUI(Rect rect, SerializedProperty property, GUIContent label)
+        {
+            try
+            {
+                label.text = label.text.Replace("Element", "Map");
+                EditorGUI.ObjectField(rect, property, label);
+            }
+            catch
+            {
+                EditorGUI.ObjectField(rect, property, label);
+            }
+        }
+    }
+    #endregion */
 
     private void Awake()
     {
