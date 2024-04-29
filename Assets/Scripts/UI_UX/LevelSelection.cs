@@ -162,8 +162,9 @@ public class LevelSelection : MonoBehaviour
         string[] objectNameNumber = gameObject.name.Split('_');
         int previousLevelIndex = int.Parse(objectNameNumber[1]) - 1;
         previousLevelName = objectNameNumber[0] + "_" + previousLevelIndex.ToString("000");
-        levelTextName[0].text = objectNameNumber[0] + " " + int.Parse(objectNameNumber[1]);
-        levelTextName[1].text = objectNameNumber[0] + " " + int.Parse(objectNameNumber[1]);
+        //levelTextName[0].text = objectNameNumber[0] + " " + int.Parse(objectNameNumber[1]);
+        levelTextName[0].text = objectNameNumber[1].TrimStart('0'); //numero do nivel que aparece no mapa
+        levelTextName[1].text = objectNameNumber[0] + " " + int.Parse(objectNameNumber[1]); //nome e numero do nivel que aparecem no pop up
 
         #endregion
 
