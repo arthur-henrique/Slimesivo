@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class MainMenuCanvasScript : MonoBehaviour
 {
-    [SerializeField] private GameObject infinityButton, campaignButton, rightChangeButton, leftChangeButton, storePagePanel, settingsButton, leaderboardPanel, energyPanel;
+    [SerializeField] private GameObject infinityButton, campaignButton, rightChangeButton, leftChangeButton, storePagePanel, inventoryPagePanel, settingsButton, leaderboardPanel, energyPanel;
     [SerializeField] private GameObject[] purchaseSignButtons;
     [SerializeField] private LeaderboardsPage leaderboardPage;
 
@@ -67,6 +67,29 @@ public class MainMenuCanvasScript : MonoBehaviour
         {
             settingsButton.SetActive(false);
             storePagePanel.SetActive(true);
+            for (int i = 0; i < purchaseSignButtons.Length; i++)
+            {
+                purchaseSignButtons[i].SetActive(false);
+            }
+        }
+    }
+
+    public void EnterExitInventoryPage()
+    {
+        if (inventoryPagePanel.activeSelf == true) //exit
+        {
+            settingsButton.SetActive(true);
+            inventoryPagePanel.SetActive(false);
+            for (int i = 0; i < purchaseSignButtons.Length; i++)
+            {
+                purchaseSignButtons[i].SetActive(true);
+            }
+        }
+        else //enter
+        {
+            settingsButton.SetActive(false);
+            inventoryPagePanel.SetActive(true);
+            InventoryDisplayer.Instance.DisplaySkins(SkinSystemChecker.Instance.allSkins);
             for (int i = 0; i < purchaseSignButtons.Length; i++)
             {
                 purchaseSignButtons[i].SetActive(false);

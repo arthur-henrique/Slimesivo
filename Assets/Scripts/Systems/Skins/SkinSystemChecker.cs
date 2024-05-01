@@ -8,9 +8,10 @@ public class SkinInfo
 {
     // a simple data structure to hold information about each skin, such as whether it’s unlocked,
     // its display name, and any other relevant attributes.
-    public bool IsUnlocked { get; set; }
+    public bool Available { get; set; }
     public string DisplayName { get; set; }
-    public string Description { get; set; }
+    public bool Owned { get; set; }
+    public string Rarity { get; set; }
 }
 
 public class Skin
@@ -23,21 +24,38 @@ public class Skin
 }
 public class SkinSystemChecker : MonoBehaviour
 {
-    /*
-    Dictionary<string, SkinInfo> allSkins = new Dictionary<string, SkinInfo>();
+    public static SkinSystemChecker Instance;
+    public Dictionary<string, SkinInfo> allSkins = new Dictionary<string, SkinInfo>();
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        GetSkinInformation();
+    }
+
     //List<Skin> availableSkins = 
-    List<GetInventoryResult> iventoryOptions = EconomyService.Instance.PlayerInventory.GetInventoryAsync();
-    
+
     public void GetSkinInformation()
     {
-        List<GetInventoryResult> iventoryOptions = EconomyService.Instance.Configuration.GetInventoryItems();
-        if(iventoryOptions.Count > 0)
+        List<InventoryItemDefinition> iventoryOptions = EconomyService.Instance.Configuration.GetInventoryItems();
+        if (iventoryOptions.Count > 0)
         {
-            foreach(GetInventoryResult item in iventoryOptions)
+            foreach (InventoryItemDefinition item in iventoryOptions)
             {
-                allSkins.Add(item.Id, item.)
+                SkinInfo skinInfo = item.CustomDataDeserializable.GetAs<SkinInfo>();
+                print(skinInfo.Available);
+                print(skinInfo.DisplayName);
+                print(skinInfo.Owned);
+                print(skinInfo.Rarity);
+                allSkins.Add(item.Id, skinInfo);
             }
         }
+
+        
     }
-    */
+
+
+
 }
