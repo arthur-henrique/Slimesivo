@@ -35,8 +35,6 @@ public class SkinSystemChecker : MonoBehaviour
         GetSkinInformation();
     }
 
-    //List<Skin> availableSkins = 
-
     public void GetSkinInformation()
     {
         List<InventoryItemDefinition> iventoryOptions = EconomyService.Instance.Configuration.GetInventoryItems();
@@ -45,17 +43,8 @@ public class SkinSystemChecker : MonoBehaviour
             foreach (InventoryItemDefinition item in iventoryOptions)
             {
                 SkinInfo skinInfo = item.CustomDataDeserializable.GetAs<SkinInfo>();
-                print(skinInfo.Available);
-                print(skinInfo.DisplayName);
-                print(skinInfo.Owned);
-                print(skinInfo.Rarity);
                 allSkins.Add(item.Id, skinInfo);
             }
         }
-
-        
     }
-
-
-
 }
