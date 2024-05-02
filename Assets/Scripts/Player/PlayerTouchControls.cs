@@ -90,7 +90,7 @@ public partial class @PlayerTouchControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""d693f9a8-4bef-4a21-b176-f42524883d1d"",
-                    ""path"": ""<Touchscreen>/primaryTouch/press"",
+                    ""path"": ""<Touchscreen>/touch0/press"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
@@ -101,7 +101,7 @@ public partial class @PlayerTouchControls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""20afa0cf-acc5-41e1-9790-232bb7ce5229"",
-                    ""path"": ""<Touchscreen>/primaryTouch/position"",
+                    ""path"": ""<Touchscreen>/touch0/position"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
