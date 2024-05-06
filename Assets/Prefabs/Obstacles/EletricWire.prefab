@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4670747963938390166}
   - component: {fileID: 7315999555162031858}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 2751533374431481567}
   - component: {fileID: 5015946801598093874}
   - component: {fileID: 340284956326244643}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: EletricWire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,6 +134,7 @@ MonoBehaviour:
   cooldownTime: 2
   dealingDamageTime: 1
   sprite: {fileID: 7315999555162031858}
+  collider: {fileID: 340284956326244643}
 --- !u!61 &340284956326244643
 BoxCollider2D:
   m_ObjectHideFlags: 0
