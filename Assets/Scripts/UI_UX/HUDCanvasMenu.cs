@@ -138,6 +138,20 @@ public class HUDCanvasMenu : MonoBehaviour
         }
     }
 
+    public void Options()
+    {
+        if(!optionsPanel.activeSelf)
+        {
+            optionsPanel.SetActive(true);
+            pausePanel.SetActive(false);
+        }
+        else
+        {
+            optionsPanel.SetActive(false);
+            pausePanel.SetActive(true);
+        }
+    }
+
     /// <summary>
     /// Para mostrar a contagem regressiva de quando despausa o jogo
     /// </summary>

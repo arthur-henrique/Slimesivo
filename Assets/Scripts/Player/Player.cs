@@ -151,7 +151,9 @@ public class Player : MonoBehaviour
             playerStatsScript.RespawnPlayer();
 
         }
+       
     }
+
 
     #region Jump
 

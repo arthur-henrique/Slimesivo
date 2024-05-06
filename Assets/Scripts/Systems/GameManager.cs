@@ -32,6 +32,17 @@ public class GameManager : MonoBehaviour
     public string _playerNick;
     public string _playerRank;
 
+
+    // Input Enum
+    public enum InputMode
+    {
+        Tap_Performed,
+        Tap_Release,
+        Swipe,
+
+    }
+    [SerializeField] public InputMode activeInputMode;
+    private bool isInGame;
     void Awake()
     {
         // Check if instance already exists
@@ -116,6 +127,29 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void SwitchInput(bool active)
+    {
+        if (active)
+        {
+            activeInputMode = InputMode.Swipe;
+            print("true");
+            if(isInGame) 
+            {
+                TouchManager.instance.inputActions.Touch.Disable();
+                TouchManager.instance.CheckActiveInputMode();
+            }
+        }
+        else
+        {
+            activeInputMode = InputMode.Tap_Performed;
+            print("false");
+            if (isInGame)
+            {
+                TouchManager.instance.inputActions.Touch.Disable();
+                TouchManager.instance.inputActions.Touch.Enable();
+            }
+        }
+    }
     public void GetPlayerRanking(TMP_Text playersNick, TMP_Text playerScore, TMP_Text playerRank)
     {
         playersNick.text = _playerNick;
@@ -125,15 +159,23 @@ public class GameManager : MonoBehaviour
 
     public void SceneLoad()
     {
-        if (SceneManager.GetActiveScene().name == "1 - Main Menu" || SceneManager.GetActiveScene().name == "SystemTesting")
+        if (SceneManager.GetActiveScene().name == "1 - Main Menu")
         {
+            isInGame = false;
             mainMenuGO.SetActive(true);
             hideMenuChild.SetActive(true);
             pauseCanvasGO.SetActive(false);
             Time.timeScale = 1f;
         }
+        else if(SceneManager.GetActiveScene().name == "2 - CampaignMap")
+        {
+            isInGame = false;
+            hideMenuChild.SetActive(false);
+            pauseCanvasGO.SetActive(false);
+        }
         else
         {
+            isInGame = true;
             mainMenuGO.SetActive(false);
             hideMenuChild.SetActive(false);
             pauseCanvasGO.SetActive(true);

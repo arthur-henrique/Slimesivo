@@ -6,12 +6,15 @@ using UnityEngine.UI;
 
 public class MainMenuCanvasScript : MonoBehaviour
 {
+    public static MainMenuCanvasScript Instance;
     [SerializeField] private GameObject infinityButton, campaignButton, rightChangeButton, leftChangeButton, storePagePanel, inventoryPagePanel, settingsButton, leaderboardPanel, energyPanel;
     [SerializeField] private GameObject[] purchaseSignButtons;
     [SerializeField] private LeaderboardsPage leaderboardPage;
 
     void Awake()
     {
+        if (Instance == null)
+            Instance = this;
         leftChangeButton.SetActive(false);
         rightChangeButton.SetActive(true);
         infinityButton.SetActive(false);
@@ -39,7 +42,10 @@ public class MainMenuCanvasScript : MonoBehaviour
             rightChangeButton.SetActive(false);
         }
     }
-
+    public void HideInventory()
+    {
+        inventoryPagePanel.SetActive(false);
+    }
     public void InfinityMode()
     {
         print("carrega modo infinito - descomentar linha");
@@ -84,12 +90,14 @@ public class MainMenuCanvasScript : MonoBehaviour
             {
                 purchaseSignButtons[i].SetActive(true);
             }
+            GameManagerMainMenuCanvasScript.Instance.ShowSideButtons();
         }
         else //enter
         {
             settingsButton.SetActive(false);
             inventoryPagePanel.SetActive(true);
             InventoryDisplayer.Instance.DisplaySkins(SkinSystemChecker.Instance.allSkins);
+            GameManagerMainMenuCanvasScript.Instance.HideSideButtons();
             for (int i = 0; i < purchaseSignButtons.Length; i++)
             {
                 purchaseSignButtons[i].SetActive(false);

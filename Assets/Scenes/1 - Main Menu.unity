@@ -5233,6 +5233,8 @@ MonoBehaviour:
   settingsButton: {fileID: 169444138}
   leaderboardPanel: {fileID: 187185346}
   energyPanel: {fileID: 1899157269}
+  storeButton: {fileID: 391265801}
+  leaderboardButton: {fileID: 416805372}
   purchaseSignButtons:
   - {fileID: 185358914}
   - {fileID: 427241719}
@@ -11633,7 +11635,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 322.57446, y: -191.42444}
+  m_AnchoredPosition: {x: 322.57446, y: -192.0901}
   m_SizeDelta: {x: 432.85352, y: 114.833}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &435948732
@@ -16418,7 +16420,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 316.4449, y: -346.6827}
+  m_AnchoredPosition: {x: 316.4449, y: -347.07367}
   m_SizeDelta: {x: 463.9554, y: 62.7046}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &659262975
@@ -21124,6 +21126,7 @@ MonoBehaviour:
   _playerBestScore: 
   _playerNick: 
   _playerRank: 
+  activeInputMode: 0
 --- !u!4 &808458483
 Transform:
   m_ObjectHideFlags: 0
@@ -32458,7 +32461,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 322.57446, y: -77.71106}
+  m_AnchoredPosition: {x: 322.57446, y: -77.93295}
   m_SizeDelta: {x: 266.79663, y: 107.6505}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1315429786
@@ -32749,7 +32752,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 316.4449, y: -419.4961}
+  m_AnchoredPosition: {x: 316.4449, y: -420.0174}
   m_SizeDelta: {x: 463.9554, y: 62.7046}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1320508216
@@ -32798,7 +32801,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 808458482}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: SwitchInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
 --- !u!1 &1324156788
 GameObject:
@@ -33607,7 +33622,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 322.57446, y: -426.0337}
+  m_AnchoredPosition: {x: 322.57446, y: -427.5869}
   m_SizeDelta: {x: 432.85352, y: 114.833}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1371974676
@@ -33653,7 +33668,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1371974677}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 52608057}
+        m_TargetAssemblyTypeName: HUDCanvasMenu, Assembly-CSharp
+        m_MethodName: Options
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1371974677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33947,7 +33974,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 322.57446, y: -543.3383}
+  m_AnchoredPosition: {x: 322.57446, y: -545.3353}
   m_SizeDelta: {x: 432.85352, y: 114.833}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1390494831
@@ -37346,7 +37373,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 316.4449, y: -188.9283}
+  m_AnchoredPosition: {x: 316.4449, y: -189.05862}
   m_SizeDelta: {x: 566.3178, y: 70.78967}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1535586250
@@ -39555,7 +39582,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 316.4449, y: -269.82678}
+  m_AnchoredPosition: {x: 316.4449, y: -270.0874}
   m_SizeDelta: {x: 566.3178, y: 70.7897}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1672571318
@@ -40982,7 +41009,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1731764740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44087,7 +44114,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 322.57446, y: -308.72906}
+  m_AnchoredPosition: {x: 322.57446, y: -309.8385}
   m_SizeDelta: {x: 432.85352, y: 114.833}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1877409471
@@ -49693,7 +49720,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 316.4449, y: -537.45416}
+  m_AnchoredPosition: {x: 316.4449, y: -538.10583}
   m_SizeDelta: {x: 527.5902, y: 152.994}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2130878198
@@ -49739,7 +49766,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2130878199}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 52608057}
+        m_TargetAssemblyTypeName: HUDCanvasMenu, Assembly-CSharp
+        m_MethodName: Options
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2130878199
 MonoBehaviour:
   m_ObjectHideFlags: 0

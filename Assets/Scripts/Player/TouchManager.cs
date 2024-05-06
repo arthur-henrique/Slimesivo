@@ -5,16 +5,9 @@ using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 public class TouchManager : MonoBehaviour
 {
+    public static TouchManager instance;
     [SerializeField] private LayerMask uiLayer;
-     private enum InputMode
-    {
-        Tap_Performed,
-        Tap_Release,
-        Swipe,
-
-    }
-
-    [SerializeField] private InputMode inputMode;
+   
     
     //Swipe Variables in inspector
     [Header("Swipe Variables")]
@@ -63,6 +56,10 @@ public class TouchManager : MonoBehaviour
 
     private void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
         DefineWorldWidth();
         Components();
     }
@@ -79,18 +76,21 @@ public class TouchManager : MonoBehaviour
         inputActions = new PlayerTouchControls();
         playerScript = GetComponent<Player>();
         mainCamera = Camera.main;
+        CheckActiveInputMode();
     }
-    private void OnEnable()
+
+
+    public void CheckActiveInputMode()
     {
-        switch (inputMode)
+        switch (GameManager.instance.activeInputMode)
         {
-            case InputMode.Tap_Performed:
+            case GameManager.InputMode.Tap_Performed:
                 inputActions.Touch.TouchPress.performed += TouchPress;
                 break;
-            case InputMode.Tap_Release:
+            case GameManager.InputMode.Tap_Release:
                 inputActions.Touch.TouchPress.canceled += TouchPress;
                 break;
-            case InputMode.Swipe:
+            case GameManager.InputMode.Swipe:
                 inputActions.Touch.PrimaryContact.started += ctx => StartTouchPrimary(ctx);
                 inputActions.Touch.PrimaryContact.canceled += ctx => EndTouchPrimary(ctx);
                 break;
@@ -106,6 +106,8 @@ public class TouchManager : MonoBehaviour
     {
         inputActions.Touch.TouchPress.canceled -= TouchPress;
         inputActions.Touch.TouchPress.performed -= TouchPress;
+        inputActions.Touch.PrimaryContact.started -= ctx => StartTouchPrimary(ctx);
+        inputActions.Touch.PrimaryContact.canceled -= ctx => EndTouchPrimary(ctx);
     }
     #endregion
 

@@ -9,7 +9,7 @@ public class GameManagerMainMenuCanvasScript : MonoBehaviour
 {
     public static GameManagerMainMenuCanvasScript Instance;
 
-    [SerializeField] private GameObject storePagePanel, settingsButton, leaderboardPanel, energyPanel;
+    [SerializeField] private GameObject storePagePanel, settingsButton, leaderboardPanel, energyPanel, storeButton, leaderboardButton;
     [SerializeField] private GameObject[] purchaseSignButtons;
     [SerializeField] private LeaderboardsPage leaderboardPage;
     [SerializeField] public TMP_Text coinText;
@@ -53,11 +53,24 @@ public class GameManagerMainMenuCanvasScript : MonoBehaviour
     {
         energyPanel.SetActive(false);
         settingsButton.SetActive(false);
+        MainMenuCanvasScript.Instance.HideInventory();
+        ShowSideButtons();
         for (int i = 0; i < purchaseSignButtons.Length; i++)
         {
             purchaseSignButtons[i].SetActive(false);
         }
         storePagePanel.SetActive(true);
+    }
+
+    public void HideSideButtons()
+    {
+        storeButton.SetActive(false);
+        leaderboardButton.SetActive(false);
+    }
+    public void ShowSideButtons()
+    {
+        storeButton.SetActive(true);
+        leaderboardButton.SetActive(true);
     }
 
     public void EnterExitLeaderboardPanel()
