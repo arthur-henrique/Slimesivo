@@ -7,7 +7,16 @@ public class WallsGenerator : MonoBehaviour
 {
     [SerializeField] private int wallLength;
     [SerializeField] private GameObject[] triggerWall;
+    [SerializeField] private int chanceToGenerateHole;
+    
     private int currentTrigger = 0;
+
+    //leftWall Counter
+    private int holeCounterLeft;
+    private int hasHoleLef;
+    //RightWall counter
+    private int holeCounterRight;
+    private int hasHoleRight;
     //Transforms references
     private Vector3Int leftWallReference;
     private Vector3Int rightWallReference;
@@ -33,11 +42,24 @@ public class WallsGenerator : MonoBehaviour
     }
     public void GenerateWallTile()
     {
+        Debug.Log(RandomizeHoles(hasHoleRight));
+        Debug.Log(RandomizeHoles(hasHoleLef));
+        int maxHolePerSection = 3;
         //Right Wall
         for (int i = 0; i < wallLength; i++)
         {
+            if(RandomizeHoles(hasHoleRight) != 0)
+            {
+                rightTilemap.SetTile(new Vector3Int(rightWallReference.x, rightWallReference.y + posToPlaceRight), tileSetWalls[Random.Range(0, tileSetWalls.Count())]);
+            }
+            else if (holeCounterRight < maxHolePerSection)
+            {
+                holeCounterRight++;
+                posToPlaceRight++;
+            }
+
             posToPlaceRight++;
-            rightTilemap.SetTile(new Vector3Int(rightWallReference.x, rightWallReference.y + posToPlaceRight), tileSetWalls[Random.Range(0, tileSetWalls.Count())]);
+
         }
       
         
@@ -46,10 +68,26 @@ public class WallsGenerator : MonoBehaviour
         //Left Wall
         for (int i = 0; i < wallLength; i++)
         {
+            if (RandomizeHoles(hasHoleLef) != 0)
+            {
+                leftTilemap.SetTile(new Vector3Int(leftWallReference.x, leftWallReference.y + posToPlaceLeft), tileSetWalls[Random.Range(0, tileSetWalls.Count())]);
+               
+            }
+            else if (holeCounterLeft < maxHolePerSection)
+            {
+                holeCounterLeft++;
+                posToPlaceLeft++;
+
+            }
             posToPlaceLeft++;
-            leftTilemap.SetTile(new Vector3Int(leftWallReference.x, leftWallReference.y + posToPlaceLeft), tileSetWalls[Random.Range(0, tileSetWalls.Count())]);
+
         }
        
+    }
+    float RandomizeHoles(int numberToRandom)
+    {
+        return numberToRandom = Random.Range(0, chanceToGenerateHole + 1);
+        
     }
     public void MoveTrigger()
     {

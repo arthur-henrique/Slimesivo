@@ -61,9 +61,13 @@ public class TouchManager : MonoBehaviour
             instance = this;
         }
         DefineWorldWidth();
+        
+    }
+    private void Start()
+    {
         Components();
     }
-  
+
     #region Inputs
     void DefineWorldWidth()
     { 
