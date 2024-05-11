@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 350
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -110,85 +110,85 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: slime_fly_l_0
+      name: slime_fly_right_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 768
-        width: 256
-        height: 256
+        y: 3000
+        width: 1000
+        height: 1000
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f514c86ddc4eb714d847ff0f0b7a2f47
-      internalID: 1696937791
+      spriteID: 4de3c76b12859de428e1ace1c9932f09
+      internalID: 2076939867
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: slime_fly_l_1
+      name: slime_fly_right_1
       rect:
         serializedVersion: 2
         x: 0
-        y: 512
-        width: 256
-        height: 256
+        y: 2000
+        width: 1000
+        height: 1000
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4d4bba331da6a2645afef257fbd919ad
-      internalID: 1727053851
+      spriteID: aa86488ce39b5d34ba6e1642b9378f88
+      internalID: 238063744
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: slime_fly_l_2
+      name: slime_fly_right_2
       rect:
         serializedVersion: 2
         x: 0
-        y: 256
-        width: 256
-        height: 256
+        y: 1000
+        width: 1000
+        height: 1000
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5d08c42c68aa1a74e94bf2061dcb89e3
-      internalID: 1394179104
+      spriteID: 17a46f00970359742b5f191d0dc028a0
+      internalID: 511022814
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: slime_fly_l_3
+      name: slime_fly_right_3
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 256
-        height: 256
+        width: 1000
+        height: 1000
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dc50ef7290ebc784ea2b62397429dc5f
-      internalID: -993704399
+      spriteID: 179e62fb401453d40a3d7a39932fc113
+      internalID: 1225966008
       vertices: []
       indices: 
       edges: []
@@ -204,10 +204,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      slime_fly_l_0: 1696937791
-      slime_fly_l_1: 1727053851
-      slime_fly_l_2: 1394179104
-      slime_fly_l_3: -993704399
+      slime_fly_right_0: 2076939867
+      slime_fly_right_1: 238063744
+      slime_fly_right_2: 511022814
+      slime_fly_right_3: 1225966008
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
