@@ -126,6 +126,6 @@ public class UAuthentication : MonoBehaviour
         //    yield return null;
         //}
         yield return new WaitForSeconds(2);
-        SceneManager.LoadScene("1 - Main Menu");
+        SceneManager.LoadScene("Level_Teste");
     }
 }
