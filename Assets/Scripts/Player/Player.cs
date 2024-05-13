@@ -443,6 +443,7 @@ public class Player : MonoBehaviour
     #region Collision and Damage
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("Chamou");
         //Damage Detection
         if (((1 << collision.gameObject.layer) & damageLayer) != 0)
         {

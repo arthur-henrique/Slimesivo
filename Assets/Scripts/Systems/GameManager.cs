@@ -114,7 +114,7 @@ public class GameManager : MonoBehaviour
 
     public void TookDamage()
     {
-        if(Player.Instance.hitCounter == 1)
+        if(Player.Instance != null && Player.Instance.hitCounter == 1)
         {
             needsToCheckAlive = true;
             pauseCanvas.OnDamageTaken(livesAmount);
@@ -122,6 +122,13 @@ public class GameManager : MonoBehaviour
             livesAmount--;
             Debug.Log("TookDamage()");
             // Initializes the sequence of updating the UI
+        } else if(Player.Instance == null)
+        {
+            //needsToCheckAlive = true;
+            //pauseCanvas.OnDamageTaken(livesAmount);
+            //PlayableLevelManager.Instance.AddTimeHit();
+            //livesAmount--;
+            Debug.Log("TookDamage()");
         }
 
 

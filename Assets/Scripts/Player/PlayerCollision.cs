@@ -16,6 +16,7 @@ public class PlayerCollision : MonoBehaviour
         if (consumableCollectible != null)
         {
             consumableCollectible.Damage();
+            Debug.Log(collision);
             return;
         }
     }
