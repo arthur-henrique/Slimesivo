@@ -7,7 +7,12 @@ public class MinimapControl : MonoBehaviour
 {
     [SerializeField] private Slider m_Slider;
     private GameObject finishLine;
-    // Start is called before the first frame update
+    private string currentSceneName;
+    private string tutorialSceneName = "Level_Teste";
+    private void Start()
+    {
+        currentSceneName = SceneManager.GetActiveScene().name;
+    }
     public void GetFinishLine()
     {
         finishLine = GameObject.FindGameObjectWithTag("FinishLine");
@@ -17,6 +22,14 @@ public class MinimapControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        m_Slider.value = Player.Instance.gameObject.transform.position.y;
+        if(currentSceneName != tutorialSceneName)
+        {
+            m_Slider.value = Player.Instance.gameObject.transform.position.y;
+        }
+        else
+        {
+            m_Slider.value = PlayerTutorial.Instance.gameObject.transform.position.y;
+        }
+        
     }
 }

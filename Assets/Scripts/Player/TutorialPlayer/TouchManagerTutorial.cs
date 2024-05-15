@@ -172,8 +172,8 @@ public class TouchManagerTutorial : MonoBehaviour
         value = inputActions.Touch.TouchPosition.ReadValue<Vector2>();
         screenSideX = value.x / Camera.main.pixelWidth;
 
-                   
 
+        TutorialManager.instance.ManagerTutorialStage();
         if (!PointerIsUIHit(value)) 
             //Dai checa pra ver se foi esquerda ou direita, maior q 0.5 direita menor esquerda
             if (screenSideX > 0.5)

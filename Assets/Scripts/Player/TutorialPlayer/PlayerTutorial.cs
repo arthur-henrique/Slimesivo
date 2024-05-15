@@ -219,7 +219,7 @@ public class PlayerTutorial : MonoBehaviour
 
         if(!IsOnGround() && !IsWalled() && doubleJumpCounter < doubleJumpMaxCounter)
         {
-           if((int)tutorialManagerScript.tutorialStages < 4)
+           if(tutorialManagerScript.doubleJumpOpen)
            {
               DoubleJump();
            }
@@ -301,7 +301,7 @@ public class PlayerTutorial : MonoBehaviour
 
 
             }
-            else if (IsOnGround() && !isJumping)
+            else if (IsOnGround())
             {
                  anim.SetInteger("AnimParameter", 0);
                  _touchManager.inputActions.Enable();
@@ -400,7 +400,7 @@ public class PlayerTutorial : MonoBehaviour
 
 
         }
-        if (tutorialManagerScript.tutorialStages == TutorialManager.TutorialFases.Stage4)
+        if (tutorialManagerScript.canWallSlde)
         {
             rig.gravityScale = 1;
             wallSlideStates = WallSlideStates.WallSlideSlow;

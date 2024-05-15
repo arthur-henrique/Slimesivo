@@ -9,5 +9,6 @@ public class ChangeTutorialFase : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         tutorialManager.tutorialStages = (TutorialManager.TutorialFases)faseToChange;
+        tutorialManager.ManagerTutorialStage();
     }
 }

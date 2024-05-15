@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TutorialManager : MonoBehaviour
 {
+    public static TutorialManager instance;
     public enum TutorialFases
     {
         Stage1, 
@@ -21,13 +22,22 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private GameObject leftJumpsprite;
     [SerializeField] private GameObject rightJumpsprite;
     [SerializeField] private GameObject initialJumpSprite;
+    [SerializeField] private GameObject damageCamera;
+    [SerializeField] private GameObject damageCameraSprite;
     private Vector3 worldPosition;
+
+   [HideInInspector] public bool doubleJumpOpen;
+    [HideInInspector] public bool canWallSlde;
+    private void Awake()
+    {
+        instance = this;
+    }
     private void Start()
     {
         DefineWorldWidth();
     }
 
-    void Update()
+   public void ManagerTutorialStage()
     {
         Debug.Log((float)tutorialStages);
         switch (tutorialStages)
@@ -68,6 +78,7 @@ public class TutorialManager : MonoBehaviour
     }
     private void Stage2Parameters()
     {
+        doubleJumpOpen = true;
         if (playerTutorialScript.canDoubleJump)
         {
             float scale = 0.5f;
@@ -86,11 +97,12 @@ public class TutorialManager : MonoBehaviour
     }
     private void Stage3Parameters()
     {
-
+        canWallSlde = true;
     }
     private void Stage4Parameters()
     {
-
+        damageCamera.SetActive(false);
+        damageCameraSprite.SetActive(true);
     }
     void DefineWorldWidth()
     {
