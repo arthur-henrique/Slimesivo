@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     public GameObject hideMenuChild;
 
     public GameObject pauseCanvasGO;
+    public GameObject heartsContainer;
     public HUDCanvasMenu pauseCanvas;
 
     [SerializeField] private MinimapControl minimapControl;
@@ -172,6 +173,7 @@ public class GameManager : MonoBehaviour
             mainMenuGO.SetActive(true);
             hideMenuChild.SetActive(true);
             pauseCanvasGO.SetActive(false);
+            pauseCanvas.OnTutorialEnd();
             Time.timeScale = 1f;
         }
         else if(SceneManager.GetActiveScene().name == "2 - CampaignMap")
@@ -182,6 +184,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+
             isInGame = true;
             mainMenuGO.SetActive(false);
             hideMenuChild.SetActive(false);
@@ -192,6 +195,15 @@ public class GameManager : MonoBehaviour
             pauseCanvas.OnNewLevel();
             Time.timeScale = 1f;
             minimapControl.GetFinishLine();
+            heartsContainer.SetActive(true);
+
+
+            if (SceneManager.GetActiveScene().name == "Level_Teste")
+            {
+                pauseCanvas.OnTutorialStart();
+            }
+
+
         }
     }
 

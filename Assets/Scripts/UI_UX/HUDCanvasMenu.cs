@@ -13,6 +13,7 @@ public class HUDCanvasMenu : MonoBehaviour
     [SerializeField] private GameObject pausePanel, optionsPanel, backgroundPanelForPause, backgroundPanelForPlaying, pauseButton, backgroundPanelForWinning, backgroundPanelForGameOver, timerObject, heart1, heart2, heart3, clapperboardIcon;
     [SerializeField] private TMP_Text timerText;
     [SerializeField] private Button retryButton/*TODO: optionsButton*/;
+    [SerializeField] private GameObject mainMenuButton, winningMainMenuButton, nextLevelButton, continueButton, lifeBar, skipButton;
 
     public static bool gameIsPaused = false; //para acessar, basta colocar: if(HUDCanvasMenu.gameIsPaused == true)
     private float timer;
@@ -281,7 +282,25 @@ public class HUDCanvasMenu : MonoBehaviour
         backgroundPanelForWinning.SetActive(true);
     }
 
+    public void OnTutorialStart()
+    {
+        mainMenuButton.SetActive(false);
+        winningMainMenuButton.SetActive(false);
+        nextLevelButton.SetActive(false);
+        lifeBar.SetActive(false);
+        skipButton.SetActive(true);
+        continueButton.SetActive(true);
+    }
 
+    public void OnTutorialEnd()
+    {
+        mainMenuButton.SetActive(true);
+        winningMainMenuButton.SetActive(true);
+        nextLevelButton.SetActive(true);
+        lifeBar.SetActive(true);
+        skipButton.SetActive(false);
+        continueButton.SetActive(false);
+    }
 
     #region Mostra quantas estrelas o Player conseguiu no nivel (principalmente visualmente)
     public void PressStarsButton(int _starsNumber)

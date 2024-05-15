@@ -145,4 +145,9 @@ public class MainMenuCanvasScript : MonoBehaviour
         }
     }
 
+    public void LoadTutorial()
+    {
+        SceneManager.LoadScene("Level_Teste");
+    }
+
 }
