@@ -10,7 +10,7 @@ public class HUDCanvasMenu : MonoBehaviour
 {
     public static HUDCanvasMenu instance;
 
-    [SerializeField] private GameObject pausePanel, optionsPanel, backgroundPanelForPause, backgroundPanelForPlaying, pauseButton, backgroundPanelForWinning, backgroundPanelForGameOver, timerObject, heart1, heart2, heart3, clapperboardIcon;
+    [SerializeField] private GameObject pausePanel, optionsPanel, backgroundPanelForPause, backgroundPanelForPlaying, pauseButton, backgroundPanelForWinning, backgroundPanelForWinningTutorial, backgroundPanelForGameOver, timerObject, heart1, heart2, heart3, clapperboardIcon;
     [SerializeField] private TMP_Text timerText;
     [SerializeField] private Button retryButton/*TODO: optionsButton*/;
     [SerializeField] private GameObject mainMenuButton, winningMainMenuButton, nextLevelButton, continueButton, lifeBar, skipButton;
@@ -279,7 +279,17 @@ public class HUDCanvasMenu : MonoBehaviour
         Time.timeScale = 0f;
         GameManager.instance.mainMenuGO.SetActive(true);
         backgroundPanelForGameOver.SetActive(false);
-        backgroundPanelForWinning.SetActive(true);
+        if(SceneManager.GetActiveScene().buildIndex != 0)
+        {
+            backgroundPanelForWinning.SetActive(false);
+            backgroundPanelForWinningTutorial.SetActive(true);
+            
+        }
+        else
+        {
+            backgroundPanelForWinning.SetActive(true);
+            backgroundPanelForWinningTutorial.SetActive(false);
+        }
     }
 
     public void OnTutorialStart()
@@ -300,6 +310,12 @@ public class HUDCanvasMenu : MonoBehaviour
         lifeBar.SetActive(true);
         skipButton.SetActive(false);
         continueButton.SetActive(false);
+    }
+
+    public void SkipedTutorial()
+    {
+        if(PlayerPrefs.GetInt("Level_Teste_completed") != 1)
+            PlayerPrefs.SetInt("Level_Teste_completed", 1); 
     }
 
     #region Mostra quantas estrelas o Player conseguiu no nivel (principalmente visualmente)

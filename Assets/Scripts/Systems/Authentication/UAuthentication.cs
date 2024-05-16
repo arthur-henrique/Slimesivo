@@ -126,6 +126,14 @@ public class UAuthentication : MonoBehaviour
         //    yield return null;
         //}
         yield return new WaitForSeconds(2);
-        SceneManager.LoadScene("Level_Teste");
+
+        if(PlayerPrefs.GetInt("Level_Teste_completed") != 1)
+        {
+            SceneManager.LoadScene("Level_Teste");
+        }
+        else
+        {
+            SceneManager.LoadScene("1 - Main Menu");
+        }
     }
 }

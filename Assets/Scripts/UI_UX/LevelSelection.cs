@@ -159,23 +159,27 @@ public class LevelSelection : MonoBehaviour
     {
         #region Get the name of the previous level based on the name of this gameObject
 
-        string[] objectNameNumber = gameObject.name.Split('_');
-        int previousLevelIndex = int.Parse(objectNameNumber[1]) - 1;
-        previousLevelName = objectNameNumber[0] + "_" + previousLevelIndex.ToString("000");
-        //levelTextName[0].text = objectNameNumber[0] + " " + int.Parse(objectNameNumber[1]);
-        levelTextName[0].text = objectNameNumber[1].TrimStart('0'); //numero do nivel que aparece no mapa
-        levelTextName[1].text = objectNameNumber[0] + " " + int.Parse(objectNameNumber[1]); //nome e numero do nivel que aparecem no pop up
-
-        #endregion
-
-        if (PlayerPrefs.GetInt(previousLevelName) > 0 || previousLevelName == "Level_000") //o OR eh para o nivel 1 somente
+        if(SceneManager.GetActiveScene().buildIndex != 0)
         {
-            unlocked = true;
+            string[] objectNameNumber = gameObject.name.Split('_');
+            int previousLevelIndex = int.Parse(objectNameNumber[1]) - 1;
+            previousLevelName = objectNameNumber[0] + "_" + previousLevelIndex.ToString("000");
+            //levelTextName[0].text = objectNameNumber[0] + " " + int.Parse(objectNameNumber[1]);
+            levelTextName[0].text = objectNameNumber[1].TrimStart('0'); //numero do nivel que aparece no mapa
+            levelTextName[1].text = objectNameNumber[0] + " " + int.Parse(objectNameNumber[1]); //nome e numero do nivel que aparecem no pop up
+
+            #endregion
+
+            if (PlayerPrefs.GetInt(previousLevelName) > 0 || previousLevelName == "Level_000") //o OR eh para o nivel 1 somente
+            {
+                unlocked = true;
+            }
+            else
+            {
+                unlocked = false;
+            }
         }
-        else
-        {
-            unlocked = false;
-        }
+        
 
     }
 
