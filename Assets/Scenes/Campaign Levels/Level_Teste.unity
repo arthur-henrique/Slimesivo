@@ -1067,9 +1067,9 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2024242819}
+  - {fileID: 86386959}
   - {fileID: 2091943822}
   - {fileID: 372934686}
-  - {fileID: 86386959}
   m_Father: {fileID: 1294694520}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1094,6 +1094,7 @@ MonoBehaviour:
   backgroundPanelForPause: {fileID: 2091943821}
   backgroundPanelForPlaying: {fileID: 2024242818}
   pauseButton: {fileID: 1588383432}
+  WinningPanelBG: {fileID: 86386958}
   backgroundPanelForWinning: {fileID: 479194839}
   backgroundPanelForWinningTutorial: {fileID: 700284221}
   backgroundPanelForGameOver: {fileID: 372934685}
@@ -16900,7 +16901,7 @@ Transform:
   m_GameObject: {fileID: 944816455}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.8717527, y: -7.8, z: 8.45}
+  m_LocalPosition: {x: -3.8725839, y: -7.8, z: 8.45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -18971,7 +18972,7 @@ Transform:
   m_GameObject: {fileID: 1083813841}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.9017527, y: -7.8, z: 8.45}
+  m_LocalPosition: {x: 3.9025838, y: -7.8, z: 8.45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

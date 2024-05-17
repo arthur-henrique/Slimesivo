@@ -22,7 +22,7 @@ public class MinimapControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(currentSceneName != tutorialSceneName)
+        if(currentSceneName != SceneManager.GetSceneByBuildIndex(1).name)
         {
             m_Slider.value = Player.Instance.gameObject.transform.position.y;
         }

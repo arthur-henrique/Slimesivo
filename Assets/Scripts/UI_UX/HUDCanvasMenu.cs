@@ -10,7 +10,7 @@ public class HUDCanvasMenu : MonoBehaviour
 {
     public static HUDCanvasMenu instance;
 
-    [SerializeField] private GameObject pausePanel, optionsPanel, backgroundPanelForPause, backgroundPanelForPlaying, pauseButton, backgroundPanelForWinning, backgroundPanelForWinningTutorial, backgroundPanelForGameOver, timerObject, heart1, heart2, heart3, clapperboardIcon;
+    [SerializeField] private GameObject pausePanel, optionsPanel, backgroundPanelForPause, backgroundPanelForPlaying, pauseButton, WinningPanelBG, backgroundPanelForWinning, backgroundPanelForWinningTutorial, backgroundPanelForGameOver, timerObject, heart1, heart2, heart3, clapperboardIcon;
     [SerializeField] private TMP_Text timerText;
     [SerializeField] private Button retryButton/*TODO: optionsButton*/;
     [SerializeField] private GameObject mainMenuButton, winningMainMenuButton, nextLevelButton, continueButton, lifeBar, skipButton;
@@ -64,7 +64,9 @@ public class HUDCanvasMenu : MonoBehaviour
         timerText.text = "";
         backgroundPanelForPause.SetActive(false);
         backgroundPanelForGameOver.SetActive(false);
+        WinningPanelBG.SetActive(false);
         backgroundPanelForWinning.SetActive(false);
+        backgroundPanelForWinningTutorial.SetActive(false);
         backgroundPanelForPlaying.SetActive(true);
         pauseButton.SetActive(true);
         heart1.SetActive(true);
@@ -279,7 +281,8 @@ public class HUDCanvasMenu : MonoBehaviour
         Time.timeScale = 0f;
         GameManager.instance.mainMenuGO.SetActive(true);
         backgroundPanelForGameOver.SetActive(false);
-        if(SceneManager.GetActiveScene().buildIndex != 0)
+        WinningPanelBG.SetActive(true);
+        if(SceneManager.GetActiveScene().buildIndex == 1)
         {
             backgroundPanelForWinning.SetActive(false);
             backgroundPanelForWinningTutorial.SetActive(true);
