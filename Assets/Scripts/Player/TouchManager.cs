@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
+using PlayerEvents;
 public class TouchManager : MonoBehaviour
 {
     public static TouchManager instance;
@@ -31,9 +32,6 @@ public class TouchManager : MonoBehaviour
     private float _worldWidth;
     private Camera mainCamera;
 
-
-
-    private Player playerScript;
 
     //Direction
    [HideInInspector] public float rightCounter;
@@ -78,7 +76,6 @@ public class TouchManager : MonoBehaviour
     private void Components()
     {
         inputActions = new PlayerTouchControls();
-        playerScript = GetComponent<Player>();
         mainCamera = Camera.main;
         CheckActiveInputMode();
     }
@@ -145,14 +142,14 @@ public class TouchManager : MonoBehaviour
         {
             Debug.Log("swipe Right");
             _isFacingRight = true;
-            playerScript.JumpManager();
-        
+            EventsPlayer.OnJumpRight();
+
         }
         else if (Vector2.Dot(Vector2.left, direction) > directionThreshold)
         {
             Debug.Log("swipe Left");
             _isFacingRight = false;
-            playerScript.JumpManager();
+            EventsPlayer.OnJumpLeft();
         }
         else if (Vector2.Dot(Vector2.up, direction) > directionThreshold)
         {
@@ -160,12 +157,12 @@ public class TouchManager : MonoBehaviour
             if ((GetPlayerPositionInScreen(0.2f, true)))
             {
                 _isFacingRight = true;
-                playerScript.JumpSameSide();
+                EventsPlayer.OnJumpSameSide(_isFacingRight);
             }
             else if (GetPlayerPositionInScreen(-0.2f, false))
             {
                 _isFacingRight = false;
-                playerScript.JumpSameSide();
+                EventsPlayer.OnJumpSameSide(_isFacingRight);
             }
         }
     }
@@ -187,12 +184,12 @@ public class TouchManager : MonoBehaviour
                 if((GetPlayerPositionInScreen(0.2f, true)))
                 {
                     _isFacingRight = true;
-                    playerScript.JumpSameSide();
+                    EventsPlayer.OnJumpSameSide(_isFacingRight);
                 }
                 else
                 {
                     _isFacingRight = true;
-                    playerScript.JumpManager();
+                    EventsPlayer.OnJumpRight();
                 }
                
 
@@ -202,13 +199,13 @@ public class TouchManager : MonoBehaviour
                 if (GetPlayerPositionInScreen(-0.2f,false))
                 {
                     _isFacingRight = false;
-                    playerScript.JumpSameSide();
+                    EventsPlayer.OnJumpSameSide(_isFacingRight);
                 }
                 else
                 {
                     _isFacingRight = false;
-                    playerScript.JumpManager();
-                   
+                    EventsPlayer.OnJumpLeft();
+
                 }
             }
     }

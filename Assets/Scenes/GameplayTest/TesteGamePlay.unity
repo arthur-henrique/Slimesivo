@@ -6178,11 +6178,6 @@ PrefabInstance:
       objectReference: {fileID: 2081412426}
     - target: {fileID: 2682705831866685873, guid: c81d557d2fcf8b14984c989be23dd044,
         type: 3}
-      propertyPath: firstJumpForce
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2682705831866685873, guid: c81d557d2fcf8b14984c989be23dd044,
-        type: 3}
       propertyPath: cameraController
       value: 
       objectReference: {fileID: 2081412426}
@@ -6191,23 +6186,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: 'Player '
       objectReference: {fileID: 0}
-    - target: {fileID: 4735764983895169955, guid: c81d557d2fcf8b14984c989be23dd044,
-        type: 3}
-      propertyPath: inputMode
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4735764983895169955, guid: c81d557d2fcf8b14984c989be23dd044,
-        type: 3}
-      propertyPath: isOnRealese
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4735764983895169955, guid: c81d557d2fcf8b14984c989be23dd044,
-        type: 3}
-      propertyPath: directionThreshold
-      value: 0.5
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 623560181105484220, guid: c81d557d2fcf8b14984c989be23dd044, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -6667,6 +6646,7 @@ MonoBehaviour:
   mainMenuGO: {fileID: 673158463}
   hideMenuChild: {fileID: 684763295}
   pauseCanvasGO: {fileID: 769632851}
+  heartsContainer: {fileID: 0}
   pauseCanvas: {fileID: 769632853}
   minimapControl: {fileID: 190720689}
   playerBestScoreFloat: 0
@@ -11149,6 +11129,7 @@ MonoBehaviour:
   backgroundPanelForPlaying: {fileID: 1015081223}
   pauseButton: {fileID: 1105336613}
   backgroundPanelForWinning: {fileID: 1660867093}
+  backgroundPanelForWinningTutorial: {fileID: 0}
   backgroundPanelForGameOver: {fileID: 51795400}
   timerObject: {fileID: 834789203}
   heart1: {fileID: 2085738608}
@@ -11157,6 +11138,12 @@ MonoBehaviour:
   clapperboardIcon: {fileID: 0}
   timerText: {fileID: 834789205}
   retryButton: {fileID: 1062013860}
+  mainMenuButton: {fileID: 0}
+  winningMainMenuButton: {fileID: 0}
+  nextLevelButton: {fileID: 0}
+  continueButton: {fileID: 0}
+  lifeBar: {fileID: 0}
+  skipButton: {fileID: 0}
   stars:
   - {fileID: 69808628}
   - {fileID: 1710822197}

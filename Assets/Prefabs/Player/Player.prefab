@@ -1,5 +1,53 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2155738521277253245
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7326791107709185902}
+  - component: {fileID: 6053438397934047373}
+  m_Layer: 0
+  m_Name: PlayerParticleManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7326791107709185902
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2155738521277253245}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.42, y: -0.54, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1029969644774920132}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6053438397934047373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2155738521277253245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d6944c2c5bdfd1409f07b1520e6d1ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpParticles: {fileID: 6202329456672133266, guid: afdf122e2e0b0b04483f6afa381e2ae9,
+    type: 3}
+  damageParticles: {fileID: 1104731915954917304, guid: f6e6b725de250c445979bb4a5f84afc0,
+    type: 3}
 --- !u!1 &2607770926949867868
 GameObject:
   m_ObjectHideFlags: 0
@@ -26,6 +74,37 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4792319070060547}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4361550984082281017
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6657670654980018384}
+  m_Layer: 0
+  m_Name: PlayerEventHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6657670654980018384
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4361550984082281017}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -68,6 +147,7 @@ Transform:
   m_Children:
   - {fileID: 1029969644774920132}
   - {fileID: 5718995810343491005}
+  - {fileID: 6657670654980018384}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &6517685885914900946
@@ -112,10 +192,9 @@ MonoBehaviour:
   uiLayer:
     serializedVersion: 2
     m_Bits: 512
-  inputMode: 0
   minimunDistance: 0.2
   maximumTime: 1
-  directionThreshold: 0.9
+  directionThreshold: 0.5
   rightCounter: 0
   leftCounter: 0
 --- !u!114 &2682705831866685873
@@ -130,7 +209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fe146808b3f7464e8cd1cf5eebf99b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstJumpForce: 5
+  firstJumpForce: 10
   groundCheck: {fileID: 5718995810343491005}
   groundLayer:
     serializedVersion: 2
@@ -232,6 +311,7 @@ GameObject:
   - component: {fileID: 6994350702405962294}
   - component: {fileID: 3209438035429612569}
   - component: {fileID: 7564198991209996596}
+  - component: {fileID: 4870133804425973444}
   m_Layer: 0
   m_Name: PlayerSprite
   m_TagString: Untagged
@@ -251,7 +331,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.2, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 7326791107709185902}
   m_Father: {fileID: 4792319070060547}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6994350702405962294
@@ -362,3 +443,15 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: -0.25}
   m_Size: {x: 1.23, y: 0.56}
   m_Direction: 1
+--- !u!114 &4870133804425973444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6457546778788927930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ea8250f13dd19d44be458e561b6f2f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

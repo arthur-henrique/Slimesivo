@@ -1,3 +1,4 @@
+using PlayerEvents;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -100,7 +101,21 @@ public class Player : MonoBehaviour
         Components();
         DefinePlayerSpeed();
     }
-       
+    private void OnEnable()
+    {
+        EventsPlayer.JumpRight += JumpRight;
+        EventsPlayer.JumpSameSide += JumpSameSide;
+        EventsPlayer.JumpLeft += JumpLeft;
+        EventsPlayer.Damage += KnockbackPlayer;
+    }
+    private void OnDisable()
+    {
+        EventsPlayer.JumpRight -= JumpManager;
+        EventsPlayer.JumpSameSide -= JumpSameSide;
+        EventsPlayer.JumpLeft -= JumpLeft;
+        EventsPlayer.Damage -= KnockbackPlayer;
+    }
+
 
     private void FixedUpdate()
     {
@@ -173,36 +188,9 @@ public class Player : MonoBehaviour
     }
     public void JumpManager()
     {
-        if (playerStatsScript.isRepawning)
-        {
-            cameraController.CameraSettingsReset();
-            playerStatsScript.isRepawning = false;
-        }
-        isJumping = true;
-        StopAllCoroutines();
-        ResetPlayerRotation();
-        rig.gravityScale = originalGravity;
-        wallSlideStates = WallSlideStates.WallStick;
-        anim.SetInteger("AnimParameter", 1);
-
-        
-        if (_touchManager.IsFacingRight && IsOnGround())
-        {
-            _touchManager.inputActions.Disable();
-            rig.velocity = new Vector2(sideForce, firstJumpForce);
-           
-
-        }
-        else if(IsOnGround() && !_touchManager.IsFacingRight)
-        {
-
-            _touchManager.inputActions.Disable();
-            rig.velocity = new Vector2(-sideForce, firstJumpForce);
-            anim.SetInteger("AnimParameter", 2);
-
-        }
-
-        if(!IsOnGround() && IsWalled())
+          JumpLogic();
+        canApplyGravity = true; 
+        if (!IsOnGround() && IsWalled())
         {
             WallJump();
         
@@ -215,31 +203,43 @@ public class Player : MonoBehaviour
         playerStatsScript.isRepawning = false;    
             
     }
-    public void JumpSameSide()
+
+    private void JumpRight()
     {
-        StopAllCoroutines();
-        ResetPlayerRotation();
+        JumpManager();
+        rig.velocity = new Vector2(sideForce, firstJumpForce);
+    }
+
+   private void JumpLeft()
+    {
+        JumpManager();
+        rig.velocity = new Vector2(-sideForce, firstJumpForce);
+    }
+    private void JumpSameSide(bool isFacingRight)
+    {
+        JumpLogic();
         canApplyGravity = false;
-        anim.SetInteger("AnimParameter", 1);
-        _touchManager.inputActions.Disable();
         isWallJumping = true;
         playerStatsScript.isRepawning = false;
-        if (!_touchManager.IsFacingRight)
+        rig.velocity = new Vector2(0, firstJumpForce);
+        Invoke(nameof(StopWallJump), jumpSameSideTimer);
+    }
+
+    private void JumpLogic()
+    {
+        if (playerStatsScript.isRepawning)
         {
-            anim.SetInteger("AnimParameter", 2);
+            cameraController.CameraSettingsReset();
+            playerStatsScript.isRepawning = false;
         }
 
-        wallSlideStates = WallSlideStates.WallStick;
+        isJumping = true;
+        StopAllCoroutines();
+        ResetPlayerRotation();
         rig.gravityScale = originalGravity;
-        rig.velocity = new Vector2(rig.velocity.x, doubleJumpForce);
-     
-        Invoke(nameof(StopJumpSameSide), jumpSameSideTimer);
+        wallSlideStates = WallSlideStates.WallStick;
     }
     
-   private void StopJumpSameSide()
-    {
-        isWallJumping = false;
-    }
 
 
 
@@ -328,17 +328,7 @@ public class Player : MonoBehaviour
         {
             ResetPlayerRotation();
             isWallJumping = true;
-            wallJumpingCounter = 0;
-            if (_touchManager.IsFacingRight)
-            {
-                rig.AddForce(new Vector2(sideForce , firstJumpForce * 0.8f),ForceMode2D.Impulse);
-            }
-            else
-            {
-                rig.AddForce(new Vector2(-sideForce , firstJumpForce * 0.8f), ForceMode2D.Impulse);
-                anim.SetInteger("AnimParameter", 2);
-            }
-           
+            wallJumpingCounter = 0;        
             Invoke(nameof(StopWallJump), wallJumpDurantion);
         }
     }
@@ -353,16 +343,6 @@ public class Player : MonoBehaviour
         _touchManager.inputActions.Disable();
         rig.velocity = Vector3.zero;
         doubleJumpCounter++;
-        if (_touchManager.IsFacingRight )
-        {
-            rig.velocity = new Vector2(sideForce, doubleJumpForce);
-        }
-        else 
-        {
-            rig.velocity = new Vector2(-sideForce, doubleJumpForce);
-            anim.SetInteger("AnimParameter", 2);
-
-        }
     }
 
     #endregion
@@ -443,15 +423,14 @@ public class Player : MonoBehaviour
     #region Collision and Damage
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Chamou");
         //Damage Detection
         if (((1 << collision.gameObject.layer) & damageLayer) != 0)
         {
-            KnockbackPlayer(collision);
+            EventsPlayer.OnTakingDamage(collision,gameObject.transform);
         }
     }
 
-    private void KnockbackPlayer(Collider2D obstacleCollision)
+    private void KnockbackPlayer(Collider2D obstacleCollision, Transform player)
     {
         if (hitCounter == 0)
         {
@@ -481,7 +460,6 @@ public class Player : MonoBehaviour
 
 
             //Pra chamar o respawn do player
-            anim.SetInteger("AnimParameter", 4);
             Invoke("ResetPlayer", respawnTime);
         }
     }
