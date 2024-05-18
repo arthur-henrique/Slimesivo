@@ -156,13 +156,32 @@ public class TouchManager : MonoBehaviour
             Debug.Log("swipe Up");
             if ((GetPlayerPositionInScreen(0.2f, true)))
             {
-                _isFacingRight = true;
-                EventsPlayer.OnJumpSameSide(_isFacingRight);
+                if (Player.Instance.IsWalled())
+                {
+                    _isFacingRight = true;
+                    EventsPlayer.OnJumpSameSide(_isFacingRight);
+
+                }
+                else
+                {
+                    _isFacingRight = true;
+                    EventsPlayer.OnJumpRight();
+
+                }
             }
             else if (GetPlayerPositionInScreen(-0.2f, false))
             {
-                _isFacingRight = false;
-                EventsPlayer.OnJumpSameSide(_isFacingRight);
+                if (Player.Instance.IsWalled())
+                {
+                    _isFacingRight = false;
+                    EventsPlayer.OnJumpSameSide(_isFacingRight);
+
+                }
+                else
+                {
+                    _isFacingRight = false;
+                    EventsPlayer.OnJumpLeft();
+                }
             }
         }
     }
@@ -183,8 +202,18 @@ public class TouchManager : MonoBehaviour
             {
                 if((GetPlayerPositionInScreen(0.2f, true)))
                 {
-                    _isFacingRight = true;
-                    EventsPlayer.OnJumpSameSide(_isFacingRight);
+                    if (Player.Instance.IsWalled())
+                    {
+                        _isFacingRight = true;
+                        EventsPlayer.OnJumpSameSide(_isFacingRight);
+
+                    }
+                    else
+                    {
+                        _isFacingRight = true;
+                        EventsPlayer.OnJumpRight();
+                    }
+
                 }
                 else
                 {
@@ -198,8 +227,17 @@ public class TouchManager : MonoBehaviour
             {
                 if (GetPlayerPositionInScreen(-0.2f,false))
                 {
-                    _isFacingRight = false;
-                    EventsPlayer.OnJumpSameSide(_isFacingRight);
+                    if (Player.Instance.IsWalled())
+                    {
+                        _isFacingRight = false;
+                        EventsPlayer.OnJumpSameSide(_isFacingRight);
+
+                    }
+                    else
+                    {
+                        _isFacingRight = false;
+                        EventsPlayer.OnJumpRight();
+                    }
                 }
                 else
                 {

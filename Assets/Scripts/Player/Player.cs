@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float jumpSameSideTimer = 1f;
     private bool isJumping;
+    private float initialJumpForce;
 
 
     //components
@@ -100,6 +101,7 @@ public class Player : MonoBehaviour
     {
         Components();
         DefinePlayerSpeed();
+        initialJumpForce = firstJumpForce;
     }
     private void OnEnable()
     {
@@ -188,12 +190,17 @@ public class Player : MonoBehaviour
     }
     public void JumpManager()
     {
-          JumpLogic();
+        JumpLogic();
         canApplyGravity = true; 
         if (!IsOnGround() && IsWalled())
         {
             WallJump();
+            firstJumpForce = firstJumpForce * 0.8f;
         
+        }
+        else
+        {
+            firstJumpForce = initialJumpForce ;
         }
 
         if(!IsOnGround() && !IsWalled() && doubleJumpCounter < doubleJumpMaxCounter)
@@ -217,12 +224,14 @@ public class Player : MonoBehaviour
     }
     private void JumpSameSide(bool isFacingRight)
     {
+
         JumpLogic();
         canApplyGravity = false;
         isWallJumping = true;
         playerStatsScript.isRepawning = false;
         rig.velocity = new Vector2(0, firstJumpForce);
         Invoke(nameof(StopWallJump), jumpSameSideTimer);
+
     }
 
     private void JumpLogic()
@@ -276,20 +285,9 @@ public class Player : MonoBehaviour
                     case WallSlideStates.WallSlideFast:
                         StartCoroutine(WallSlideMaxTimer());
                         break;
-
-
-
-
-
                 }
                  
-                    PlayerOrientationChecker();
-                   
-
-
-
-
-
+                    PlayerOrientationChecker();                 
             }
             else if (IsOnGround() && !isJumping)
             {
@@ -298,8 +296,8 @@ public class Player : MonoBehaviour
                  isWallSliding = false;
                  playerSprite.transform.rotation = Quaternion.Euler(0, 0, 0);
 
-             }
-        else
+            }
+            else
             {
                 isWallSliding = false;
             }
