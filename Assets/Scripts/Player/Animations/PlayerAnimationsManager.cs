@@ -1,4 +1,5 @@
 using PlayerEvents;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,13 +20,21 @@ public class PlayerAnimationsManager : MonoBehaviour
         EventsPlayer.JumpLeft += JumpLeftAnimation;
         EventsPlayer.JumpSameSide += JumpSameSideAnimation;
         EventsPlayer.Damage += DamageAnimation;
+        EventsPlayer.ClearAllEventsvariables += ClearEventsReferences;
     }
+
+
     private void OnDisable()
+    {
+        ClearEventsReferences();
+    }
+    private void ClearEventsReferences()
     {
         EventsPlayer.JumpRight -= JumpRightAnimation;
         EventsPlayer.JumpLeft -= JumpLeftAnimation;
         EventsPlayer.JumpSameSide -= JumpSameSideAnimation;
         EventsPlayer.Damage -= DamageAnimation;
+        EventsPlayer.ClearAllEventsvariables -= ClearEventsReferences;
     }
 
 

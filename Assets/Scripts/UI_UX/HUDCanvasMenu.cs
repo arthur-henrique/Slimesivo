@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
+using PlayerEvents;
 
 public class HUDCanvasMenu : MonoBehaviour
 {
@@ -111,9 +112,18 @@ public class HUDCanvasMenu : MonoBehaviour
         //Reativar
 
         if (EnergyManager.Instance.UseEnergy(0))
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        {
+            EventsPlayer.OnClearAllEventsvariables();
+            StartCoroutine(RetryCounter());
+        }
         else
             Debug.Log("Not enough energy to retry");
+    }
+    IEnumerator RetryCounter()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        EventsPlayer.OnsetupInputsPlayer(GameManager.instance.activeInputMode);
+        yield return new WaitForSeconds(0.02f);
     }
 
     public void NextLevel()

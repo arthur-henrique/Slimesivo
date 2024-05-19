@@ -48,6 +48,7 @@ MonoBehaviour:
     type: 3}
   damageParticles: {fileID: 1104731915954917304, guid: f6e6b725de250c445979bb4a5f84afc0,
     type: 3}
+  jumpSameSidePos: {fileID: 3623052421927086798}
 --- !u!1 &2607770926949867868
 GameObject:
   m_ObjectHideFlags: 0
@@ -332,6 +333,7 @@ Transform:
   m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 3623052421927086798}
   - {fileID: 7326791107709185902}
   m_Father: {fileID: 4792319070060547}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -455,3 +457,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ea8250f13dd19d44be458e561b6f2f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &8259876130155099576
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3623052421927086798}
+  m_Layer: 0
+  m_Name: SameSideJumpParticleSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3623052421927086798
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8259876130155099576}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.88, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1029969644774920132}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

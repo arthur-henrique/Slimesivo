@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float jumpSameSideTimer = 1f;
     private bool isJumping;
     private float initialJumpForce;
+    private float jumpWallForce;
 
 
     //components
@@ -109,16 +110,21 @@ public class Player : MonoBehaviour
         EventsPlayer.JumpSameSide += JumpSameSide;
         EventsPlayer.JumpLeft += JumpLeft;
         EventsPlayer.Damage += KnockbackPlayer;
+        EventsPlayer.ClearAllEventsvariables += ClearEventsReferences;
     }
     private void OnDisable()
+    {
+        ClearEventsReferences();
+    }
+
+    private void ClearEventsReferences()
     {
         EventsPlayer.JumpRight -= JumpManager;
         EventsPlayer.JumpSameSide -= JumpSameSide;
         EventsPlayer.JumpLeft -= JumpLeft;
         EventsPlayer.Damage -= KnockbackPlayer;
+        EventsPlayer.ClearAllEventsvariables -= ClearEventsReferences;
     }
-
-
     private void FixedUpdate()
     {
         if (!getHit)
@@ -182,7 +188,8 @@ public class Player : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         playerCollider = GetComponent<Collider2D>();
         originalGravity = rig.gravityScale;
-         
+        jumpWallForce = firstJumpForce * 0.8f;
+
     }
     public bool IsOnGround()
     {
@@ -195,12 +202,12 @@ public class Player : MonoBehaviour
         if (!IsOnGround() && IsWalled())
         {
             WallJump();
-            firstJumpForce = firstJumpForce * 0.8f;
+           firstJumpForce = jumpWallForce;
         
         }
         else
         {
-            firstJumpForce = initialJumpForce ;
+            firstJumpForce = initialJumpForce;
         }
 
         if(!IsOnGround() && !IsWalled() && doubleJumpCounter < doubleJumpMaxCounter)
@@ -226,6 +233,7 @@ public class Player : MonoBehaviour
     {
 
         JumpLogic();
+        firstJumpForce = initialJumpForce;
         canApplyGravity = false;
         isWallJumping = true;
         playerStatsScript.isRepawning = false;

@@ -1,3 +1,5 @@
+using PlayerEvents;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -74,7 +76,22 @@ public class GameManager : MonoBehaviour
         //    pauseCanvasGO.SetActive(false);
         //}
     }
+    private void OnEnable()
+    {
+        EventsPlayer.SetupInputsPlayer += SwitchInput;
+        EventsPlayer.ClearAllEventsvariables += ClearEventsReferences;
+    }
 
+    private void ClearEventsReferences()
+    {
+        EventsPlayer.SetupInputsPlayer -= SwitchInput;
+        EventsPlayer.ClearAllEventsvariables -= ClearEventsReferences;
+    }
+
+    private void OnDisable()
+    {
+        ClearEventsReferences();
+    }
     private void Update()
     {
         if (needsToCheckAlive && isAlive)
@@ -135,16 +152,16 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void SwitchInput(bool active)
+    public void SwitchInput(Enum inputType)
     {
-        if (active)
+        if (activeInputMode == InputMode.Tap_Performed)
         {
             activeInputMode = InputMode.Swipe;
             print("true");
             if(isInGame) 
             {
-                TouchManager.instance.inputActions.Touch.Disable();
-                TouchManager.instance.CheckActiveInputMode();
+                inputType = activeInputMode;
+                EventsPlayer.OnsetupInputsPlayer(inputType);
             }
         }
         else
@@ -153,8 +170,8 @@ public class GameManager : MonoBehaviour
             print("false");
             if (isInGame)
             {
-                TouchManager.instance.inputActions.Touch.Disable();
-                TouchManager.instance.inputActions.Touch.Enable();
+                inputType = activeInputMode;
+                EventsPlayer.OnsetupInputsPlayer(inputType);
             }
         }
     }
@@ -196,6 +213,7 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 1f;
             minimapControl.GetFinishLine();
             heartsContainer.SetActive(true);
+            EventsPlayer.OnsetupInputsPlayer(activeInputMode);
 
 
             if (SceneManager.GetActiveScene().name == "Level_Teste")

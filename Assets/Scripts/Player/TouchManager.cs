@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 using PlayerEvents;
+using System;
 public class TouchManager : MonoBehaviour
 {
     public static TouchManager instance;
@@ -65,6 +66,18 @@ public class TouchManager : MonoBehaviour
     {
         Components();
     }
+    private void OnEnable()
+    {
+        EventsPlayer.SetupInputsPlayer += CheckActiveInputMode;
+        EventsPlayer.ClearAllEventsvariables += ClearEventsReferences;
+    }
+
+    private void ClearEventsReferences()
+    {
+        EventsPlayer.SetupInputsPlayer -= CheckActiveInputMode;
+        EventsPlayer.ClearAllEventsvariables -= ClearEventsReferences;
+    }
+
 
     #region Inputs
     void DefineWorldWidth()
@@ -77,13 +90,14 @@ public class TouchManager : MonoBehaviour
     {
         inputActions = new PlayerTouchControls();
         mainCamera = Camera.main;
-        CheckActiveInputMode();
+        EventsPlayer.OnsetupInputsPlayer(GameManager.instance.activeInputMode);
+        
     }
 
 
-    public void CheckActiveInputMode()
+    public void CheckActiveInputMode(Enum inputType)
     {
-        switch (GameManager.instance.activeInputMode)
+        switch (inputType)
         {
             case GameManager.InputMode.Tap_Performed:
                 inputActions.Touch.TouchPress.performed += TouchPress;
@@ -96,12 +110,7 @@ public class TouchManager : MonoBehaviour
                 inputActions.Touch.PrimaryContact.canceled += ctx => EndTouchPrimary(ctx);
                 break;
         }
-            
-       
-            
-        
-       
-        
+                                                 
     }
     private void OnDisable()
     {
@@ -109,6 +118,7 @@ public class TouchManager : MonoBehaviour
         inputActions.Touch.TouchPress.performed -= TouchPress;
         inputActions.Touch.PrimaryContact.started -= ctx => StartTouchPrimary(ctx);
         inputActions.Touch.PrimaryContact.canceled -= ctx => EndTouchPrimary(ctx);
+        ClearEventsReferences();
     }
     #endregion
 
