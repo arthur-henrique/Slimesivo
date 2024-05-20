@@ -5,6 +5,7 @@ using Unity.Services.Economy;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
 using Unity.Services.Economy.Model;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class CurrencyManager : MonoBehaviour
@@ -12,6 +13,8 @@ public class CurrencyManager : MonoBehaviour
     public static CurrencyManager instance = null;
     [SerializeField]
     private TMP_Text coinText;
+    [SerializeField]
+    private TMP_Text tutorialCoinText;
     [SerializeField]
     private TMP_Text tokenText;
 
@@ -95,6 +98,7 @@ public class CurrencyManager : MonoBehaviour
     {
         currentCoinAmount += coinAmount;
         coinText.text = currentCoinAmount.ToString();
+        tutorialCoinText.text = currentCoinAmount.ToString();
         Debug.Log("Current Coin Amount is: " +currentCoinAmount);
     }
     public void QuestCoinReward(int coinAmount)
