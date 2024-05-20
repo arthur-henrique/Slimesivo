@@ -168,6 +168,7 @@ public class Player : MonoBehaviour
 
         if (deathCounter > maxTimeToDie)
         {
+            
             hitCounter++;
             GameManager.instance.TookDamage();
             ResetPlayer();

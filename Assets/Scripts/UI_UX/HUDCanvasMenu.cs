@@ -268,6 +268,7 @@ public class HUDCanvasMenu : MonoBehaviour
     {
         pauseButton.SetActive(false);
         GameManager.instance.mainMenuGO.SetActive(true);
+        VibrationManager.instance.VibeDeath();
         backgroundPanelForGameOver.SetActive(true);
     }
     public void OnNewLevel()
@@ -318,6 +319,7 @@ public class HUDCanvasMenu : MonoBehaviour
         lifeBar.SetActive(true);
         skipButton.SetActive(false);
         continueButton.SetActive(false);
+        backgroundPanelForWinningTutorial.SetActive(false);
     }
 
     public void SkipedTutorial()

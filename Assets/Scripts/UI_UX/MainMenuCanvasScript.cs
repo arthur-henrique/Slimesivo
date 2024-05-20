@@ -27,6 +27,7 @@ public class MainMenuCanvasScript : MonoBehaviour
     }
     public void ChangeModes()
     {
+        VibrationManager.instance.VibeUI();
         if (infinityButton.activeSelf == true)
         {
             infinityButton.SetActive(false);
@@ -49,12 +50,14 @@ public class MainMenuCanvasScript : MonoBehaviour
     public void InfinityMode()
     {
         print("carrega modo infinito - descomentar linha");
+        VibrationManager.instance.VibeUI();
         //SceneManager.LoadScene(/*Index da cena do modo Infinito*/);
-        
+
     }
 
     public void GoToCampaignMapScene()
     {
+        VibrationManager.instance.VibeUI();
         SceneManager.LoadScene("2 - CampaignMap"); //Nome da cena do mapa
     }
 
@@ -64,6 +67,7 @@ public class MainMenuCanvasScript : MonoBehaviour
         {
             settingsButton.SetActive(true);
             storePagePanel.SetActive(false);
+            VibrationManager.instance.VibeUI();
             for (int i = 0; i < purchaseSignButtons.Length; i++)
             {
                 purchaseSignButtons[i].SetActive(true);
@@ -73,6 +77,7 @@ public class MainMenuCanvasScript : MonoBehaviour
         {
             settingsButton.SetActive(false);
             storePagePanel.SetActive(true);
+            VibrationManager.instance.VibeUI();
             for (int i = 0; i < purchaseSignButtons.Length; i++)
             {
                 purchaseSignButtons[i].SetActive(false);
@@ -86,6 +91,7 @@ public class MainMenuCanvasScript : MonoBehaviour
         {
             settingsButton.SetActive(true);
             inventoryPagePanel.SetActive(false);
+            VibrationManager.instance.VibeUI();
             for (int i = 0; i < purchaseSignButtons.Length; i++)
             {
                 purchaseSignButtons[i].SetActive(true);
@@ -96,6 +102,7 @@ public class MainMenuCanvasScript : MonoBehaviour
         {
             settingsButton.SetActive(false);
             inventoryPagePanel.SetActive(true);
+            VibrationManager.instance.VibeUI();
             InventoryDisplayer.Instance.DisplaySkins(SkinSystemChecker.Instance.allSkins);
             GameManagerMainMenuCanvasScript.Instance.HideSideButtons();
             for (int i = 0; i < purchaseSignButtons.Length; i++)
@@ -112,6 +119,7 @@ public class MainMenuCanvasScript : MonoBehaviour
     {
         energyPanel.SetActive(false);
         settingsButton.SetActive(false);
+        VibrationManager.instance.VibeUI();
         for (int i = 0; i < purchaseSignButtons.Length; i++)
         {
             purchaseSignButtons[i].SetActive(false);
@@ -125,16 +133,18 @@ public class MainMenuCanvasScript : MonoBehaviour
         {
             leaderboardPanel.SetActive(true);
             leaderboardPage.SetUpLeaderboard();
+            VibrationManager.instance.VibeUI();
         }
         else
         {
             leaderboardPanel.SetActive(false);
-
+            VibrationManager.instance.VibeUI();
         }
     }
 
     public void ShowOrHideEnergyPopUpPanel()
     {
+        VibrationManager.instance.VibeUI();
         if (energyPanel.activeSelf == false)
         {
             energyPanel.SetActive(true);
@@ -147,6 +157,7 @@ public class MainMenuCanvasScript : MonoBehaviour
 
     public void LoadTutorial()
     {
+        VibrationManager.instance.VibeUI();
         SceneManager.LoadScene("Level_Teste");
     }
 

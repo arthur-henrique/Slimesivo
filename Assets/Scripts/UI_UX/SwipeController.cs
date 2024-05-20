@@ -91,6 +91,7 @@ public class SwipeController : MonoBehaviour, IEndDragHandler
 
     private void MovePage()
     {
+        VibrationManager.instance.VibeUI();
         mapPages.LeanMoveLocal(targetPos, tweenTime).setEase(tweenType);
         UpdateArrowButtons();
         mapText.text = "Mapa " + currentPage.ToString();
@@ -101,6 +102,7 @@ public class SwipeController : MonoBehaviour, IEndDragHandler
     {
         if(Mathf.Abs(eventData.position.x-eventData.pressPosition.x) > dragThreshold)
         {
+            VibrationManager.instance.VibeUI();
             if (eventData.position.x > eventData.pressPosition.x)
             {
                 PreviousPage();
@@ -152,6 +154,7 @@ public class SwipeController : MonoBehaviour, IEndDragHandler
 
     public void BackToMainMenu()
     {
+        VibrationManager.instance.VibeUI();
         SceneManager.LoadScene("1 - Main Menu");
     }
 }

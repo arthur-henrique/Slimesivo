@@ -15,6 +15,7 @@ public class PlayerCollision : MonoBehaviour
         IDamageDealer consumableCollectible = collision.gameObject.GetComponent<IDamageDealer>();
         if (consumableCollectible != null)
         {
+            VibrationManager.instance.VibeDamage();
             consumableCollectible.Damage();
             Debug.Log(collision);
             return;
@@ -30,12 +31,14 @@ public class PlayerCollision : MonoBehaviour
             if (currencyCollectible != null)
             {
                 currencyCollectible.Collect();
+                VibrationManager.instance.VibeCollectible();
                 PlayableLevelManager.Instance.AddCoinCollected();
                 return;
             }
             else if (consumableCollectible != null)
             {
                 consumableCollectible.Consume();
+                VibrationManager.instance.VibeCollectible();
                 return;
             }
         }

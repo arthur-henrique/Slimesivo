@@ -134,6 +134,7 @@ public class GameManager : MonoBehaviour
     {
         if(Player.Instance != null && Player.Instance.hitCounter == 1)
         {
+            
             needsToCheckAlive = true;
             pauseCanvas.OnDamageTaken(livesAmount);
             PlayableLevelManager.Instance.AddTimeHit();
@@ -230,6 +231,7 @@ public class GameManager : MonoBehaviour
 
     public void Victory()
     {
+        VibrationManager.instance.VibeWin();
         HUDCanvasMenu.instance.OnWinningLevel();
         QuestManager.Instance.CheckQuests();
     }

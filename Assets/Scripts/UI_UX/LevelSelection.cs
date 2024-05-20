@@ -237,7 +237,8 @@ public class LevelSelection : MonoBehaviour
 
     public void ShowOrHideLevelStatistics()
     {
-        if(unlocked)
+        VibrationManager.instance.VibeUI();
+        if (unlocked)
         {
             if (popUpPanel.activeSelf == false) //Show
             {
@@ -267,6 +268,7 @@ public class LevelSelection : MonoBehaviour
 
     public void GoToLevel()
     {
+        VibrationManager.instance.VibeUI();
         if (unlocked)
         {
             if(EnergyManager.Instance.UseEnergy(0))
