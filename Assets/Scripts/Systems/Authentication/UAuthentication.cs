@@ -24,6 +24,7 @@ public class UAuthentication : MonoBehaviour
         }
         // UnityServices.InitializeAsync() will initialize all services that are subscribed to Core
         await UnityServices.InitializeAsync();
+        Vibration.Init();
         Debug.Log(UnityServices.State);
 
         SetupEvents();
