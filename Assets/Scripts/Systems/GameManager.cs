@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
         Swipe,
 
     }
-    [SerializeField] public InputMode activeInputMode;
+    public InputMode activeInputMode = InputMode.Tap_Performed;
     private bool isInGame;
     void Awake()
     {
@@ -78,14 +78,14 @@ public class GameManager : MonoBehaviour
     }
     private void OnEnable()
     {
-        EventsPlayer.SetupInputsPlayer += SwitchInput;
-        EventsPlayer.ClearAllEventsvariables += ClearEventsReferences;
+        //EventsPlayer.SetupInputsPlayer += SwitchInput;
+        //EventsPlayer.ClearAllEventsvariables += ClearEventsReferences;
     }
 
     private void ClearEventsReferences()
     {
-        EventsPlayer.SetupInputsPlayer -= SwitchInput;
-        EventsPlayer.ClearAllEventsvariables -= ClearEventsReferences;
+       // EventsPlayer.SetupInputsPlayer -= SwitchInput;
+        //EventsPlayer.ClearAllEventsvariables -= ClearEventsReferences;
     }
 
     private void OnDisable()
@@ -152,7 +152,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void SwitchInput(Enum inputType)
+    public void SwitchInput(int inputValue)
     {
         if (activeInputMode == InputMode.Tap_Performed)
         {
@@ -160,8 +160,9 @@ public class GameManager : MonoBehaviour
             print("true");
             if(isInGame) 
             {
-                inputType = activeInputMode;
-                EventsPlayer.OnsetupInputsPlayer(inputType);
+                inputValue = (int)activeInputMode;
+                //EventsPlayer.OnsetupInputsPlayer(inputType);
+    
             }
         }
         else
@@ -170,8 +171,9 @@ public class GameManager : MonoBehaviour
             print("false");
             if (isInGame)
             {
-                inputType = activeInputMode;
-                EventsPlayer.OnsetupInputsPlayer(inputType);
+                inputValue = (int)activeInputMode;
+                //EventsPlayer.OnsetupInputsPlayer(inputType);
+                
             }
         }
     }
@@ -213,7 +215,8 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 1f;
             minimapControl.GetFinishLine();
             heartsContainer.SetActive(true);
-            EventsPlayer.OnsetupInputsPlayer(activeInputMode);
+            int inputValue = (int)activeInputMode;
+            EventsPlayer.OnsetupInputsPlayer(inputValue);
 
 
             if (SceneManager.GetActiveScene().name == "Level_Teste")

@@ -26,8 +26,8 @@ public class PlayerSoundsEVfxManager : MonoBehaviour
         EventsPlayer.JumpLeft -= SpawnJumpParticles;
         EventsPlayer.JumpRight -= SpawnJumpParticles;
         EventsPlayer.JumpSameSide -= _ => SpawnJumpParticles();
+        EventsPlayer.Damage -= SpawnDamageParticles;
         EventsPlayer.ClearAllEventsvariables -= ClearEventsReferences;
-        Debug.Log("chamou");
     }
 
     private void OnDisable()
@@ -44,7 +44,11 @@ public class PlayerSoundsEVfxManager : MonoBehaviour
     }
     private void SpawnJumpSameSideParticles()
     {
-        Instantiate(jumpParticles, jumpSameSidePos.position, Quaternion.identity);
+        if(jumpSameSidePos != null)
+        {
+            Instantiate(jumpParticles, jumpSameSidePos.position, Quaternion.identity);
+        }
+       
     }
 
     private void SpawnWallParticle()

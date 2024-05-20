@@ -1,3 +1,4 @@
+using fbg;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,8 +22,8 @@ namespace PlayerEvents
         public static event UnityAction<Collider2D, Transform> Damage;
         public static void OnTakingDamage(Collider2D obstacleCollision, Transform player) => Damage?.Invoke(obstacleCollision,player);
 
-        public static event UnityAction<Enum> SetupInputsPlayer;
-        public static void OnsetupInputsPlayer(Enum inputType) => SetupInputsPlayer?.Invoke(inputType);
+        public static event UnityAction<int> SetupInputsPlayer;
+        public static void OnsetupInputsPlayer(int inputType) => SetupInputsPlayer?.Invoke(inputType);
 
         public static event UnityAction ClearAllEventsvariables;
         public static void OnClearAllEventsvariables() => ClearAllEventsvariables?.Invoke();

@@ -96,7 +96,8 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+        if(Instance == null)
+            Instance = this;
     }
     private void Start()
     {
@@ -106,11 +107,12 @@ public class Player : MonoBehaviour
     }
     private void OnEnable()
     {
-        EventsPlayer.JumpRight += JumpRight;
-        EventsPlayer.JumpSameSide += JumpSameSide;
-        EventsPlayer.JumpLeft += JumpLeft;
-        EventsPlayer.Damage += KnockbackPlayer;
-        EventsPlayer.ClearAllEventsvariables += ClearEventsReferences;
+       Debug.LogWarning("OnEnable");
+       EventsPlayer.JumpRight += JumpRight;
+       EventsPlayer.JumpSameSide += JumpSameSide;
+       EventsPlayer.JumpLeft += JumpLeft;
+       EventsPlayer.Damage += KnockbackPlayer;
+       EventsPlayer.ClearAllEventsvariables += ClearEventsReferences; 
     }
     private void OnDisable()
     {
@@ -119,11 +121,12 @@ public class Player : MonoBehaviour
 
     private void ClearEventsReferences()
     {
-        EventsPlayer.JumpRight -= JumpManager;
+       
+        EventsPlayer.JumpRight -= JumpRight;
         EventsPlayer.JumpSameSide -= JumpSameSide;
         EventsPlayer.JumpLeft -= JumpLeft;
         EventsPlayer.Damage -= KnockbackPlayer;
-        EventsPlayer.ClearAllEventsvariables -= ClearEventsReferences;
+        EventsPlayer.ClearAllEventsvariables -= ClearEventsReferences; Debug.LogWarning("OnDisable");
     }
     private void FixedUpdate()
     {
@@ -136,9 +139,6 @@ public class Player : MonoBehaviour
     }
             
         
-          
-
-
        
 
     private void DefinePlayerSpeed()

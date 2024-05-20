@@ -20,14 +20,15 @@ public class PlayableLevelManager : MonoBehaviour
     }
     // Start is called before the first frame update
     public void Start()
-    {
-        GameManager.instance.SceneLoad();
+    {   
         //canCountTime = false;
         timesHit = 0;
         coinsCollected = 0;
         timeSpent = 0;
         print("HasZeroed");
+        GameManager.instance.SceneLoad();
     }
+ 
 
     public void FixedUpdate()
     {

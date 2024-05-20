@@ -60,7 +60,8 @@ public class TouchManager : MonoBehaviour
             instance = this;
         }
         DefineWorldWidth();
-        
+        inputActions = new PlayerTouchControls();
+
     }
     private void Start()
     {
@@ -69,7 +70,7 @@ public class TouchManager : MonoBehaviour
     private void OnEnable()
     {
         EventsPlayer.SetupInputsPlayer += CheckActiveInputMode;
-        EventsPlayer.ClearAllEventsvariables += ClearEventsReferences;
+        EventsPlayer.ClearAllEventsvariables += ClearEventsReferences;     
     }
 
     private void ClearEventsReferences()
@@ -88,24 +89,24 @@ public class TouchManager : MonoBehaviour
     }
     private void Components()
     {
-        inputActions = new PlayerTouchControls();
+       
         mainCamera = Camera.main;
-        EventsPlayer.OnsetupInputsPlayer(GameManager.instance.activeInputMode);
-        
+            
     }
 
 
-    public void CheckActiveInputMode(Enum inputType)
+    public void CheckActiveInputMode(int inputValue)
     {
-        switch (inputType)
+        
+        switch (inputValue)
         {
-            case GameManager.InputMode.Tap_Performed:
+            case 0:
                 inputActions.Touch.TouchPress.performed += TouchPress;
                 break;
-            case GameManager.InputMode.Tap_Release:
+            case 1:
                 inputActions.Touch.TouchPress.canceled += TouchPress;
                 break;
-            case GameManager.InputMode.Swipe:
+            case 2:
                 inputActions.Touch.PrimaryContact.started += ctx => StartTouchPrimary(ctx);
                 inputActions.Touch.PrimaryContact.canceled += ctx => EndTouchPrimary(ctx);
                 break;
@@ -210,8 +211,10 @@ public class TouchManager : MonoBehaviour
             //Dai checa pra ver se foi esquerda ou direita, maior q 0.5 direita menor esquerda
             if (screenSideX > 0.5)
             {
-                if((GetPlayerPositionInScreen(0.2f, true)))
+                Debug.LogWarning(Player.Instance.gameObject);
+                if ((GetPlayerPositionInScreen(0.2f, true)))
                 {
+                    
                     if (Player.Instance.IsWalled())
                     {
                         _isFacingRight = true;
@@ -235,6 +238,7 @@ public class TouchManager : MonoBehaviour
             }
             else
             {
+                Debug.LogWarning(Player.Instance.gameObject);
                 if (GetPlayerPositionInScreen(-0.2f,false))
                 {
                     if (Player.Instance.IsWalled())
