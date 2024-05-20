@@ -233,13 +233,13 @@ public class PlayerTutorial : MonoBehaviour
         StopAllCoroutines();
         ResetPlayerRotation();
         canApplyGravity = false;
-        anim.SetInteger("AnimParameter", 1);
+        anim.SetInteger("AnimParameter", 5);
         _touchManager.inputActions.Disable();
         isWallJumping = true;
         playerStatsScript.isRepawning = false;
         if (!_touchManager.IsFacingRight)
         {
-            anim.SetInteger("AnimParameter", 2);
+            anim.SetInteger("AnimParameter", 6);
         }
 
         wallSlideStates = WallSlideStates.WallStick;
@@ -301,7 +301,7 @@ public class PlayerTutorial : MonoBehaviour
 
 
             }
-            else if (IsOnGround())
+            else if (IsOnGround() && !isJumping)
             {
                  anim.SetInteger("AnimParameter", 0);
                  _touchManager.inputActions.Enable();

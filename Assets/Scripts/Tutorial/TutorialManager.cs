@@ -79,21 +79,6 @@ public class TutorialManager : MonoBehaviour
     private void Stage2Parameters()
     {
         doubleJumpOpen = true;
-        if (playerTutorialScript.canDoubleJump)
-        {
-            float scale = 0.5f;
-            if (playerTutorialScript.gameObject.transform.position.x == worldPosition.x)
-            {
-                scale = 0;
-                Time.timeScale = scale;
-                Time.fixedDeltaTime = scale * .02f;
-            }
-            else
-            {
-                Time.timeScale = scale;
-                Time.fixedDeltaTime = scale * .02f;
-            }
-        }
     }
     private void Stage3Parameters()
     {

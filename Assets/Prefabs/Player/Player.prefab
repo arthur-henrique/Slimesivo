@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 1620982679027179847}
   - component: {fileID: 8116846347982900939}
   - component: {fileID: 4824584723614067966}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -143,8 +143,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.05, y: -0.05, z: 0}
-  m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1029969644774920132}
   - {fileID: 5718995810343491005}
@@ -193,7 +193,7 @@ MonoBehaviour:
   uiLayer:
     serializedVersion: 2
     m_Bits: 512
-  minimunDistance: 0.2
+  minimunDistance: 0.5
   maximumTime: 1
   directionThreshold: 0.5
   rightCounter: 0
@@ -210,18 +210,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fe146808b3f7464e8cd1cf5eebf99b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstJumpForce: 10
+  firstJumpForce: 12
   groundCheck: {fileID: 5718995810343491005}
   groundLayer:
     serializedVersion: 2
     m_Bits: 128
-  jumpSameSideTimer: 1
+  jumpSameSideTimer: 0.3
   playerSprite: {fileID: 6457546778788927930}
   cameraController: {fileID: 0}
-  wallStickTime: 2
-  wallSlideFase1Time: 0
+  wallStickTime: 1
+  wallSlideFase1Time: 0.1
   wallSlideSpeedMin: 0.5
-  wallSlideSpeedMax: 1
+  wallSlideSpeedMax: 1.5
   wallLayer:
     serializedVersion: 2
     m_Bits: 64

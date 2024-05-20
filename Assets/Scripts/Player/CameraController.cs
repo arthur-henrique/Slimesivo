@@ -12,8 +12,9 @@ public class CameraController : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera vCam;
     private Vector3 startOffset;
     private float startDeadzone;
-    [SerializeField] private float newDeadzone;
-    [SerializeField] private float newOffset = 0;
+    private float newDeadzone;
+    private float newOffset = 0;
+    Vector2 playerLastPos;
 
     private Vector2 spawnPosition;
 
@@ -36,11 +37,17 @@ public class CameraController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if(gameObject.transform.position.y < player.transform.position.y)
+        MoveCamera();
+        
+    }
+    private void MoveCamera()
+    {
+        
+        if (player.transform.position.y > playerLastPos.y)
         {
+            playerLastPos = player.transform.position; 
             gameObject.transform.position = new Vector3(0, Mathf.Lerp(gameObject.transform.position.y, player.transform.position.y, speedFollowPlayer), 0);
         }
-        
     }
     public void MoveCameraToRespawn(float positionToMove)
     {

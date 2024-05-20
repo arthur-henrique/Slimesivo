@@ -203,18 +203,20 @@ public class TouchManager : MonoBehaviour
     {
        //Pega o valor do pixel onde o player clica e divide pelo valor total de pixeis da tela
         value = inputActions.Touch.TouchPosition.ReadValue<Vector2>();
-        screenSideX = value.x / Camera.main.pixelWidth;
+        screenSideX = value.x /mainCamera.pixelWidth;
 
                    
 
-        if (!PointerIsUIHit(value)) 
+        if (!PointerIsUIHit(value))
+        {
+
             //Dai checa pra ver se foi esquerda ou direita, maior q 0.5 direita menor esquerda
             if (screenSideX > 0.5)
             {
                 Debug.LogWarning(Player.Instance.gameObject);
                 if ((GetPlayerPositionInScreen(0.2f, true)))
                 {
-                    
+
                     if (Player.Instance.IsWalled())
                     {
                         _isFacingRight = true;
@@ -233,13 +235,13 @@ public class TouchManager : MonoBehaviour
                     _isFacingRight = true;
                     EventsPlayer.OnJumpRight();
                 }
-               
+
 
             }
             else
             {
                 Debug.LogWarning(Player.Instance.gameObject);
-                if (GetPlayerPositionInScreen(-0.2f,false))
+                if (GetPlayerPositionInScreen(-0.2f, false))
                 {
                     if (Player.Instance.IsWalled())
                     {
@@ -250,7 +252,7 @@ public class TouchManager : MonoBehaviour
                     else
                     {
                         _isFacingRight = false;
-                        EventsPlayer.OnJumpRight();
+                        EventsPlayer.OnJumpLeft();
                     }
                 }
                 else
@@ -260,6 +262,7 @@ public class TouchManager : MonoBehaviour
 
                 }
             }
+        }
     }
     #endregion
 
