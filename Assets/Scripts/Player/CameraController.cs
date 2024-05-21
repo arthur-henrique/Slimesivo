@@ -14,6 +14,7 @@ public class CameraController : MonoBehaviour
     private float startDeadzone;
     private float newDeadzone;
     private float newOffset = 0;
+    [SerializeField] private float offsetFollowCamera;
     Vector2 playerLastPos;
 
     private Vector2 spawnPosition;
@@ -35,7 +36,7 @@ public class CameraController : MonoBehaviour
     {
         return gameObject.transform.position.y > spawnPosition.y;
     }
-    private void FixedUpdate()
+    private void Update()
     {
         MoveCamera();
         
@@ -46,7 +47,7 @@ public class CameraController : MonoBehaviour
         if (player.transform.position.y > playerLastPos.y)
         {
             playerLastPos = player.transform.position; 
-            gameObject.transform.position = new Vector3(0, Mathf.Lerp(gameObject.transform.position.y, player.transform.position.y, speedFollowPlayer), 0);
+            gameObject.transform.position = new Vector3(0, Mathf.Lerp(gameObject.transform.position.y + offsetFollowCamera, player.transform.position.y, speedFollowPlayer), 0);
         }
     }
     public void MoveCameraToRespawn(float positionToMove)
