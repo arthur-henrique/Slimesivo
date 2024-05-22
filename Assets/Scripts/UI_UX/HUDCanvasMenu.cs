@@ -34,6 +34,10 @@ public class HUDCanvasMenu : MonoBehaviour
         {
             instance = this;
         }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
 
         LevelUIPreparation();
     }
@@ -171,6 +175,7 @@ public class HUDCanvasMenu : MonoBehaviour
         {
             timerText.text = timer.ToString();
             yield return new WaitForSecondsRealtime(1f);
+            VibrationManager.instance.VibeUI();
             timer -= 1f;
         }
 
