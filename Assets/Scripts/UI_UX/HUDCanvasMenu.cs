@@ -117,7 +117,6 @@ public class HUDCanvasMenu : MonoBehaviour
 
         if (EnergyManager.Instance.UseEnergy(0))
         {
-            EventsPlayer.OnClearAllEventsvariables();
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
         else

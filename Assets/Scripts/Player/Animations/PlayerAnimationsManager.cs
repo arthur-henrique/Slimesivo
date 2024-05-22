@@ -20,7 +20,6 @@ public class PlayerAnimationsManager : MonoBehaviour
         EventsPlayer.JumpLeft += JumpLeftAnimation;
         EventsPlayer.JumpSameSide += JumpSameSideAnimation;
         EventsPlayer.Damage += DamageAnimation;
-        EventsPlayer.ClearAllEventsvariables += ClearEventsReferences;
     }
 
 
@@ -34,7 +33,6 @@ public class PlayerAnimationsManager : MonoBehaviour
         EventsPlayer.JumpLeft -= JumpLeftAnimation;
         EventsPlayer.JumpSameSide -= JumpSameSideAnimation;
         EventsPlayer.Damage -= DamageAnimation;
-        EventsPlayer.ClearAllEventsvariables -= ClearEventsReferences;
     }
 
 

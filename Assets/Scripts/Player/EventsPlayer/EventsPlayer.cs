@@ -24,8 +24,7 @@ namespace PlayerEvents
         public static event UnityAction<int> SetupInputsPlayer;
         public static void OnsetupInputsPlayer(int inputType) => SetupInputsPlayer?.Invoke(inputType);
 
-        public static event UnityAction ClearAllEventsvariables;
-        public static void OnClearAllEventsvariables() => ClearAllEventsvariables?.Invoke();
+
     }
 }
 

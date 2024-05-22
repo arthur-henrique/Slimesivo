@@ -107,12 +107,10 @@ public class Player : MonoBehaviour
     }
     private void OnEnable()
     {
-       Debug.LogWarning("OnEnable");
        EventsPlayer.JumpRight += JumpRight;
        EventsPlayer.JumpSameSide += JumpSameSide;
        EventsPlayer.JumpLeft += JumpLeft;
-       EventsPlayer.Damage += KnockbackPlayer;
-       EventsPlayer.ClearAllEventsvariables += ClearEventsReferences; 
+       EventsPlayer.Damage += KnockbackPlayer;   
     }
     private void OnDisable()
     {
@@ -126,7 +124,6 @@ public class Player : MonoBehaviour
         EventsPlayer.JumpSameSide -= JumpSameSide;
         EventsPlayer.JumpLeft -= JumpLeft;
         EventsPlayer.Damage -= KnockbackPlayer;
-        EventsPlayer.ClearAllEventsvariables -= ClearEventsReferences; Debug.LogWarning("OnDisable");
     }
     private void FixedUpdate()
     {

@@ -10,6 +10,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private GameObject player;
     [SerializeField] private float speedFollowPlayer;
     [SerializeField] private CinemachineVirtualCamera vCam;
+    [SerializeField] private GameObject cameraDamage;
     private Vector3 startOffset;
     private float startDeadzone;
     private float newDeadzone;
@@ -31,7 +32,7 @@ public class CameraController : MonoBehaviour
         startDeadzone = vCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_DeadZoneHeight;
         spawnPosition = vCam.transform.position;
     }
-
+    
     public bool CheckSpawnPosition()
     {
         return gameObject.transform.position.y > spawnPosition.y;
@@ -56,10 +57,21 @@ public class CameraController : MonoBehaviour
         
         if (CheckSpawnPosition())
         {
+            DisableCameraDamage();
+            playerLastPos = Vector2.zero;
             gameObject.transform.position = new Vector3(0, positionToMove, 0);
             vCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_TrackedObjectOffset.y = newOffset;
             vCam.GetCinemachineComponent<CinemachineFramingTransposer>().m_DeadZoneHeight = newDeadzone;
         }
+    }
+
+    public void DisableCameraDamage()
+    {
+        cameraDamage.SetActive(false);
+    }
+    public void EnableCameraDamage()
+    {
+        cameraDamage.SetActive(true);
     }
 
     public void CameraSettingsReset()

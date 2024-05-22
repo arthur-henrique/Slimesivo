@@ -18,7 +18,6 @@ public class PlayerSoundsEVfxManager : MonoBehaviour
         EventsPlayer.JumpRight += SpawnJumpParticles;
         EventsPlayer.JumpSameSide += _ => SpawnJumpSameSideParticles();
         EventsPlayer.Damage += SpawnDamageParticles;
-        EventsPlayer.ClearAllEventsvariables += ClearEventsReferences;
     }
 
     private void ClearEventsReferences()
@@ -27,7 +26,6 @@ public class PlayerSoundsEVfxManager : MonoBehaviour
         EventsPlayer.JumpRight -= SpawnJumpParticles;
         EventsPlayer.JumpSameSide -= _ => SpawnJumpParticles();
         EventsPlayer.Damage -= SpawnDamageParticles;
-        EventsPlayer.ClearAllEventsvariables -= ClearEventsReferences;
     }
 
     private void OnDisable()

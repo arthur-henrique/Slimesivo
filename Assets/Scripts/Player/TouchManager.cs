@@ -69,14 +69,12 @@ public class TouchManager : MonoBehaviour
     }
     private void OnEnable()
     {
-        EventsPlayer.SetupInputsPlayer += CheckActiveInputMode;
-        EventsPlayer.ClearAllEventsvariables += ClearEventsReferences;     
+        EventsPlayer.SetupInputsPlayer += CheckActiveInputMode;    
     }
 
     private void ClearEventsReferences()
     {
         EventsPlayer.SetupInputsPlayer -= CheckActiveInputMode;
-        EventsPlayer.ClearAllEventsvariables -= ClearEventsReferences;
     }
 
 
@@ -213,7 +211,7 @@ public class TouchManager : MonoBehaviour
             //Dai checa pra ver se foi esquerda ou direita, maior q 0.5 direita menor esquerda
             if (screenSideX > 0.5)
             {
-                Debug.LogWarning(Player.Instance.gameObject);
+               
                 if ((GetPlayerPositionInScreen(0.2f, true)))
                 {
 
@@ -240,7 +238,7 @@ public class TouchManager : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning(Player.Instance.gameObject);
+                
                 if (GetPlayerPositionInScreen(-0.2f, false))
                 {
                     if (Player.Instance.IsWalled())

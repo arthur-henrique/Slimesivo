@@ -60,6 +60,7 @@ public class PlayerStats : MonoBehaviour
             {
                 gameObject.transform.position = respawnPos;
             }
+            StartCoroutine(DelayToEnableCameraDamage());
         }
         else
         {
@@ -67,6 +68,11 @@ public class PlayerStats : MonoBehaviour
         }
        
         cameraController.MoveCameraToRespawn(respawnPos.y);
+    }
+    IEnumerator DelayToEnableCameraDamage()
+    {
+        yield return new WaitForSeconds(0.5f);
+        cameraController.EnableCameraDamage();
     }
     public void RespawnPlayerSameSide()
     {
