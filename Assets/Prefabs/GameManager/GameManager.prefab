@@ -1268,6 +1268,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 3552320521374328181}
+        m_TargetAssemblyTypeName: CurrencyManager, Assembly-CSharp
+        m_MethodName: SetBalance
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 5510449808988430023}
         m_TargetAssemblyTypeName: VibrationManager, Assembly-CSharp
         m_MethodName: VibeUI
@@ -8834,7 +8846,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 5510449808988430023}
         m_TargetAssemblyTypeName: VibrationManager, Assembly-CSharp
-        m_MethodName: Vib
+        m_MethodName: VibeUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -21770,6 +21782,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 3552320521374328181}
+        m_TargetAssemblyTypeName: CurrencyManager, Assembly-CSharp
+        m_MethodName: SetBalance
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6281659835346042242
 GameObject:
   m_ObjectHideFlags: 0
@@ -29023,7 +29047,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 5510449808988430023}
         m_TargetAssemblyTypeName: VibrationManager, Assembly-CSharp
-        m_MethodName: Vib
+        m_MethodName: VibeUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

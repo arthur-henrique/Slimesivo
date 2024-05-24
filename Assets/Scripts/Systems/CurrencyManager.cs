@@ -73,8 +73,9 @@ public class CurrencyManager : MonoBehaviour
         if (!IsAuthenticationSignedIn())
         {
             return;
-        }
-        ;
+        };
+
+        FetchCoinBalance();
         currentCurrency += currentCoinAmount;
         currentCurrency += questCoinAmount;
         PlayerBalance playerBalance = await EconomyService.Instance.PlayerBalances.SetBalanceAsync(coinCurrencyID, currentCurrency);
