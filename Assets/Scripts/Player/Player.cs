@@ -111,6 +111,7 @@ public class Player : MonoBehaviour
        EventsPlayer.JumpSameSide += JumpSameSide;
        EventsPlayer.JumpLeft += JumpLeft;
        EventsPlayer.Damage += KnockbackPlayer;   
+       EventsPlayer.WallStick += WallStick;
     }
     private void OnDisable()
     {
@@ -119,18 +120,17 @@ public class Player : MonoBehaviour
 
     private void ClearEventsReferences()
     {
-       
         EventsPlayer.JumpRight -= JumpRight;
         EventsPlayer.JumpSameSide -= JumpSameSide;
         EventsPlayer.JumpLeft -= JumpLeft;
         EventsPlayer.Damage -= KnockbackPlayer;
+        EventsPlayer.WallStick -= WallStick;
     }
     private void FixedUpdate()
     {
         
         if (!getHit)
         {
-            WallStick();
             CheckPlayerStillAlive();
         }
        
@@ -246,6 +246,10 @@ public class Player : MonoBehaviour
     private void StopWallSlide()
     {
         isWallJumping = false;
+        if (!getHit)
+        {
+            EventsPlayer.OnWallStick();
+        }
 
     }
     private void JumpLogic()
@@ -378,6 +382,7 @@ public class Player : MonoBehaviour
         }
         rig.gravityScale = 1;
         wallSlideStates = WallSlideStates.WallSlideSlow;
+        WallStick();
 
     }
 
@@ -396,6 +401,7 @@ public class Player : MonoBehaviour
 
         }
         wallSlideStates = WallSlideStates.WallSlideFast;
+        WallStick();
 
     }
     IEnumerator WallSlideMaxTimer()
@@ -437,6 +443,10 @@ public class Player : MonoBehaviour
     #region Collision and Damage
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!getHit)
+        {
+            EventsPlayer.OnWallStick();
+        }
         //Damage Detection
         if (((1 << collision.gameObject.layer) & damageLayer) != 0)
         {

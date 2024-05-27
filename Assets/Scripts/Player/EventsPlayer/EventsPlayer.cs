@@ -24,6 +24,8 @@ namespace PlayerEvents
         public static event UnityAction<int> SetupInputsPlayer;
         public static void OnsetupInputsPlayer(int inputType) => SetupInputsPlayer?.Invoke(inputType);
 
+        public static event UnityAction WallStick;
+        public static void OnWallStick() => WallStick?.Invoke();
 
     }
 }

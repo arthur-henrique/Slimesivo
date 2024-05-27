@@ -1,3 +1,4 @@
+using PlayerEvents;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro.Examples;
@@ -16,7 +17,8 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] LayerMask damageableLayer;
     [HideInInspector] public bool isRepawning;
     private Vector3 startPlayerPosition;
- 
+    
+
 
     private void Start()
     {
@@ -51,15 +53,9 @@ public class PlayerStats : MonoBehaviour
         //if(vidasPlayer <0)
         playerScript.ResetVelocityPlayer();
         if (cameraController.CheckSpawnPosition())
-        {
-            if (touchManagerScript.IsFacingRight)
-            {
-                gameObject.transform.position = respawnPos;
-            }
-            else
-            {
-                gameObject.transform.position = respawnPos;
-            }
+        {         
+            gameObject.transform.position = respawnPos;
+            EventsPlayer.OnWallStick();
             StartCoroutine(DelayToEnableCameraDamage());
         }
         else
