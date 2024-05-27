@@ -47,16 +47,19 @@ public class PlayerAnimationsManager : MonoBehaviour
     }
     private void JumpSameSideAnimation(bool isFacingRight)
     {
-        Debug.Log("Chamou");
-        if (isFacingRight)
+        if(anim.GetInteger("AnimParameter") != 5|| anim.GetInteger("AnimParameter") != 6)
         {
-            anim.SetInteger("AnimParameter", 5);
+            if (isFacingRight)
+            {
+                anim.SetInteger("AnimParameter", 5);
+            }
+            else
+            {
+                Debug.Log(isFacingRight);
+                anim.SetInteger("AnimParameter", 6);
+            }
         }
-        else
-        {
-            Debug.Log(isFacingRight);
-            anim.SetInteger("AnimParameter", 6);
-        }
+      
         
     }
     private void DamageAnimation(Collider2D collider, Transform player)
