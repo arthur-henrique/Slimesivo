@@ -127,6 +127,7 @@ public class Player : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        
         if (!getHit)
         {
             WallStick();
@@ -195,7 +196,8 @@ public class Player : MonoBehaviour
     }
     public void JumpManager()
     {
-        JumpLogic();
+        Debug.Log(isWallJumping);
+        JumpLogic();                          
         canApplyGravity = true; 
         if (!IsOnGround() && IsWalled())
         {
@@ -205,6 +207,7 @@ public class Player : MonoBehaviour
         }
         else
         {
+            isWallJumping = false;
             firstJumpForce = initialJumpForce;
         }
 
@@ -229,17 +232,22 @@ public class Player : MonoBehaviour
     }
     private void JumpSameSide(bool isFacingRight)
     {
-
+        Debug.Log(isWallJumping);
+        CancelInvoke(nameof(StopWallSlide));
         JumpLogic();
         firstJumpForce = initialJumpForce;
         canApplyGravity = false;
         isWallJumping = true;
         playerStatsScript.isRepawning = false;
         rig.velocity = new Vector2(0, firstJumpForce);
-        Invoke(nameof(StopWallJump), jumpSameSideTimer);
+        Invoke(nameof(StopWallSlide), jumpSameSideTimer);
 
     }
+    private void StopWallSlide()
+    {
+        isWallJumping = false;
 
+    }
     private void JumpLogic()
     {
         if (playerStatsScript.isRepawning)
@@ -283,6 +291,7 @@ public class Player : MonoBehaviour
                 {
                     case WallSlideStates.WallStick:
                         StartCoroutine(WallStickTimer());
+ 
                         playerStatsScript.SaveCurrentPlayerPos();
                         break;
                     case WallSlideStates.WallSlideSlow:
@@ -321,7 +330,7 @@ public class Player : MonoBehaviour
             deathCounter = 0;
             isWallJumping = false;
             wallJumpingCounter = wallJumpTime;
-            CancelInvoke(nameof(StopWallJump));
+            StopCoroutine(StopWallJump());
         }
         else
         {
@@ -332,12 +341,13 @@ public class Player : MonoBehaviour
         {
             ResetPlayerRotation();
             isWallJumping = true;
-            wallJumpingCounter = 0;        
-            Invoke(nameof(StopWallJump), wallJumpDurantion);
+            wallJumpingCounter = 0;
+            StartCoroutine(StopWallJump());
         }
     }
-    private void StopWallJump()
+    private IEnumerator StopWallJump()
     {
+        yield return new WaitForSeconds(wallJumpDurantion);
         isWallJumping = false;
         
     }
