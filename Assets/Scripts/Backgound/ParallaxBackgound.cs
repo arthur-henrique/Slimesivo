@@ -16,7 +16,7 @@ public class ParallaxBackgound : MonoBehaviour
         Texture2D texture = sprite.texture;
         textureUnitySizeY = texture.height/sprite.pixelsPerUnit;
     }
-    private void LateUpdate()
+    private void Update()
     {
         Vector3 deltaMovement = cameraTransform.position - lastCameraPosition;
 
