@@ -15,7 +15,9 @@ public class GameManager : MonoBehaviour
     // Health and Values associated to being alive
     public int livesAmount = 0;
     private int maxLivesAmount = 3;
+    private float damageCooldown = 2f;
     private bool isAlive = true;
+    private bool canTakeDamage = true;
     private bool needsToCheckAlive = false;
 
     // Canvases
@@ -134,13 +136,17 @@ public class GameManager : MonoBehaviour
     {
         if(Player.Instance != null && Player.Instance.hitCounter == 1)
         {
-            
-            needsToCheckAlive = true;
-            pauseCanvas.OnDamageTaken(livesAmount);
-            PlayableLevelManager.Instance.AddTimeHit();
-            livesAmount--;
-            Debug.Log("TookDamage()");
-            // Initializes the sequence of updating the UI
+            if(canTakeDamage)
+            {
+                StartCoroutine(DamageCooldown());
+                needsToCheckAlive = true;
+                pauseCanvas.OnDamageTaken(livesAmount);
+                PlayableLevelManager.Instance.AddTimeHit();
+                livesAmount--;
+                Debug.Log("TookDamage()");
+            }
+
+
         } else if(Player.Instance == null)
         {
             //needsToCheckAlive = true;
@@ -236,4 +242,10 @@ public class GameManager : MonoBehaviour
         QuestManager.Instance.CheckQuests();
     }
     
+    private IEnumerator DamageCooldown()
+    {
+        canTakeDamage = false;
+        yield return new WaitForSeconds(damageCooldown);
+        canTakeDamage = true;
+    }
 }
