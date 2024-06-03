@@ -116,7 +116,6 @@ MonoBehaviour:
   uiLayer:
     serializedVersion: 2
     m_Bits: 512
-  inputMode: 0
   minimunDistance: 0.2
   maximumTime: 1
   directionThreshold: 0.5
@@ -201,6 +200,7 @@ GameObject:
   - component: {fileID: 2161547291106795086}
   - component: {fileID: 7264554907372996494}
   - component: {fileID: 1589730310856652138}
+  - component: {fileID: 3920405643213985896}
   m_Layer: 0
   m_Name: PlayerSprite
   m_TagString: Untagged
@@ -331,6 +331,18 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: -0.43}
   m_Size: {x: 1.23, y: 0.56}
   m_Direction: 1
+--- !u!114 &3920405643213985896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4585458349036441465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 285ae34c4c692ae45be677c84a3d6283, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6947530593431214199
 GameObject:
   m_ObjectHideFlags: 0

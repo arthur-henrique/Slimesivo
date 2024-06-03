@@ -1,3 +1,4 @@
+using PlayerEvents;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -6,6 +7,7 @@ using UnityEngine.UIElements;
 
 public class PlayerTutorial : MonoBehaviour
 {
+
     public static PlayerTutorial Instance;
 
     [Header("Jump variables")]
@@ -16,7 +18,8 @@ public class PlayerTutorial : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float jumpSameSideTimer = 1f;
     private bool isJumping;
-    public bool canDoubleJump;
+    private float initialJumpForce;
+    private float jumpWallForce;
 
 
     //components
@@ -27,10 +30,9 @@ public class PlayerTutorial : MonoBehaviour
     [Header("components")]
     [SerializeField] private GameObject playerSprite;
     [SerializeField] private CameraController cameraController;
-    [SerializeField] private TutorialManager tutorialManagerScript;
     Collider2D playerCollider;
 
-   //wall slide
+    //wall slide
     private bool isWallSliding;
     private float deathCounter;
     [Header("Wall Slide variables")]
@@ -60,21 +62,21 @@ public class PlayerTutorial : MonoBehaviour
     //Double Jump
     [Header("Double Jump variables")]
     [Tooltip("Quantidade de pulos que o player pode dar no ar")]
-   
+
     [SerializeField] private int doubleJumpMaxCounter;
     private int doubleJumpCounter;
-     [Tooltip("O quão alto o player pode pular no double jump")]
-  
+    [Tooltip("O quão alto o player pode pular no double jump")]
+
     [SerializeField] private float doubleJumpForce;
 
 
 
-    [Header("Damage and respawn variables")]  
+    [Header("Damage and respawn variables")]
     [SerializeField] private LayerMask damageLayer;
-    
+
     [Tooltip("Tempo que leva pro player respawnar depois que ele leva dano")]
     [SerializeField] private float respawnTime;
-    
+
     [Tooltip("Tempo que leva pro player morrer se ele não encostar em nada")]
     [SerializeField] private float maxTimeToDie;
 
@@ -87,39 +89,47 @@ public class PlayerTutorial : MonoBehaviour
     private float originalGravity;
     private bool canApplyGravity;
     [SerializeField] private float gravityMultiplyer;
-    public TouchManagerTutorial touchManager
-    {
-        get { return _touchManager; }
-        set { _touchManager = value; }
-    }
 
 
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+            Instance = this;
     }
     private void Start()
     {
         Components();
         DefinePlayerSpeed();
+        initialJumpForce = firstJumpForce;
     }
-       
-
+    private void OnEnable()
+    {
+        EventsTutorialPlayer.JumpRightTutorial += JumpRight;
+        EventsTutorialPlayer.JumpSameSideTutorial += JumpSameSide;
+        EventsTutorialPlayer.JumpLeftTutorial += JumpLeft;
+        EventsTutorialPlayer.DamageTutorial += KnockbackPlayer;
+        EventsTutorialPlayer.WallStickTutorial += WallStick;
+    }
+    private void OnDisable()
+    {
+        EventsTutorialPlayer.JumpRightTutorial -= JumpRight;
+        EventsTutorialPlayer.JumpSameSideTutorial -= JumpSameSide;
+        EventsTutorialPlayer.JumpLeftTutorial -= JumpLeft;
+        EventsTutorialPlayer.DamageTutorial -= KnockbackPlayer;
+        EventsTutorialPlayer.WallStickTutorial -= WallStick;
+    }
     private void FixedUpdate()
     {
+
         if (!getHit)
         {
-            WallStick();
             CheckPlayerStillAlive();
         }
-       
+
     }
-            
-        
-          
 
 
-       
+
 
     private void DefinePlayerSpeed()
     {
@@ -138,7 +148,7 @@ public class PlayerTutorial : MonoBehaviour
             {
                 rig.gravityScale += gravityMultiplyer * Time.deltaTime;
             }
-            
+
 
         }
         else
@@ -148,13 +158,16 @@ public class PlayerTutorial : MonoBehaviour
 
         if (deathCounter > maxTimeToDie)
         {
+
             hitCounter++;
             GameManager.instance.TookDamage();
             ResetPlayer();
             playerStatsScript.RespawnPlayer();
 
         }
+
     }
+
 
     #region Jump
 
@@ -166,7 +179,8 @@ public class PlayerTutorial : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         playerCollider = GetComponent<Collider2D>();
         originalGravity = rig.gravityScale;
-         
+        jumpWallForce = firstJumpForce * 0.8f;
+
     }
     public bool IsOnGround()
     {
@@ -174,85 +188,85 @@ public class PlayerTutorial : MonoBehaviour
     }
     public void JumpManager()
     {
+        Debug.Log(isWallJumping);
+        JumpLogic();
+        canApplyGravity = true;
+        if (!IsOnGround() && IsWalled())
+        {
+            WallJump();
+            firstJumpForce = jumpWallForce;
+
+        }
+        else
+        {
+            isWallJumping = false;
+            firstJumpForce = initialJumpForce;
+        }
+
+        if (!IsOnGround() && !IsWalled() && doubleJumpCounter < doubleJumpMaxCounter)
+        {
+            DoubleJump();
+        }
+        playerStatsScript.isRepawning = false;
+
+    }
+
+    private void JumpRight()
+    {
+        JumpManager();
+        rig.velocity = new Vector2(sideForce, firstJumpForce);
+        if (!TutorialManager.instance.canDoubleJump)
+        {
+            _touchManager.inputActions.Disable();
+        }
+    }
+
+    private void JumpLeft()
+    {
+        JumpManager();
+        rig.velocity = new Vector2(-sideForce, firstJumpForce);
+        if (!TutorialManager.instance.canDoubleJump)
+        {
+            _touchManager.inputActions.Disable();
+        }
+    }
+    private void JumpSameSide(bool isFacingRight)
+    {
+        Debug.Log(isWallJumping);
+        CancelInvoke(nameof(StopWallSlide));
+        JumpLogic();
+        firstJumpForce = initialJumpForce;
+        canApplyGravity = false;
+        isWallJumping = true;
+        playerStatsScript.isRepawning = false;
+        rig.velocity = new Vector2(0, firstJumpForce);
+        Invoke(nameof(StopWallSlide), jumpSameSideTimer);
+
+    }
+    private void StopWallSlide()
+    {
+        isWallJumping = false;
+        if (!getHit)
+        {
+            EventsTutorialPlayer.OnWallStickTutorial();
+        }
+
+    }
+    private void JumpLogic()
+    {
         if (playerStatsScript.isRepawning)
         {
             cameraController.CameraSettingsReset();
             playerStatsScript.isRepawning = false;
         }
+
         isJumping = true;
         StopAllCoroutines();
         ResetPlayerRotation();
         rig.gravityScale = originalGravity;
         wallSlideStates = WallSlideStates.WallStick;
-        anim.SetInteger("AnimParameter", 1);
-
-        
-        if (_touchManager.IsFacingRight && IsOnGround())
-        {
-            _touchManager.inputActions.Disable();
-            rig.velocity = new Vector2(sideForce, firstJumpForce);
-           
-
-        }
-        else if(IsOnGround() && !_touchManager.IsFacingRight)
-        {
-
-            _touchManager.inputActions.Disable();
-            rig.velocity = new Vector2(-sideForce, firstJumpForce);
-            anim.SetInteger("AnimParameter", 2);
-
-        }
-
-        if(!IsOnGround() && IsWalled())
-        {
-            WallJump();
-            if (tutorialManagerScript.tutorialStages == TutorialManager.TutorialFases.Stage2)
-            {
-                canDoubleJump = true;
-            }
-            else if(tutorialManagerScript.tutorialStages == TutorialManager.TutorialFases.Stage1)
-            {
-                _touchManager.inputActions.Disable();
-            }
-
-        }
-
-        if(!IsOnGround() && !IsWalled() && doubleJumpCounter < doubleJumpMaxCounter)
-        {
-           if(tutorialManagerScript.doubleJumpOpen)
-           {
-              DoubleJump();
-           }
-            
-        }
-        playerStatsScript.isRepawning = false;    
-            
     }
-    public void JumpSameSide()
-    {
-        StopAllCoroutines();
-        ResetPlayerRotation();
-        canApplyGravity = false;
-        anim.SetInteger("AnimParameter", 5);
-        _touchManager.inputActions.Disable();
-        isWallJumping = true;
-        playerStatsScript.isRepawning = false;
-        if (!_touchManager.IsFacingRight)
-        {
-            anim.SetInteger("AnimParameter", 6);
-        }
 
-        wallSlideStates = WallSlideStates.WallStick;
-        rig.gravityScale = originalGravity;
-        rig.velocity = new Vector2(rig.velocity.x, doubleJumpForce);
-     
-        Invoke(nameof(StopJumpSameSide), jumpSameSideTimer);
-    }
-    
-   private void StopJumpSameSide()
-    {
-        isWallJumping = false;
-    }
 
 
 
@@ -262,64 +276,56 @@ public class PlayerTutorial : MonoBehaviour
     #region WallSlide and WallJump
     public bool IsWalled()
     {
-       return Physics2D.OverlapCircle(gameObject.transform.position, 0.5f, wallLayer);
+        return Physics2D.OverlapCircle(gameObject.transform.position, 0.5f, wallLayer);
     }
-   
+
     private void WallStick()
     {
-            if (IsWalled() && !IsOnGround() && !isWallJumping)
+
+        if (IsWalled() && !IsOnGround() && !isWallJumping)
+        {
+
+            _touchManager.inputActions.Enable();
+            canApplyGravity = true;
+            doubleJumpCounter = 0;
+            anim.SetInteger("AnimParameter", 3);
+            isWallSliding = true;
+            isJumping = false;
+            switch (wallSlideStates)
             {
+                case WallSlideStates.WallStick:
+                    StartCoroutine(WallStickTimer());
 
-                _touchManager.inputActions.Enable();
-                canApplyGravity = true;
-                doubleJumpCounter = 0;
-                anim.SetInteger("AnimParameter", 3);
-                isWallSliding = true;
-                isJumping = false;
-                 
-                    switch (wallSlideStates)
-                    {
-                         case WallSlideStates.WallStick:
-                             StartCoroutine(WallStickTimer());
-                             playerStatsScript.SaveCurrentPlayerPos();
-                             break;
-                         case WallSlideStates.WallSlideSlow:
-                             StartCoroutine(WallSlideMinTimer());
-                             break;
-                         case WallSlideStates.WallSlideFast:
-                             StartCoroutine(WallSlideMaxTimer());
-                             break;
-                    }
-                 
-                
-                 
-                    PlayerOrientationChecker();
-                   
-
-
-
-
-
+                    playerStatsScript.SaveCurrentPlayerPos();
+                    break;
+                case WallSlideStates.WallSlideSlow:
+                    StartCoroutine(WallSlideMinTimer());
+                    break;
+                case WallSlideStates.WallSlideFast:
+                    StartCoroutine(WallSlideMaxTimer());
+                    break;
             }
-            else if (IsOnGround() && !isJumping)
-            {
-                 anim.SetInteger("AnimParameter", 0);
-                 _touchManager.inputActions.Enable();
-                 isWallSliding = false;
-                 playerSprite.transform.rotation = Quaternion.Euler(0, 0, 0);
 
-             }
-              else
-              {
-                 isWallSliding = false;
-              }
-            
-    
-      
+            PlayerOrientationChecker();
+        }
+        else if (IsOnGround() && !isJumping)
+        {
+            anim.SetInteger("AnimParameter", 0);
+            _touchManager.inputActions.Enable();
+            isWallSliding = false;
+            playerSprite.transform.rotation = Quaternion.Euler(0, 0, 0);
+
+        }
+        else
+        {
+            isWallSliding = false;
+        }
+
+
 
     }
 
-  
+
 
     private void WallJump()
     {
@@ -328,7 +334,7 @@ public class PlayerTutorial : MonoBehaviour
             deathCounter = 0;
             isWallJumping = false;
             wallJumpingCounter = wallJumpTime;
-            CancelInvoke(nameof(StopWallJump));
+            StopCoroutine(StopWallJump());
         }
         else
         {
@@ -340,52 +346,31 @@ public class PlayerTutorial : MonoBehaviour
             ResetPlayerRotation();
             isWallJumping = true;
             wallJumpingCounter = 0;
-            if (_touchManager.IsFacingRight)
-            {
-                rig.AddForce(new Vector2(sideForce , firstJumpForce * 0.8f),ForceMode2D.Impulse);
-            }
-            else
-            {
-                rig.AddForce(new Vector2(-sideForce , firstJumpForce * 0.8f), ForceMode2D.Impulse);
-                anim.SetInteger("AnimParameter", 2);
-            }
-           
-            Invoke(nameof(StopWallJump), wallJumpDurantion);
+            StartCoroutine(StopWallJump());
         }
     }
-    private void StopWallJump()
+    private IEnumerator StopWallJump()
     {
+        yield return new WaitForSeconds(wallJumpDurantion);
         isWallJumping = false;
-        
+
     }
 
     private void DoubleJump()
     {
-        if (canDoubleJump)
+        if (TutorialManager.instance.canDoubleJump)
         {
-            Time.timeScale = 1f;
-            Time.fixedDeltaTime = .02f;
-            tutorialManagerScript.tutorialStages = TutorialManager.TutorialFases.Stage3;
-            canDoubleJump = false;
-        }
-        _touchManager.inputActions.Disable();
-        rig.velocity = Vector3.zero;
-        doubleJumpCounter++;
-        if (_touchManager.IsFacingRight)
-        {
-            rig.velocity = new Vector2(sideForce, doubleJumpForce);
-        }
-        else 
-        {
-            rig.velocity = new Vector2(-sideForce, doubleJumpForce);
-            anim.SetInteger("AnimParameter", 2);
 
+            _touchManager.inputActions.Disable();
+            rig.velocity = Vector3.zero;
+            doubleJumpCounter++;
         }
+        
     }
 
     #endregion
     #region WallCoroutines
-  
+
     IEnumerator WallStickTimer()
     {
         float timer = 0;
@@ -400,23 +385,23 @@ public class PlayerTutorial : MonoBehaviour
 
 
         }
-        if (tutorialManagerScript.canWallSlde)
+        rig.gravityScale = 1;
+        if (TutorialManager.instance.canWallSlde)
         {
-            rig.gravityScale = 1;
             wallSlideStates = WallSlideStates.WallSlideSlow;
         }
-        
-         
+        WallStick();
+
     }
 
     IEnumerator WallSlideMinTimer()
     {
         float timer = 0;
-        
+
         while (timer < wallSlideFase1Time)
         {
-            
-            rig.velocity = new Vector2(0, -1* wallSlideSpeedMin);
+
+            rig.velocity = new Vector2(0, -1 * wallSlideSpeedMin);
             timer += Time.deltaTime;
             yield return null;
 
@@ -424,13 +409,14 @@ public class PlayerTutorial : MonoBehaviour
 
         }
         wallSlideStates = WallSlideStates.WallSlideFast;
+        WallStick();
 
     }
     IEnumerator WallSlideMaxTimer()
     {
         rig.velocity = new Vector2(0, -1 * wallSlideSpeedMax);
         yield return null;
-        
+
     }
 
 
@@ -447,7 +433,7 @@ public class PlayerTutorial : MonoBehaviour
     private void PlayerOrientationChecker()
     {
 
-        if (_touchManager.GetPlayerPositionInScreen(0.2f,true))
+        if (_touchManager.GetPlayerPositionInScreen(0.2f, true))
         {
             playerSprite.transform.rotation = Quaternion.Euler(0, 0, 90);
         }
@@ -465,14 +451,18 @@ public class PlayerTutorial : MonoBehaviour
     #region Collision and Damage
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!getHit)
+        {
+            EventsTutorialPlayer.OnWallStickTutorial();
+        }
         //Damage Detection
         if (((1 << collision.gameObject.layer) & damageLayer) != 0)
         {
-            KnockbackPlayer(collision);
+            EventsTutorialPlayer.OnTakingDamageTutorial(collision, gameObject.transform);
         }
     }
 
-    private void KnockbackPlayer(Collider2D obstacleCollision)
+    private void KnockbackPlayer(Collider2D obstacleCollision, Transform player)
     {
         if (hitCounter == 0)
         {
@@ -502,21 +492,20 @@ public class PlayerTutorial : MonoBehaviour
 
 
             //Pra chamar o respawn do player
-            anim.SetInteger("AnimParameter", 4);
             Invoke("ResetPlayer", respawnTime);
         }
     }
     private void ResetPlayer()
-    {  
-      getHit = false;
-      playerCollider.enabled = true;
-      hitCounter--;
-      playerStatsScript.RespawnPlayer();
+    {
+        getHit = false;
+        playerCollider.enabled = true;
+        hitCounter--;
+        playerStatsScript.RespawnPlayer();
     }
     #endregion
 }
-            
-        
-       
+
+
+
 
 

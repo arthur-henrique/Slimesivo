@@ -3,19 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
+using PlayerEvents;
 public class TouchManagerTutorial : MonoBehaviour
 {
+    public static TouchManagerTutorial instance;
     [SerializeField] private LayerMask uiLayer;
-     private enum InputMode
-    {
-        Tap_Performed,
-        Tap_Release,
-        Swipe,
 
-    }
 
-    [SerializeField] private InputMode inputMode;
-    
     //Swipe Variables in inspector
     [Header("Swipe Variables")]
     [Tooltip("Distancia minima para ser considerado um swipe")]
@@ -39,12 +33,9 @@ public class TouchManagerTutorial : MonoBehaviour
     private Camera mainCamera;
 
 
-
-    private PlayerTutorial playerScript;
-
     //Direction
-   [HideInInspector] public float rightCounter;
-   [HideInInspector] public float leftCounter;
+    [HideInInspector] public float rightCounter;
+    [HideInInspector] public float leftCounter;
 
     private bool _isFacingRight;
 
@@ -55,57 +46,77 @@ public class TouchManagerTutorial : MonoBehaviour
     }
     public float WorldWidth
     {
-        get { return _worldWidth; } 
+        get { return _worldWidth; }
         set { _worldWidth = value; }
     }
-   
+
 
 
     private void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
         DefineWorldWidth();
-        Components();
-    }
-  
-    #region Inputs
-    void DefineWorldWidth()
-    { 
-       float aspect = (float)Screen.width / Screen.height;
-       float worldHeight = Camera.main.orthographicSize * 2;
-       _worldWidth = worldHeight * aspect;  
-    }
-    private void Components()
-    {
         inputActions = new PlayerTouchControls();
-        playerScript = GetComponent<PlayerTutorial>();
-        mainCamera = Camera.main;
+
+    }
+    private void Start()
+    {
+        Components();
     }
     private void OnEnable()
     {
-        switch (inputMode)
+       EventsTutorialPlayer.SetupInputsPlayerTutorial += CheckActiveInputMode;
+    }
+
+    private void ClearEventsReferences()
+    {
+        EventsTutorialPlayer.SetupInputsPlayerTutorial -= CheckActiveInputMode;
+    }
+
+
+    #region Inputs
+    void DefineWorldWidth()
+    {
+        float aspect = (float)Screen.width / Screen.height;
+        float worldHeight = Camera.main.orthographicSize * 2;
+        _worldWidth = worldHeight * aspect;
+    }
+    private void Components()
+    {
+
+        mainCamera = Camera.main;
+
+    }
+
+
+    public void CheckActiveInputMode(int inputValue)
+    {
+
+        switch (inputValue)
         {
-            case InputMode.Tap_Performed:
+            case 0:
                 inputActions.Touch.TouchPress.performed += TouchPress;
                 break;
-            case InputMode.Tap_Release:
+            case 1:
                 inputActions.Touch.TouchPress.canceled += TouchPress;
                 break;
-            case InputMode.Swipe:
+            case 2:
                 inputActions.Touch.PrimaryContact.started += ctx => StartTouchPrimary(ctx);
                 inputActions.Touch.PrimaryContact.canceled += ctx => EndTouchPrimary(ctx);
                 break;
         }
-            
-       
-            
-        
-       
-        
+
     }
     private void OnDisable()
     {
         inputActions.Touch.TouchPress.canceled -= TouchPress;
         inputActions.Touch.TouchPress.performed -= TouchPress;
+        inputActions.Touch.PrimaryContact.started -= ctx => StartTouchPrimary(ctx);
+        inputActions.Touch.PrimaryContact.canceled -= ctx => EndTouchPrimary(ctx);
+        ClearEventsReferences();
     }
     #endregion
 
@@ -117,7 +128,7 @@ public class TouchManagerTutorial : MonoBehaviour
     }
     private void EndTouchPrimary(InputAction.CallbackContext context)
     {
-       endPosition = ScreenToWorld(mainCamera, inputActions.Touch.PrimaryPosition.ReadValue<Vector2>());
+        endPosition = ScreenToWorld(mainCamera, inputActions.Touch.PrimaryPosition.ReadValue<Vector2>());
         endTime = (float)context.time;
 
         DetectSwipe();
@@ -125,7 +136,7 @@ public class TouchManagerTutorial : MonoBehaviour
 
     private void DetectSwipe()
     {
-        if(Vector3.Distance(startPosition, endPosition)>= minimunDistance && (endTime - startTime) <= maximumTime)
+        if (Vector3.Distance(startPosition, endPosition) >= minimunDistance && (endTime - startTime) <= maximumTime)
         {
             Debug.DrawLine(startPosition, endPosition, Color.red, 5f);
             Vector3 direction = endPosition - startPosition;
@@ -135,31 +146,50 @@ public class TouchManagerTutorial : MonoBehaviour
     }
     private void SwipeDirection(Vector2 direction)
     {
-        if(Vector2.Dot(Vector2.right,direction) > directionThreshold)
+        if (Vector2.Dot(Vector2.right, direction) > directionThreshold)
         {
             Debug.Log("swipe Right");
             _isFacingRight = true;
-            playerScript.JumpManager();
-        
+            EventsTutorialPlayer.OnJumpRightTutorial();
+
         }
         else if (Vector2.Dot(Vector2.left, direction) > directionThreshold)
         {
             Debug.Log("swipe Left");
             _isFacingRight = false;
-            playerScript.JumpManager();
+            EventsTutorialPlayer.OnJumpLeftTutorial();
         }
         else if (Vector2.Dot(Vector2.up, direction) > directionThreshold)
         {
             Debug.Log("swipe Up");
             if ((GetPlayerPositionInScreen(0.2f, true)))
             {
-                _isFacingRight = true;
-                playerScript.JumpSameSide();
+                if (PlayerTutorial.Instance.IsWalled())
+                {
+                    _isFacingRight = true;
+                    EventsTutorialPlayer.OnJumpSameSideTutorial(_isFacingRight);
+
+                }
+                else
+                {
+                    _isFacingRight = true;
+                    EventsTutorialPlayer.OnJumpRightTutorial();
+
+                }
             }
             else if (GetPlayerPositionInScreen(-0.2f, false))
             {
-                _isFacingRight = false;
-                playerScript.JumpSameSide();
+                if (PlayerTutorial.Instance.IsWalled())
+                {
+                    _isFacingRight = false;
+                    EventsTutorialPlayer.OnJumpSameSideTutorial(_isFacingRight);
+
+                }
+                else
+                {
+                    _isFacingRight = false;
+                    EventsTutorialPlayer.OnJumpLeftTutorial();
+                }
             }
         }
     }
@@ -168,44 +198,76 @@ public class TouchManagerTutorial : MonoBehaviour
     #region TapInput
     private void TouchPress(InputAction.CallbackContext context)
     {
-       //Pega o valor do pixel onde o player clica e divide pelo valor total de pixeis da tela
+        //Pega o valor do pixel onde o player clica e divide pelo valor total de pixeis da tela
         value = inputActions.Touch.TouchPosition.ReadValue<Vector2>();
-        screenSideX = value.x / Camera.main.pixelWidth;
+        screenSideX = value.x / mainCamera.pixelWidth;
 
 
-        TutorialManager.instance.ManagerTutorialStage();
-        if (!PointerIsUIHit(value)) 
+
+        if (!PointerIsUIHit(value))
+        {
+
             //Dai checa pra ver se foi esquerda ou direita, maior q 0.5 direita menor esquerda
             if (screenSideX > 0.5)
             {
-                if((GetPlayerPositionInScreen(0.2f, true)))
+
+                if ((GetPlayerPositionInScreen(0.2f, true)))
                 {
-                    Debug.Log("Chamou");
-                    _isFacingRight = true;
-                    playerScript.JumpSameSide();
+
+                    if (PlayerTutorial.Instance.IsWalled())
+                    {
+                        _isFacingRight = true;
+                        EventsTutorialPlayer.OnJumpSameSideTutorial(_isFacingRight);
+
+                    }
+                    else
+                    {
+                        if (TutorialManager.instance.canDoubleJump)
+                        {
+                            _isFacingRight = true;
+                            EventsTutorialPlayer.OnJumpRightTutorial();
+                        }
+                       
+                    }
+
                 }
                 else
                 {
                     _isFacingRight = true;
-                    playerScript.JumpManager();
+                    EventsTutorialPlayer.OnJumpRightTutorial();
                 }
-               
+
 
             }
             else
             {
-                if (GetPlayerPositionInScreen(-0.2f,false))
+
+                if (GetPlayerPositionInScreen(-0.2f, false))
                 {
-                    _isFacingRight = false;
-                    playerScript.JumpSameSide();
+                    if (PlayerTutorial.Instance.IsWalled())
+                    {
+                        _isFacingRight = false;
+                        EventsTutorialPlayer.OnJumpSameSideTutorial(_isFacingRight);
+
+                    }
+                    else
+                    {
+                        if (TutorialManager.instance.canDoubleJump)
+                        {
+                            _isFacingRight = false;
+                            EventsTutorialPlayer.OnJumpLeftTutorial();
+                        }
+                          
+                    }
                 }
                 else
                 {
                     _isFacingRight = false;
-                    playerScript.JumpManager();
-                   
+                    EventsTutorialPlayer.OnJumpLeftTutorial();
+
                 }
             }
+        }
     }
     #endregion
 
@@ -214,7 +276,7 @@ public class TouchManagerTutorial : MonoBehaviour
     {
         position.z = camera.nearClipPlane;
         return camera.ScreenToWorldPoint(position);
-    }    
+    }
 
     public bool GetPlayerPositionInScreen(float range, bool greaterOrLess)
     {
@@ -226,7 +288,7 @@ public class TouchManagerTutorial : MonoBehaviour
         {
             return gameObject.transform.position.x / _worldWidth < range;
         }
-        
+
     }
     private bool PointerIsUIHit(Vector2 position)
     {
@@ -251,7 +313,7 @@ public class TouchManagerTutorial : MonoBehaviour
         return false;
     }
 
-  
+
     #endregion
 
 }

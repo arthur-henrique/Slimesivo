@@ -228,6 +228,7 @@ public class GameManager : MonoBehaviour
 
             if (SceneManager.GetActiveScene().name == "Level_Teste")
             {
+                EventsTutorialPlayer.OnsetupInputsPlayerTutorial(inputValue);
                 pauseCanvas.OnTutorialStart();
             }
 
