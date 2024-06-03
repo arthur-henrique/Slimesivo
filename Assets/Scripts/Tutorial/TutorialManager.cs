@@ -26,8 +26,8 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private GameObject damageCameraSprite;
     private Vector3 worldPosition;
 
-   [HideInInspector] public bool doubleJumpOpen;
-    [HideInInspector] public bool canWallSlde;
+    public bool canDoubleJump = false;
+    public bool canWallSlde;
     private void Awake()
     {
         instance = this;
@@ -39,7 +39,7 @@ public class TutorialManager : MonoBehaviour
 
    public void ManagerTutorialStage()
     {
-        Debug.Log((float)tutorialStages);
+        Debug.LogWarning((float)tutorialStages);
         switch (tutorialStages)
         {
             case TutorialFases.Stage1:
@@ -78,7 +78,7 @@ public class TutorialManager : MonoBehaviour
     }
     private void Stage2Parameters()
     {
-        doubleJumpOpen = true;
+        canDoubleJump = true;
     }
     private void Stage3Parameters()
     {

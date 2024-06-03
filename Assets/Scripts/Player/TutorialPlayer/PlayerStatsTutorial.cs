@@ -1,3 +1,4 @@
+using PlayerEvents;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro.Examples;
@@ -9,14 +10,15 @@ public class PlayerStatsTutorial : MonoBehaviour
     private Vector2 respawnPos;
 
     //Components
-    private TouchManagerTutorial touchManagerScript;
+    private TouchManager touchManagerScript;
     private PlayerTutorial playerScript;
     [SerializeField] private GameObject playerSprite;
     [SerializeField] private CameraController cameraController;
     [SerializeField] LayerMask damageableLayer;
     [HideInInspector] public bool isRepawning;
     private Vector3 startPlayerPosition;
- 
+
+
 
     private void Start()
     {
@@ -27,53 +29,53 @@ public class PlayerStatsTutorial : MonoBehaviour
         float timer = 0.2f;
         yield return new WaitForSeconds(timer);
         playerScript = GetComponent<PlayerTutorial>();
-        touchManagerScript = GetComponent<TouchManagerTutorial>();
+        touchManagerScript = GetComponent<TouchManager>();
         startPlayerPosition = gameObject.transform.position;
     }
 
     public void SaveCurrentPlayerPos()
     {
-            if (!DangerousRespawnPoint())
-          {
+        if (!DangerousRespawnPoint())
+        {
 
             if (playerScript.IsOnGround() || playerScript.IsWalled())
             {
                 respawnPos = gameObject.transform.position;
             }
-          }
+        }
     }
 
 
     public void RespawnPlayer()
     {
-        
+
         isRepawning = true;
         //if(vidasPlayer <0)
         playerScript.ResetVelocityPlayer();
         if (cameraController.CheckSpawnPosition())
         {
-            if (touchManagerScript.IsFacingRight)
-            {
-                gameObject.transform.position = respawnPos;
-            }
-            else
-            {
-                gameObject.transform.position = respawnPos;
-            }
+            gameObject.transform.position = respawnPos;
+            EventsTutorialPlayer.OnWallStickTutorial();
+            StartCoroutine(DelayToEnableCameraDamage());
         }
         else
         {
             gameObject.transform.position = startPlayerPosition;
         }
-       
+
         cameraController.MoveCameraToRespawn(respawnPos.y);
+    }
+    IEnumerator DelayToEnableCameraDamage()
+    {
+        yield return new WaitForSeconds(0.5f);
+        cameraController.EnableCameraDamage();
     }
     public void RespawnPlayerSameSide()
     {
         playerScript.ResetVelocityPlayer();
         if (touchManagerScript.IsFacingRight)
         {
-            gameObject.transform.position = respawnPos;           
+            gameObject.transform.position = respawnPos;
         }
         else
         {
@@ -86,7 +88,7 @@ public class PlayerStatsTutorial : MonoBehaviour
     {
         return Physics2D.OverlapCapsule(gameObject.transform.position, new Vector2(0.72f, 2.77f), CapsuleDirection2D.Vertical, 0f, damageableLayer);
     }
- 
+
 
 
 
