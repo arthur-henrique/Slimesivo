@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
@@ -98,6 +99,7 @@ public class Player : MonoBehaviour
     {
         if(Instance == null)
             Instance = this;
+
     }
     private void Start()
     {
@@ -281,7 +283,7 @@ public class Player : MonoBehaviour
    
     private void WallStick()
     {
-       
+        if (!getHit)       
             if (IsWalled() && !IsOnGround() && !isWallJumping)
             {
 
@@ -443,10 +445,7 @@ public class Player : MonoBehaviour
     #region Collision and Damage
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!getHit)
-        {
-            EventsPlayer.OnWallStick();
-        }
+        
         //Damage Detection
         if (((1 << collision.gameObject.layer) & damageLayer) != 0)
         {
