@@ -95,7 +95,6 @@ public class TouchManager : MonoBehaviour
 
     public void CheckActiveInputMode(int inputValue)
     {
-        
         switch (inputValue)
         {
             case 0:
@@ -203,11 +202,10 @@ public class TouchManager : MonoBehaviour
         value = inputActions.Touch.TouchPosition.ReadValue<Vector2>();
         screenSideX = value.x /mainCamera.pixelWidth;
 
-                   
 
+        Debug.LogWarning("Clicou");
         if (!PointerIsUIHit(value))
         {
-
             //Dai checa pra ver se foi esquerda ou direita, maior q 0.5 direita menor esquerda
             if (screenSideX > 0.5)
             {

@@ -88,6 +88,10 @@ public class Player : MonoBehaviour
     private float originalGravity;
     private bool canApplyGravity;
     [SerializeField] private float gravityMultiplyer;
+
+    //Hit variables 
+    Vector3 currentHitPoint;
+    [HideInInspector] public bool canSpawnWallVfx;
     public TouchManager touchManager
     {
         get { return _touchManager; }
@@ -112,8 +116,8 @@ public class Player : MonoBehaviour
        EventsPlayer.JumpRight += JumpRight;
        EventsPlayer.JumpSameSide += JumpSameSide;
        EventsPlayer.JumpLeft += JumpLeft;
-       EventsPlayer.Damage += KnockbackPlayer;   
-       EventsPlayer.WallStick += WallStick;
+       EventsPlayer.Damage += KnockbackPlayer;
+        EventsPlayer.WallStick += _ => WallStick();
     }
     private void OnDisable()
     {
@@ -126,7 +130,7 @@ public class Player : MonoBehaviour
         EventsPlayer.JumpSameSide -= JumpSameSide;
         EventsPlayer.JumpLeft -= JumpLeft;
         EventsPlayer.Damage -= KnockbackPlayer;
-        EventsPlayer.WallStick -= WallStick;
+        EventsPlayer.WallStick -= _ => WallStick();
     }
     private void FixedUpdate()
     {
@@ -250,7 +254,8 @@ public class Player : MonoBehaviour
         isWallJumping = false;
         if (!getHit)
         {
-            EventsPlayer.OnWallStick();
+            canSpawnWallVfx = false;
+            EventsPlayer.OnWallStick(Vector3.zero);
         }
 
     }
@@ -282,8 +287,7 @@ public class Player : MonoBehaviour
     }
    
     private void WallStick()
-    {
-        if (!getHit)       
+    {  
             if (IsWalled() && !IsOnGround() && !isWallJumping)
             {
 
@@ -444,8 +448,7 @@ public class Player : MonoBehaviour
     #endregion
     #region Collision and Damage
     private void OnTriggerEnter2D(Collider2D collision)
-    {
-        
+    {      
         //Damage Detection
         if (((1 << collision.gameObject.layer) & damageLayer) != 0)
         {
@@ -492,6 +495,29 @@ public class Player : MonoBehaviour
       playerCollider.enabled = true;
       hitCounter--;
       playerStatsScript.RespawnPlayer();
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!getHit)
+        {
+            Vector3 rayDirection = (collision.gameObject.transform.position - transform.position).normalized;
+            float rayDistance = 10f;
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, rayDirection, out hit, rayDistance))
+            {
+                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Wall"))
+                {
+                    Vector3 pointOfCollision = hit.point;
+                    canSpawnWallVfx = true;
+                    EventsPlayer.OnWallStick(pointOfCollision);
+                }
+            }
+            else
+            {
+                canSpawnWallVfx = false;
+                EventsPlayer.OnWallStick(Vector3.zero);
+            }
+        }
     }
     #endregion
 }
