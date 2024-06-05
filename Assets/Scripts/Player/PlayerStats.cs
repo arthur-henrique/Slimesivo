@@ -55,9 +55,7 @@ public class PlayerStats : MonoBehaviour
         if (cameraController.CheckSpawnPosition())
         {         
             gameObject.transform.position = respawnPos;
-            Vector3 zero = Vector3.zero;
-            Player.Instance.canSpawnWallVfx = false;
-            EventsPlayer.OnWallStick(zero);
+            EventsPlayer.OnWallStick();
             StartCoroutine(DelayToEnableCameraDamage());
         }
         else

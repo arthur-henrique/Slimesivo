@@ -48,9 +48,7 @@ MonoBehaviour:
     type: 3}
   damageParticles: {fileID: 1104731915954917304, guid: f6e6b725de250c445979bb4a5f84afc0,
     type: 3}
-  wallParticle: {fileID: -1816950737, guid: 809426d06d0d2854889137072b609175, type: 3}
   jumpSameSidePos: {fileID: 3623052421927086798}
-  touchManager: {fileID: 4735764983895169955}
 --- !u!1 &2607770926949867868
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,7 +235,6 @@ MonoBehaviour:
   knockbackForce: 6
   hitCounter: 0
   gravityMultiplyer: 5
-  canSpawnWallVfx: 0
 --- !u!114 &1620982679027179847
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -8,9 +8,7 @@ public class PlayerSoundsEVfxManager : MonoBehaviour
 {
     [SerializeField] private ParticleSystem jumpParticles;
     [SerializeField] private ParticleSystem damageParticles;
-    [SerializeField] private Sprite wallParticle;
     [SerializeField] private Transform jumpSameSidePos;
-      [SerializeField] private TouchManager touchManager;
 
 
 
@@ -20,7 +18,6 @@ public class PlayerSoundsEVfxManager : MonoBehaviour
         EventsPlayer.JumpRight += SpawnJumpParticles;
         EventsPlayer.JumpSameSide += _ => SpawnJumpSameSideParticles();
         EventsPlayer.Damage += SpawnDamageParticles;
-        EventsPlayer.WallStick += SpawnWallParticle;
     }
 
     private void ClearEventsReferences()
@@ -29,7 +26,6 @@ public class PlayerSoundsEVfxManager : MonoBehaviour
         EventsPlayer.JumpRight -= SpawnJumpParticles;
         EventsPlayer.JumpSameSide -= _ => SpawnJumpParticles();
         EventsPlayer.Damage -= SpawnDamageParticles;
-        EventsPlayer.WallStick -= SpawnWallParticle;
     }
 
     private void OnDisable()
@@ -53,20 +49,12 @@ public class PlayerSoundsEVfxManager : MonoBehaviour
        
     }
 
-    private void SpawnWallParticle(Vector3 spawnPos)
+    private void SpawnWallParticle()
     {
-        if (Player.Instance.canSpawnWallVfx)
-        {
-            if (touchManager.IsFacingRight)
-            {
-                Instantiate(wallParticle, spawnPos, Quaternion.identity);
-            }
-            else
-            {
-                Instantiate(wallParticle, spawnPos, Quaternion.Euler(0,180,0));
-            }
-            
-        }
-       
+
+    }
+    private void SpawnPosWallParticle()
+    {
+
     }
 }

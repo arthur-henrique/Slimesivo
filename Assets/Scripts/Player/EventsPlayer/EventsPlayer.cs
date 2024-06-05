@@ -24,8 +24,8 @@ namespace PlayerEvents
         public static event UnityAction<int> SetupInputsPlayer;
         public static void OnsetupInputsPlayer(int inputType) => SetupInputsPlayer?.Invoke(inputType);
 
-        public static event UnityAction<Vector3> WallStick;
-        public static void OnWallStick(Vector3 hitPos) => WallStick?.Invoke(hitPos);
+        public static event UnityAction WallStick;
+        public static void OnWallStick() => WallStick?.Invoke();
 
     }
 }
