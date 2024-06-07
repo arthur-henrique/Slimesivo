@@ -493,6 +493,13 @@ public class Player : MonoBehaviour
       hitCounter--;
       playerStatsScript.RespawnPlayer();
     }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!getHit)
+        {
+            EventsPlayer.OnWallStick();
+        }
+    }
     #endregion
 }
             
