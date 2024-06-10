@@ -88,6 +88,8 @@ public class Player : MonoBehaviour
     private float originalGravity;
     private bool canApplyGravity;
     [SerializeField] private float gravityMultiplyer;
+
+    private bool _validCollision;
     public TouchManager touchManager
     {
         get { return _touchManager; }
@@ -200,14 +202,13 @@ public class Player : MonoBehaviour
     }
     public void JumpManager()
     {
-        Debug.Log(isWallJumping);
+        
         JumpLogic();                          
         canApplyGravity = true; 
         if (!IsOnGround() && IsWalled())
         {
             WallJump();
-           firstJumpForce = jumpWallForce;
-        
+            firstJumpForce = jumpWallForce;
         }
         else
         {
@@ -225,14 +226,22 @@ public class Player : MonoBehaviour
 
     private void JumpRight()
     {
-        JumpManager();
-        rig.velocity = new Vector2(sideForce, firstJumpForce);
+        if (_validCollision || IsOnGround())
+        {
+            JumpManager();
+            rig.velocity = new Vector2(sideForce, firstJumpForce);
+        }
+           
     }
 
    private void JumpLeft()
     {
-        JumpManager();
-        rig.velocity = new Vector2(-sideForce, firstJumpForce);
+        if (_validCollision || IsOnGround())
+        {
+            JumpManager();
+            rig.velocity = new Vector2(-sideForce, firstJumpForce);
+        }
+        
     }
     private void JumpSameSide(bool isFacingRight)
     {
@@ -250,7 +259,11 @@ public class Player : MonoBehaviour
     private void StopWallSlide()
     {
         isWallJumping = false;
-        EventsPlayer.OnWallStick(true);
+        if (_validCollision)
+        {
+            EventsPlayer.OnWallStick(true);
+        }
+       
     }
     private void JumpLogic()
     {
@@ -275,13 +288,16 @@ public class Player : MonoBehaviour
 
     #region WallSlide and WallJump
     public bool IsWalled()
-    {
-       return Physics2D.OverlapCircle(gameObject.transform.position, 0.5f, wallLayer);
+    {     
+       return Physics2D.OverlapCircle(gameObject.transform.position, 0.5f, wallLayer);   
+      
     }
    
     private void WallStick(bool validCollision)
     {
-        if (!getHit && validCollision)       
+        _validCollision = validCollision;
+        if (!getHit && validCollision)
+        {
             if (IsWalled() && !IsOnGround() && !isWallJumping)
             {
 
@@ -295,7 +311,7 @@ public class Player : MonoBehaviour
                 {
                     case WallSlideStates.WallStick:
                         StartCoroutine(WallStickTimer());
- 
+
                         playerStatsScript.SaveCurrentPlayerPos();
                         break;
                     case WallSlideStates.WallSlideSlow:
@@ -305,28 +321,25 @@ public class Player : MonoBehaviour
                         StartCoroutine(WallSlideMaxTimer());
                         break;
                 }
-                 
-                    PlayerOrientationChecker();                 
+
+                PlayerOrientationChecker();
             }
             else
             {
                 isWallSliding = false;
             }
-            
-       
-
+        }       
     }
 
      private void Grounded()
      {
-        if (!isJumping)
-        {
+       
             anim.SetInteger("AnimParameter", 0);
             _touchManager.inputActions.Enable();
             isWallSliding = false;
             playerSprite.transform.rotation = Quaternion.Euler(0, 0, 0);
 
-        }       
+               
      }
 
     private void WallJump()
@@ -493,10 +506,6 @@ public class Player : MonoBehaviour
       hitCounter--;
       playerStatsScript.RespawnPlayer();
     }
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    EventsPlayer.OnWallStick(true);
-    //}
     #endregion
 }
             

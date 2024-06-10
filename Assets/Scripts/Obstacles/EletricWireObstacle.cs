@@ -8,7 +8,7 @@ public class EletricWireObstacle : MonoBehaviour
     [SerializeField] private int dealingDamageTime;
     //Visual Components
     [SerializeField] private SpriteRenderer sprite;
-    [SerializeField] private Collider2D collider;
+    [SerializeField] private Collider2D wireCollider;
     private enum EletricWireStates
     {
         Cooldown,
@@ -22,11 +22,11 @@ public class EletricWireObstacle : MonoBehaviour
         {
             case EletricWireStates.Cooldown:
                 StartCoroutine(CooldownTimer());
-                collider.enabled = false;
+                wireCollider.enabled = false;
                 break;
             case EletricWireStates.DealingDamage:
                 StartCoroutine(DealingDamageTimer());
-                collider.enabled = true;
+                wireCollider.enabled = true;
                 break;
         }
     }

@@ -31,24 +31,33 @@ public class WallCollision : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Vector3 contactNormal = collision.contacts[0].normal;
-        float angle = Vector2.SignedAngle(Vector2.right, contactNormal);
+        Vector2 contactNormal = collision.contacts[0].normal;
+        //float angle = Vector2.SignedAngle(Vector2.right, contactNormal);
         if (((1 << collision.gameObject.layer) & playerLayer) != 0)
         {
             if (isRightLocation)
             {
-                if (angle > -maxAngle && angle < maxAngle)
+                if (contactNormal == Vector2.right)
                 {
                     EventsPlayer.OnWallStick(true);
+                }
+                else
+                {
+                    EventsPlayer.OnWallStick(false);
                 }
 
             }
             else
             {
-                if (angle < -maxAngle || angle > maxAngle)
+                
+                if (contactNormal == Vector2.left)
                 {
                     EventsPlayer.OnWallStick(true);
-                }                        
+                }
+                else
+                {
+                    EventsPlayer.OnWallStick(false);
+                }                      
             }
         }
 
