@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
 
 public class SkinButton : MonoBehaviour
 {
-    [SerializeField] private AnimatorController playableAnimator;
-    [SerializeField] private AnimatorController menuAnimator;
+    [SerializeField] private AnimatorOverrideController playableAnimator;
+    [SerializeField] private AnimatorOverrideController menuAnimator;
 
     // Start is called before the first frame update
     public void OnClickSkin()

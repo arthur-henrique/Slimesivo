@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -35,7 +34,7 @@ public class MainMenuCanvasScript : MonoBehaviour
             menuPlayer.GetComponent<Animator>().runtimeAnimatorController = GameManager.instance.menuPlayerAnimator;
     }
 
-    public void ChangePlayerSkin(AnimatorController anim)
+    public void ChangePlayerSkin(AnimatorOverrideController anim)
     {
         menuPlayer.GetComponent<Animator>().runtimeAnimatorController = anim;
     }
