@@ -55,7 +55,7 @@ public class PlayerStats : MonoBehaviour
         if (cameraController.CheckSpawnPosition())
         {         
             gameObject.transform.position = respawnPos;
-            EventsPlayer.OnWallStick();
+            EventsPlayer.OnWallStick(true);
             StartCoroutine(DelayToEnableCameraDamage());
         }
         else

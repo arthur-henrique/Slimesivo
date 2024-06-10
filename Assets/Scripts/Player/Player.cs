@@ -114,6 +114,7 @@ public class Player : MonoBehaviour
        EventsPlayer.JumpLeft += JumpLeft;
        EventsPlayer.Damage += KnockbackPlayer;   
        EventsPlayer.WallStick += WallStick;
+       EventsPlayer.Grounded += Grounded;
     }
     private void OnDisable()
     {
@@ -127,6 +128,7 @@ public class Player : MonoBehaviour
         EventsPlayer.JumpLeft -= JumpLeft;
         EventsPlayer.Damage -= KnockbackPlayer;
         EventsPlayer.WallStick -= WallStick;
+        EventsPlayer.Grounded -= Grounded;
     }
     private void FixedUpdate()
     {
@@ -248,11 +250,7 @@ public class Player : MonoBehaviour
     private void StopWallSlide()
     {
         isWallJumping = false;
-        if (!getHit)
-        {
-            EventsPlayer.OnWallStick();
-        }
-
+        EventsPlayer.OnWallStick(true);
     }
     private void JumpLogic()
     {
@@ -281,9 +279,9 @@ public class Player : MonoBehaviour
        return Physics2D.OverlapCircle(gameObject.transform.position, 0.5f, wallLayer);
     }
    
-    private void WallStick()
+    private void WallStick(bool validCollision)
     {
-        if (!getHit)       
+        if (!getHit && validCollision)       
             if (IsWalled() && !IsOnGround() && !isWallJumping)
             {
 
@@ -310,14 +308,6 @@ public class Player : MonoBehaviour
                  
                     PlayerOrientationChecker();                 
             }
-            else if (IsOnGround() && !isJumping)
-            {
-                 anim.SetInteger("AnimParameter", 0);
-                 _touchManager.inputActions.Enable();
-                 isWallSliding = false;
-                 playerSprite.transform.rotation = Quaternion.Euler(0, 0, 0);
-
-            }
             else
             {
                 isWallSliding = false;
@@ -327,7 +317,17 @@ public class Player : MonoBehaviour
 
     }
 
-  
+     private void Grounded()
+     {
+        if (!isJumping)
+        {
+            anim.SetInteger("AnimParameter", 0);
+            _touchManager.inputActions.Enable();
+            isWallSliding = false;
+            playerSprite.transform.rotation = Quaternion.Euler(0, 0, 0);
+
+        }       
+     }
 
     private void WallJump()
     {
@@ -384,7 +384,7 @@ public class Player : MonoBehaviour
         }
         rig.gravityScale = 1;
         wallSlideStates = WallSlideStates.WallSlideSlow;
-        WallStick();
+        WallStick(true);
 
     }
 
@@ -403,7 +403,7 @@ public class Player : MonoBehaviour
 
         }
         wallSlideStates = WallSlideStates.WallSlideFast;
-        WallStick();
+        WallStick(true);
 
     }
     IEnumerator WallSlideMaxTimer()
@@ -493,13 +493,10 @@ public class Player : MonoBehaviour
       hitCounter--;
       playerStatsScript.RespawnPlayer();
     }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (!getHit)
-        {
-            EventsPlayer.OnWallStick();
-        }
-    }
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    EventsPlayer.OnWallStick(true);
+    //}
     #endregion
 }
             
