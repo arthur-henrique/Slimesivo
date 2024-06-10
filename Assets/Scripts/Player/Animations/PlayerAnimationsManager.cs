@@ -12,6 +12,10 @@ public class PlayerAnimationsManager : MonoBehaviour
     private void Start()
     {
         anim = GetComponent<Animator>(); 
+        if(GameManager.instance.playerAnimator != null)
+        {
+            anim.runtimeAnimatorController = GameManager.instance.playerAnimator;
+        }
     }
 
     private void OnEnable()

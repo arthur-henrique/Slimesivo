@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -10,7 +11,9 @@ public class MainMenuCanvasScript : MonoBehaviour
     [SerializeField] private GameObject infinityButton, campaignButton, rightChangeButton, leftChangeButton, storePagePanel, inventoryPagePanel, settingsButton, leaderboardPanel, energyPanel;
     [SerializeField] private GameObject[] purchaseSignButtons;
     [SerializeField] private LeaderboardsPage leaderboardPage;
+    public GameObject menuPlayer;
 
+    
     void Awake()
     {
         if (Instance == null)
@@ -24,6 +27,17 @@ public class MainMenuCanvasScript : MonoBehaviour
         energyPanel.SetActive(false);
         //leaderboardPanel.SetActive(false);
 
+    }
+
+    private void Start()
+    {
+        if(GameManager.instance.menuPlayerAnimator != null)
+            menuPlayer.GetComponent<Animator>().runtimeAnimatorController = GameManager.instance.menuPlayerAnimator;
+    }
+
+    public void ChangePlayerSkin(AnimatorController anim)
+    {
+        menuPlayer.GetComponent<Animator>().runtimeAnimatorController = anim;
     }
     public void ChangeModes()
     {
@@ -103,7 +117,7 @@ public class MainMenuCanvasScript : MonoBehaviour
             settingsButton.SetActive(false);
             inventoryPagePanel.SetActive(true);
             VibrationManager.instance.VibeUI();
-            InventoryDisplayer.Instance.DisplaySkins(SkinSystemChecker.Instance.allSkins);
+            //InventoryDisplayer.Instance.DisplaySkins(SkinSystemChecker.Instance.allSkins);
             GameManagerMainMenuCanvasScript.Instance.HideSideButtons();
             for (int i = 0; i < purchaseSignButtons.Length; i++)
             {

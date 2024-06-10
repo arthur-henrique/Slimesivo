@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0f06c96a518808e4eb10c117e5f4182a
+guid: e442cf3ef648a7c4d9242019d3945a24
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -72,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -82,6 +82,32 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -106,37 +132,32 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: iPhone
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Slime_idle_1
+      name: slime_fly_blue_l_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3000
+        width: 1000
+        height: 1000
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac0c55af6b0f39142b82292892936b43
+      internalID: 860250103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slime_fly_blue_l_1
       rect:
         serializedVersion: 2
         x: 0
@@ -150,35 +171,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d53d1280218d7014a8b7297f7ed85d18
-      internalID: -1928527226
+      spriteID: d0a58e41ad395bf4a9e0f68193e6aaff
+      internalID: 808655952
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Slime_idle_2
-      rect:
-        serializedVersion: 2
-        x: 1000
-        y: 2000
-        width: 1000
-        height: 1000
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9fbbeb168397ed94e98e0e463b2663f4
-      internalID: -500844280
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Slime_left_idle_1
+      name: slime_fly_blue_l_2
       rect:
         serializedVersion: 2
         x: 0
@@ -192,35 +192,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bff6e092daf56cb4fb10d8d01f1da2b1
-      internalID: -137193568
+      spriteID: 65b4afbb904cd204f8d3957ea546f40a
+      internalID: -491983282
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Slime_left_idle_2
-      rect:
-        serializedVersion: 2
-        x: 1000
-        y: 1000
-        width: 1000
-        height: 1000
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3b4d0fd561d83ca42b7f68b91c06090a
-      internalID: 911017970
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Slime_right_idle_1
+      name: slime_fly_blue_l_3
       rect:
         serializedVersion: 2
         x: 0
@@ -234,29 +213,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d2f9b8cbbefb8034186bf1e90237c9e4
-      internalID: -504818849
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Slime_right_idle_2
-      rect:
-        serializedVersion: 2
-        x: 1000
-        y: 0
-        width: 1000
-        height: 1000
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8915952c3df0c854b947ce652f2deab6
-      internalID: -1837677290
+      spriteID: 4cd4389cb0b4df3429f04d77419e6fa6
+      internalID: 506178809
       vertices: []
       indices: 
       edges: []
@@ -272,12 +230,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Slime_idle_1: -1928527226
-      Slime_idle_2: -500844280
-      Slime_left_idle_1: -137193568
-      Slime_left_idle_2: 911017970
-      Slime_right_idle_1: -504818849
-      Slime_right_idle_2: -1837677290
+      slime_fly_blue_l_0: 860250103
+      slime_fly_blue_l_1: 808655952
+      slime_fly_blue_l_2: -491983282
+      slime_fly_blue_l_3: 506178809
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

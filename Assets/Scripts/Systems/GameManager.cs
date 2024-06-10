@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -37,6 +38,10 @@ public class GameManager : MonoBehaviour
     public string _playerNick;
     public string _playerRank;
 
+
+    // Animators
+    public AnimatorController playerAnimator;
+    public AnimatorController menuPlayerAnimator;
 
     // Input Enum
     public enum InputMode
