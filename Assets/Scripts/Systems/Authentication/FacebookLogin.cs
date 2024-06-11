@@ -53,9 +53,9 @@ public class FacebookLogin : MonoBehaviour
     {
         if (FB.IsLoggedIn)
         {
-            var accessToken = AccessToken.CurrentAccessToken;
-            Debug.Log("Facebook login successful. User ID: " + accessToken.UserId);
-            SignInWithUnityServices(accessToken.TokenString);
+            var accessToken = AccessToken.CurrentAccessToken.TokenString;
+            Debug.Log("Access Token: " + accessToken);
+            SignInWithUnityServices(accessToken);
             DealWithFbMenus(true);
         }
         else
@@ -64,12 +64,13 @@ public class FacebookLogin : MonoBehaviour
         }
     }
 
+
     private async void SignInWithUnityServices(string accessToken)
     {
         try
         {
+            Debug.Log("Attempting to sign in with token: " + accessToken);
             await AuthenticationService.Instance.SignInWithFacebookAsync(accessToken);
-            print(accessToken);
             Debug.Log("Signed in with Unity Services using Facebook token.");
         }
         catch (AuthenticationException ex)
@@ -88,6 +89,8 @@ public class FacebookLogin : MonoBehaviour
         {
             FB.API("/me?fields=first_name", HttpMethod.GET, DisplayUsername);
             FB.API("/me/picture?type=square&height=128&width=128", HttpMethod.GET, DisplayProfilePic);
+            UAuthentication.Instance.facebookLoginButton.SetActive(false);
+            UAuthentication.Instance.anonymousLoginButton.SetActive(false);
             UAuthentication.Instance.facebookStuff.SetActive(true);
         }
         else
