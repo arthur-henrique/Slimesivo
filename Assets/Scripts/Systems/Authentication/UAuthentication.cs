@@ -14,6 +14,17 @@ using UnityEngine.SceneManagement;
 public class UAuthentication : MonoBehaviour
 {
     public static UAuthentication Instance;
+    // Login Buttons
+    public GameObject playOfflineButton;
+    public GameObject anonymousLoginButton;
+    public GameObject facebookLoginButton;
+
+    // Second Step 
+    public GameObject facebookStuff;
+
+
+
+
     private async void Awake()
     {
         // Check if instance already exists
@@ -74,7 +85,7 @@ public class UAuthentication : MonoBehaviour
             // Shows how to get player ID
             Debug.Log($"PlayerID: {AuthenticationService.Instance.PlayerId}");
             //InventoryManager.instance.FetchInventoryItems();
-            StartCoroutine(LoginIntoTheGame());
+            LogIn();
         }
         catch (AuthenticationException ex)
         {
@@ -118,7 +129,10 @@ public class UAuthentication : MonoBehaviour
         Debug.Log(JsonConvert.SerializeObject(playerEntry));
         Debug.Log("Configuration sync finished");
     }
-
+    public void LogIn()
+    {
+        StartCoroutine(LoginIntoTheGame());
+    }
     IEnumerator LoginIntoTheGame()
     {
         //while (!AuthenticationService.Instance.IsSignedIn)
@@ -126,7 +140,7 @@ public class UAuthentication : MonoBehaviour
         //    print("WaitingToSignIn");
         //    yield return null;
         //}
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1.5f);
 
         if(PlayerPrefs.GetInt("Level_Teste_completed") != 1)
         {

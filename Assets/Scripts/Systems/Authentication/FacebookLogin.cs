@@ -5,182 +5,156 @@ using UnityEngine.UI;
 using TMPro;
 using Facebook.Unity;
 using System;
+using Unity.Services.Authentication;
+using System.Threading.Tasks;
+using Unity.Services.Core;
 
 public class FacebookLogin : MonoBehaviour
 {
     public TextMeshProUGUI FB_userName;
-    //public Image FB_profilePic;
     public RawImage rawImg;
-
-    #region Initialize SDK
 
     private void Awake()
     {
-        FB.Init(SetInit, onHidenUnity);
-
         if (!FB.IsInitialized)
         {
-            FB.Init(() =>
-            {
-                if (FB.IsInitialized)
-                    FB.ActivateApp();
-                else
-                    print("Couldn't Initialize");
-            },
-            isGameShown =>
-            {
-                if (!isGameShown)
-                    Time.timeScale = 0;
-                else
-                    Time.timeScale = 1;
-            });
+            FB.Init(InitCallback, OnHideUnity);
         }
         else
+        {
             FB.ActivateApp();
+        }
     }
-    async void SetInit()
+
+    private void InitCallback()
+    {
+        if (FB.IsInitialized)
+        {
+            FB.ActivateApp();
+        }
+        else
+        {
+            Debug.LogError("Failed to Initialize the Facebook SDK");
+        }
+    }
+
+    private void OnHideUnity(bool isGameShown)
+    {
+        Time.timeScale = isGameShown ? 1 : 0;
+    }
+
+    public void Facebook_LogIn()
+    {
+        List<string> permissions = new List<string> { "public_profile", "email" };
+        FB.LogInWithReadPermissions(permissions, AuthCallBack);
+    }
+
+    private void AuthCallBack(ILoginResult result)
     {
         if (FB.IsLoggedIn)
         {
-            Debug.Log("Facebook is Login!");
-            string s = "client token" + FB.ClientToken + "User Id" + AccessToken.CurrentAccessToken.UserId + "token string" + AccessToken.CurrentAccessToken.TokenString;
-            await UAuthentication.Instance.SignInWithFacebook(s);
+            var accessToken = AccessToken.CurrentAccessToken;
+            Debug.Log("Facebook login successful. User ID: " + accessToken.UserId);
+            SignInWithUnityServices(accessToken.TokenString);
+            DealWithFbMenus(true);
         }
         else
         {
-            Debug.Log("Facebook is not Logged in!");
+            Debug.LogError("Facebook login failed");
         }
-        DealWithFbMenus(FB.IsLoggedIn);
     }
 
-    void onHidenUnity(bool isGameShown)
+    private async void SignInWithUnityServices(string accessToken)
     {
-        if (!isGameShown)
+        try
         {
-            Time.timeScale = 0;
+            await AuthenticationService.Instance.SignInWithFacebookAsync(accessToken);
+            print(accessToken);
+            Debug.Log("Signed in with Unity Services using Facebook token.");
         }
-        else
+        catch (AuthenticationException ex)
         {
-            Time.timeScale = 1;
+            Debug.LogError($"SignInWithFacebook failed: {ex.Message}");
+        }
+        catch (RequestFailedException ex)
+        {
+            Debug.LogError($"SignInWithFacebook failed: {ex.Message}");
         }
     }
 
-    void DealWithFbMenus(bool isLoggedIn)
+    private void DealWithFbMenus(bool isLoggedIn)
     {
         if (isLoggedIn)
         {
             FB.API("/me?fields=first_name", HttpMethod.GET, DisplayUsername);
             FB.API("/me/picture?type=square&height=128&width=128", HttpMethod.GET, DisplayProfilePic);
+            UAuthentication.Instance.facebookStuff.SetActive(true);
         }
         else
         {
-            print("Not logged in");
+            Debug.Log("User not logged in");
         }
     }
-    void DisplayUsername(IResult result)
+
+    private void DisplayUsername(IResult result)
     {
         if (result.Error == null)
         {
-            string name = "" + result.ResultDictionary["first_name"];
+            string name = result.ResultDictionary["first_name"].ToString();
             if (FB_userName != null) FB_userName.text = name;
-            FB_userName.text = name;
-            Debug.Log("" + name);
+            Debug.Log("Username: " + name);
         }
         else
         {
-            Debug.Log(result.Error);
+            Debug.LogError(result.Error);
         }
     }
-    void DisplayProfilePic(IGraphResult result)
+
+    private void DisplayProfilePic(IGraphResult result)
     {
         if (result.Texture != null)
         {
-            Debug.Log("Profile Pic");
             rawImg.texture = result.Texture;
-            //if (FB_profilePic != null) FB_profilePic.sprite = Sprite.Create(result.Texture, new Rect(0, 0, 128, 128), new Vector2());
-            /*JSONObject json = new JSONObject(result.RawResult);
-
-            StartCoroutine(DownloadTexture(json["picture"]["data"]["url"].str, profile_texture));*/
+            Debug.Log("Profile picture updated.");
         }
         else
         {
-            Debug.Log(result.Error);
+            Debug.LogError(result.Error);
         }
     }
 
-    #endregion
-
-    //login
-    public void Facebook_LogIn()
-    {
-        List<string> permissions = new List<string>();
-        permissions.Add("public_profile");
-        //permissions.Add("user_friends");
-        FB.LogInWithReadPermissions(permissions, AuthCallBack);
-
-    }
-    void AuthCallBack(IResult result)
-    {
-        if (FB.IsLoggedIn)
-        {
-            SetInit();
-            //AccessToken class will have session details
-            var aToken = AccessToken.CurrentAccessToken;
-
-            print(aToken.UserId);
-
-            foreach (string perm in aToken.Permissions)
-            {
-                print(perm);
-            }
-        }
-        else
-        {
-            print("Failed to log in");
-        }
-
-    }
-
-
-
-
-    //logout
     public void Facebook_LogOut()
     {
         StartCoroutine(LogOut());
     }
-    IEnumerator LogOut()
+
+    private IEnumerator LogOut()
     {
         FB.LogOut();
         while (FB.IsLoggedIn)
         {
-            print("Logging Out");
+            Debug.Log("Logging Out");
             yield return null;
         }
-        print("Logout Successful");
-        // if (FB_profilePic != null) FB_profilePic.sprite = null;
+        Debug.Log("Logout Successful");
         if (FB_userName != null) FB_userName.text = "";
         if (rawImg != null) rawImg.texture = null;
     }
 
-
-    #region other
     public void FacebookSharefeed()
     {
-        string url = "https:developers.facebook.com/docs/unity/reference/current/FB.ShareLink";
+        string url = "https://developers.facebook.com/docs/unity/reference/current/FB.ShareLink";
         FB.ShareLink(
             new Uri(url),
             "Checkout COCO 3D channel",
             "I just watched " + "22" + " times of this channel",
             null,
             ShareCallback);
-
     }
 
     private static void ShareCallback(IShareResult result)
     {
         Debug.Log("ShareCallback");
-        SpentCoins(2, "sharelink");
         if (result.Error != null)
         {
             Debug.LogError(result.Error);
@@ -188,32 +162,4 @@ public class FacebookLogin : MonoBehaviour
         }
         Debug.Log(result.RawResult);
     }
-    public static void SpentCoins(int coins, string item)
-    {
-        var param = new Dictionary<string, object>();
-        param[AppEventParameterName.ContentID] = item;
-        FB.LogAppEvent(AppEventName.SpentCredits, (float)coins, param);
-    }
-
-    /*public void GetFriendsPlayingThisGame()
-    {
-        string query = "/me/friends";
-        FB.API(query, HttpMethod.GET, result =>
-        {
-            Debug.Log("the raw" + result.RawResult);
-            var dictionary = (Dictionary<string, object>)Facebook.MiniJSON.Json.Deserialize(result.RawResult);
-            var friendsList = (List<object>)dictionary["data"];
-
-            foreach (var dict in friendsList)
-            {
-                GameObject go = Instantiate(friendstxtprefab);
-                go.GetComponent<Text>().text = ((Dictionary<string, object>)dict)["name"].ToString();
-                go.transform.SetParent(GetFriendsPos.transform, false);
-                FriendsText[1].text += ((Dictionary<string, object>)dict)["name"];
-            }
-        });
-    }*/
-
-    #endregion
-
 }
