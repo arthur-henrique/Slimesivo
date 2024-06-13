@@ -5,7 +5,8 @@ public class WallCollision : MonoBehaviour
 {
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private float maxAngle = 45;
-    [SerializeField] bool isRightLocation;
+    [SerializeField] private bool isRightLocation;
+    [SerializeField] private float impulseForce = 10;
     private float _worldWidth;
 
     private void Start()
@@ -32,6 +33,7 @@ public class WallCollision : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Vector2 contactNormal = collision.contacts[0].normal;
+        Rigidbody2D rig = collision.gameObject.GetComponent<Rigidbody2D>();
         //float angle = Vector2.SignedAngle(Vector2.right, contactNormal);
         if (((1 << collision.gameObject.layer) & playerLayer) != 0)
         {
