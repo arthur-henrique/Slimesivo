@@ -69,9 +69,9 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 256
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 4
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -157,7 +157,7 @@ TextureImporter:
         width: 2093
         height: 1811
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -178,7 +178,7 @@ TextureImporter:
         width: 2167
         height: 1172
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -194,10 +194,10 @@ TextureImporter:
       name: Icons 5_2
       rect:
         serializedVersion: 2
-        x: 104
-        y: 104
-        width: 2018
-        height: 2161
+        x: 7
+        y: 141
+        width: 114
+        height: 99
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -220,7 +220,7 @@ TextureImporter:
         width: 2167
         height: 1174
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -228,6 +228,69 @@ TextureImporter:
       bones: []
       spriteID: 503613b190282d840b16139568befdef
       internalID: -829724354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons 5_4
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 159
+        width: 119
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc6a1de8618f1f246b7965d492b3a241
+      internalID: -1897196718
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons 5_5
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 7
+        width: 110
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b82385c7be7deb64db02d57a081832b2
+      internalID: 1820699285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons 5_6
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 34
+        width: 119
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97ef583da0e76b3418e656ff573f5498
+      internalID: -1937929969
       vertices: []
       indices: 
       edges: []
@@ -247,6 +310,9 @@ TextureImporter:
       Icons 5_1: -168497260
       Icons 5_2: -1231777366
       Icons 5_3: -829724354
+      Icons 5_4: -1897196718
+      Icons 5_5: 1820699285
+      Icons 5_6: -1937929969
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

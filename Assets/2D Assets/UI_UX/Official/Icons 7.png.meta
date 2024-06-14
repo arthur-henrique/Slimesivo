@@ -69,9 +69,9 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 4
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -152,13 +152,13 @@ TextureImporter:
       name: Icons 7_0
       rect:
         serializedVersion: 2
-        x: 1313
-        y: 43
-        width: 2113
-        height: 2199
+        x: 118
+        y: 946
+        width: 356
+        height: 329
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 288, y: 788, z: 752, w: 565}
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -262,7 +262,7 @@ TextureImporter:
         width: 2457
         height: 2317
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -283,7 +283,7 @@ TextureImporter:
         width: 2645
         height: 2764
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -304,7 +304,7 @@ TextureImporter:
         width: 2162
         height: 2034
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -325,7 +325,7 @@ TextureImporter:
         width: 2359
         height: 2458
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -333,6 +333,174 @@ TextureImporter:
       bones: []
       spriteID: 487413b2723ffdf4bab06f5c5d141795
       internalID: 1500433273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons 7_9
+      rect:
+        serializedVersion: 2
+        x: 593
+        y: 928
+        width: 389
+        height: 404
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67fa1fa48c2d28f448b12339208ba520
+      internalID: -399636752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons 7_10
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 477
+        width: 398
+        height: 376
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc85729fbd91d7e4f8d750063f0f9c8f
+      internalID: 968302204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons 7_11
+      rect:
+        serializedVersion: 2
+        x: 573
+        y: 425
+        width: 429
+        height: 451
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f395871ea98ab034eb56c564e4654457
+      internalID: -1276214047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons 7_12
+      rect:
+        serializedVersion: 2
+        x: 219
+        y: 13
+        width: 344
+        height: 354
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48007a8b770383f41ae4e6e19355bc00
+      internalID: 223543863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons 7_14
+      rect:
+        serializedVersion: 2
+        x: 841
+        y: 308
+        width: 81
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b163b990bbcf25844a701e5da98a303e
+      internalID: 11682154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons 7_13
+      rect:
+        serializedVersion: 2
+        x: 676
+        y: 306
+        width: 84
+        height: 85
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6632a52c88bd76642a151590488e51c2
+      internalID: 383570648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons 7_15
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 180
+        width: 342
+        height: 115
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8499177d1d769114aa11c0e47df9f9f0
+      internalID: 857047444
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons 7_16
+      rect:
+        serializedVersion: 2
+        x: 621
+        y: 44
+        width: 349
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54f28d1b8ea131b45a65217a7bd3fe99
+      internalID: -1688826233
       vertices: []
       indices: 
       edges: []
@@ -350,6 +518,13 @@ TextureImporter:
     nameFileIdTable:
       Icons 7_0: 808976443
       Icons 7_1: 1250181571
+      Icons 7_10: 968302204
+      Icons 7_11: -1276214047
+      Icons 7_12: 223543863
+      Icons 7_13: 383570648
+      Icons 7_14: 11682154
+      Icons 7_15: 857047444
+      Icons 7_16: -1688826233
       Icons 7_2: -481457561
       Icons 7_3: 1672215594
       Icons 7_4: 2098312865
@@ -357,6 +532,7 @@ TextureImporter:
       Icons 7_6: -1571158469
       Icons 7_7: 1475895768
       Icons 7_8: 1500433273
+      Icons 7_9: -399636752
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -69,9 +69,9 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 512
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 4
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -157,7 +157,7 @@ TextureImporter:
         width: 3016
         height: 2429
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -174,11 +174,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 3018
-        height: 1650
+        y: 310
+        width: 512
+        height: 405
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -186,6 +186,27 @@ TextureImporter:
       bones: []
       spriteID: a498f89a3830f284ea2b3fdb14a95636
       internalID: -263142970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Slime Button_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 512
+        height: 302
+      alignment: 9
+      pivot: {x: 0.49999997, y: 0.4845647}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 787b379590120be4f8536977586258f3
+      internalID: 81423972
       vertices: []
       indices: 
       edges: []
@@ -203,6 +224,7 @@ TextureImporter:
     nameFileIdTable:
       Slime Button_0: -881273222
       Slime Button_1: -263142970
+      Slime Button_2: 81423972
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

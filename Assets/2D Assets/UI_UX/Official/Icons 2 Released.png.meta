@@ -69,9 +69,9 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 512
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 4
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -194,12 +194,12 @@ TextureImporter:
       name: Icons 2 Released_2
       rect:
         serializedVersion: 2
-        x: 245
-        y: 115
-        width: 2103
-        height: 2185
+        x: 34
+        y: 267
+        width: 212
+        height: 208
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -232,6 +232,69 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Icons 2 Released_4
+      rect:
+        serializedVersion: 2
+        x: 269
+        y: 261
+        width: 228
+        height: 235
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b67f3acd5228c5439a75b2083827823
+      internalID: -2108938991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons 2 Released_5
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 16
+        width: 224
+        height: 232
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fcac7dc0f79f1884fb7d4ad78e0f6bac
+      internalID: 1608329535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons 2 Released_6
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 15
+        width: 217
+        height: 233
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7898e878c6f1fa74c9fb99303d69cbaa
+      internalID: 331610296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -247,6 +310,9 @@ TextureImporter:
       Icons 2 Released_1: -1198263838
       Icons 2 Released_2: 1794027245
       Icons 2 Released_3: 1193050203
+      Icons 2 Released_4: -2108938991
+      Icons 2 Released_5: 1608329535
+      Icons 2 Released_6: 331610296
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
