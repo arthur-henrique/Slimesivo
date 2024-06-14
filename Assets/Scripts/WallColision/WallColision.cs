@@ -12,7 +12,7 @@ public class WallCollision : MonoBehaviour
     private void Start()
     {
         DefineWorldWidth();
-        float range = 0.5f;
+        float range = 0.3f;
         if (gameObject.transform.position.x / _worldWidth > range)
         {
             isRightLocation = true;

@@ -1,3 +1,4 @@
+using PlayerEvents;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -44,14 +45,17 @@ public class TrampolimObstacle : MonoBehaviour
         
         if (playerChecker != null )
         {
-            rig.velocity = Vector2.zero;
             if (isInright)
-            {   
-                rig.AddForce(new Vector2(-sideForce, upForce), ForceMode2D.Impulse);
+            {
+                rig.velocity = new Vector2(0,0);
+                playerChecker._validCollision = true;
+                EventsPlayer.OnJumpLeft();
             }
             else
             {
-                rig.AddForce( new Vector2(sideForce, upForce), ForceMode2D.Impulse);
+                rig.velocity = new Vector2(0, 0);
+                playerChecker._validCollision = true;
+                EventsPlayer.OnJumpRight();
             }
 
         }

@@ -89,7 +89,7 @@ public class Player : MonoBehaviour
     private bool canApplyGravity;
     [SerializeField] private float gravityMultiplyer;
 
-    private bool _validCollision;
+    [HideInInspector] public bool _validCollision;
     public TouchManager touchManager
     {
         get { return _touchManager; }
