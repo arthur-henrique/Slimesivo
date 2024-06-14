@@ -69,9 +69,9 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 512
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 4
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -170,21 +170,42 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Slime Button with frame_1
+      name: Slime Button with frame_3
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 3211
-        height: 1803
+        x: 21
+        y: 21
+        width: 469
+        height: 243
       alignment: 9
-      pivot: {x: 0.5183681, y: 0.510904}
+      pivot: {x: 0.5, y: 0.52}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d7623919a7e877f498c77ec37a8a7743
+      spriteID: eb2bc40ca32214340a178a7f179674c4
+      internalID: 1008434861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Slime Button with frame_1
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 286
+        width: 470
+        height: 415
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ebe744035779cd47b86d7574f466010
       internalID: -1957043887
       vertices: []
       indices: 
@@ -203,6 +224,8 @@ TextureImporter:
     nameFileIdTable:
       Slime Button with frame_0: -1909638353
       Slime Button with frame_1: -1957043887
+      Slime Button with frame_2: 1046149817
+      Slime Button with frame_3: 1008434861
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

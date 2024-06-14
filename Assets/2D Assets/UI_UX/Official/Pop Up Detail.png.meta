@@ -69,9 +69,9 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 512
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 4
     textureCompression: 2
     compressionQuality: 50
     crunchedCompression: 0
@@ -152,12 +152,12 @@ TextureImporter:
       name: Pop Up Detail_0
       rect:
         serializedVersion: 2
-        x: 7
-        y: 0
-        width: 996
-        height: 4833
+        x: 2
+        y: 2
+        width: 165
+        height: 827
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -190,6 +190,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Pop Up Detail_2
+      rect:
+        serializedVersion: 2
+        x: 345
+        y: 2
+        width: 165
+        height: 827
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ef1d51de5f8f8c4489ba84731b45e26
+      internalID: -988755171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -203,6 +224,7 @@ TextureImporter:
     nameFileIdTable:
       Pop Up Detail_0: -1982281117
       Pop Up Detail_1: 1753209934
+      Pop Up Detail_2: -988755171
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

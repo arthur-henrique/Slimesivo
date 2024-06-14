@@ -69,9 +69,9 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 512
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 4
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -233,27 +233,6 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icons 8_4
-      rect:
-        serializedVersion: 2
-        x: 104
-        y: 104
-        width: 2539
-        height: 956
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 985, y: 0, z: 258, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 046e8a3b17f105e46888841946f52b05
-      internalID: 908225755
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Icons 8_5
       rect:
         serializedVersion: 2
@@ -274,6 +253,132 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Icons 8_4
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 394
+        width: 180
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ba7c99201fd9004d82f69cf39e74a49
+      internalID: 908225755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons 8_6
+      rect:
+        serializedVersion: 2
+        x: 308
+        y: 347
+        width: 168
+        height: 235
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c70fecc18b7aca445ba72c52e44e1ee2
+      internalID: 907326291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons 8_7
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 292
+        width: 214
+        height: 73
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8baf79d869d9a449acd13eb9e4875c3
+      internalID: 1169135488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons 8_8
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 144
+        width: 197
+        height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 9, y: 0, z: 104, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 090e56f7c262ea845b067e30e0e2f91a
+      internalID: -1185510101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons 8_9
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 15
+        width: 275
+        height: 100
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 101, y: 0, z: 121, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc0e5981ff227964ea7efa19ed0b9272
+      internalID: -1397102300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icons 8_10
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 120
+        width: 213
+        height: 211
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2916608c98a10d341939dec58f35b397
+      internalID: -1222610586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -287,10 +392,15 @@ TextureImporter:
     nameFileIdTable:
       Icons 8_0: -1119196275
       Icons 8_1: 871959297
+      Icons 8_10: -1222610586
       Icons 8_2: 1624050413
       Icons 8_3: 739782128
       Icons 8_4: 908225755
       Icons 8_5: -1012357648
+      Icons 8_6: 907326291
+      Icons 8_7: 1169135488
+      Icons 8_8: -1185510101
+      Icons 8_9: -1397102300
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
