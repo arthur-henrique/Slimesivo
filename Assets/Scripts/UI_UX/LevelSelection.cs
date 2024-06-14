@@ -86,8 +86,11 @@ public class LevelSelection : MonoBehaviour
             questStrings.Add(questsHandles[questIndex[i]]);
             if (!QuestingDictionary.Instance.questDictionary.ContainsKey(gameObject.name + questStrings[i]))
                 QuestingDictionary.Instance.questDictionary.Add(gameObject.name + questStrings[i], activeQuestValue[i]);
+
+            
         }
 
+        print(QuestingDictionary.Instance.questDictionary.Values);
         // QuestCompleteToPlayerPrefs
         // PlayerPrefs(String, [0 = false, 1 = true])
         if (!PlayerPrefs.HasKey(gameObject.name + "_completed"))
