@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7068021510573429317}
   - component: {fileID: 5907504262497992851}
   - component: {fileID: 5471027203041797322}
+  - component: {fileID: 4328588366573058204}
   m_Layer: 8
   m_Name: MiddleSpike
   m_TagString: Untagged
@@ -133,3 +134,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e1cb98226a2b94b89c751c9622b8a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4328588366573058204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4760885403650983150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c30196f4d8aba8448d38188fb149d87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSpeed: 0.25
+  maxSpeed: 0.5
+  angle: 90
