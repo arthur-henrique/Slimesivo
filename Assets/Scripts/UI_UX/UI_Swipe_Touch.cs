@@ -8,14 +8,19 @@ public class UI_Swipe_Touch : MonoBehaviour //colocar este script no Handle do T
     [SerializeField] private GameObject swipeObject, touchObject;
     private Image swipeImage, touchImage;
     private bool willTheToggleSwitchToTouch;
-    private Vector3 initialHandlePosition;
+    private RectTransform thisRectTransform;
 
     void Start()
     {
         swipeImage = swipeObject.GetComponent<Image>();
         touchImage = touchObject.GetComponent<Image>();
-        initialHandlePosition = transform.position;
+        thisRectTransform = GetComponent<RectTransform>();
         willTheToggleSwitchToTouch = false;
+    }
+
+    void OnMouseDown()
+    {
+        print("clicou");
     }
 
     public void ToggleSwipeTouch() //quando o player clica no Toggle - ele comeca ativado
@@ -25,25 +30,19 @@ public class UI_Swipe_Touch : MonoBehaviour //colocar este script no Handle do T
         {
             swipeImage.color = Color.gray;
             touchImage.color = Color.white;
-            //move o toggle
-            //LeanTween.moveX(gameObject, gameObject.transform.position.x - 33.6f, 1f).setEaseInOutBounce();
 
             //float newXPosition = initialHandlePosition.x - 118;
+            thisRectTransform.anchoredPosition = new Vector2 (14.5f, 0f);
 
-            transform.position = initialHandlePosition;
             willTheToggleSwitchToTouch = false;
         }
         else
         {
             touchImage.color = Color.gray;
             swipeImage.color = Color.white;
-            //move o toggle
-            //LeanTween.moveX(gameObject, gameObject.transform.position.x + 33.6f, 1f).setEaseInBack();
 
-            float newXPosition = transform.position.x - 118;
-            Vector3 newPosition = transform.position;
-            newPosition.x = newXPosition;
-            transform.position = newPosition;
+            thisRectTransform.anchoredPosition = new Vector2(-17.5f, 0f);
+
             willTheToggleSwitchToTouch = true;
         }
     }
