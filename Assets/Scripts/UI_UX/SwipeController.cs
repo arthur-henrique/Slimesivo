@@ -77,6 +77,15 @@ public class SwipeController : MonoBehaviour, IEndDragHandler
             targetPos += pageWidth;
             MovePage();
         }
+
+        if (currentPage == maxPage)
+        {
+            nextButton.interactable = false;
+        }
+        else
+        {
+            nextButton.interactable = true;
+        }
     }
 
     public void PreviousPage()
@@ -86,6 +95,15 @@ public class SwipeController : MonoBehaviour, IEndDragHandler
             currentPage--;
             targetPos -= pageWidth;
             MovePage();
+        }
+
+        if (currentPage == 1)
+        {
+            previousButton.interactable = false;
+        }
+        else
+        {
+            previousButton.interactable = true;
         }
     }
 
