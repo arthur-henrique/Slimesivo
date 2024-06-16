@@ -6,6 +6,8 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
 using PlayerEvents;
+using System;
+using UnityEngine.InputSystem;
 
 public class HUDCanvasMenu : MonoBehaviour
 {
@@ -39,8 +41,13 @@ public class HUDCanvasMenu : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
         LevelUIPreparation();
+
+        if (!PlayerPrefs.HasKey("OptionsPreferences"))
+        {
+            playerChoosesCountdown = true;
+            PlayerPrefs.SetInt("OptionsPreferences", Convert.ToInt32(playerChoosesCountdown));
+        }
     }
 
     #region To call everytime a new scene is loaded, since this canvas isnt destroyed
@@ -133,7 +140,6 @@ public class HUDCanvasMenu : MonoBehaviour
             Debug.Log("Not enough energy to go to the next level");
     }
 
-
     public void ResumeGame() //comeca a contagem regressiva
     {
         if (resumeInProgress == false)
@@ -143,7 +149,10 @@ public class HUDCanvasMenu : MonoBehaviour
             pauseButton.SetActive(true);
             //canHidePanels = false;
             resumeInProgress = true;
-            if (playerChoosesCountdown == true) //se o player deixar essa opcao ativa no menu de Options
+
+
+
+            if (playerChoosesCountdown = Convert.ToBoolean(PlayerPrefs.GetInt("OptionsPreferences")) == true) //se o player deixar essa opcao ativa no menu de Options
                 timer = 3f; //quero 3 segundos no timer countdown
             //animacao de despausar para o countdown
             else

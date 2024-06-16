@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,22 +15,33 @@ public class ToggleForOptions : MonoBehaviour
 
         if (isThisCountdown == true)
         {
-            checkedAssetCountdown.SetActive(true);
-            uncheckedAssetCountdown.SetActive(false);
+            if (HUDCanvasMenu.playerChoosesCountdown = Convert.ToBoolean(PlayerPrefs.GetInt("OptionsPreferences")) == true)
+            {
+                checkedAssetCountdown.SetActive(true);
+                uncheckedAssetCountdown.SetActive(false);
+            }
+            else if (HUDCanvasMenu.playerChoosesCountdown = Convert.ToBoolean(PlayerPrefs.GetInt("OptionsPreferences")) == false)
+            {
+                checkedAssetCountdown.SetActive(false);
+                uncheckedAssetCountdown.SetActive(true);
+            }
 
             toggleCountdown.onValueChanged.AddListener((v) =>
             {
-                if (toggleCountdown.isOn)
+                if (uncheckedAssetCountdown.activeSelf == true)
                 {
                     checkedAssetCountdown.SetActive(true);
                     uncheckedAssetCountdown.SetActive(false);
                     HUDCanvasMenu.playerChoosesCountdown = true;
+                    PlayerPrefs.SetInt("OptionsPreferences", Convert.ToInt32(HUDCanvasMenu.playerChoosesCountdown));
                 }
-                else
+                else if (checkedAssetCountdown.activeSelf == true)
                 {
                     checkedAssetCountdown.SetActive(false);
                     uncheckedAssetCountdown.SetActive(true);
                     HUDCanvasMenu.playerChoosesCountdown = false;
+
+                    PlayerPrefs.SetInt("OptionsPreferences", Convert.ToInt32(HUDCanvasMenu.playerChoosesCountdown));
                 }
             });
         }
