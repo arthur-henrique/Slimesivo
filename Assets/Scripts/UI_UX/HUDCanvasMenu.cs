@@ -24,6 +24,7 @@ public class HUDCanvasMenu : MonoBehaviour
     private string currentLevelName;
     [SerializeField] private GameObject[] stars;
     [SerializeField] private Sprite starSprite;
+    public static bool playerChoosesCountdown = true;
 
 
     //int quantoDeVida = 3; //SUBSTITUIR DEPOIS PELO INT DA VIDA DO PLAYER!!!!
@@ -142,8 +143,11 @@ public class HUDCanvasMenu : MonoBehaviour
             pauseButton.SetActive(true);
             //canHidePanels = false;
             resumeInProgress = true;
-            timer = 3f; //quero 3 segundos no timer countdown
+            if (playerChoosesCountdown == true) //se o player deixar essa opcao ativa no menu de Options
+                timer = 3f; //quero 3 segundos no timer countdown
             //animacao de despausar para o countdown
+            else
+                timer = 0f;
             pausePanel.SetActive(false);
             StartCoroutine(StartCountdownCoroutine(timer));//countdown
         }
