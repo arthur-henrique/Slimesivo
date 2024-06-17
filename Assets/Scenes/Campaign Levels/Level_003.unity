@@ -3612,10 +3612,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4263046871543070852, guid: 9c348c3c5f83f3f43ba43f473a90e35c,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 362a2fbdba9ed09479a33e42c4e96aba,
+        type: 3}
     - target: {fileID: 4298161000813468272, guid: 9c348c3c5f83f3f43ba43f473a90e35c,
         type: 3}
       propertyPath: m_Name
       value: Linha de Chegada
+      objectReference: {fileID: 0}
+    - target: {fileID: 5362450663280529380, guid: 9c348c3c5f83f3f43ba43f473a90e35c,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 5362450663280529380, guid: 9c348c3c5f83f3f43ba43f473a90e35c,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.border.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5362450663280529380, guid: 9c348c3c5f83f3f43ba43f473a90e35c,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.border.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5362450663280529380, guid: 9c348c3c5f83f3f43ba43f473a90e35c,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5362450663280529380, guid: 9c348c3c5f83f3f43ba43f473a90e35c,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7624,7 +7655,7 @@ PrefabInstance:
     - target: {fileID: 117412478424319839, guid: 1b31a9b7f09796b4880b8757f0daa30b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.388293
+      value: 4.383471
       objectReference: {fileID: 0}
     - target: {fileID: 117412478424319839, guid: 1b31a9b7f09796b4880b8757f0daa30b,
         type: 3}
@@ -77677,7 +77708,7 @@ PrefabInstance:
     - target: {fileID: 7480416109408571177, guid: 339acbf382c1ada438f07df34c5760da,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.388293
+      value: -4.383471
       objectReference: {fileID: 0}
     - target: {fileID: 7480416109408571177, guid: 339acbf382c1ada438f07df34c5760da,
         type: 3}

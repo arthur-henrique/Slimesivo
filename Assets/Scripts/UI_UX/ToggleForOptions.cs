@@ -34,6 +34,7 @@ public class ToggleForOptions : MonoBehaviour
                     uncheckedAssetCountdown.SetActive(false);
                     HUDCanvasMenu.playerChoosesCountdown = true;
                     PlayerPrefs.SetInt("OptionsPreferences", Convert.ToInt32(HUDCanvasMenu.playerChoosesCountdown));
+                    PlayerPrefs.Save();
                 }
                 else if (checkedAssetCountdown.activeSelf == true)
                 {
@@ -42,6 +43,7 @@ public class ToggleForOptions : MonoBehaviour
                     HUDCanvasMenu.playerChoosesCountdown = false;
 
                     PlayerPrefs.SetInt("OptionsPreferences", Convert.ToInt32(HUDCanvasMenu.playerChoosesCountdown));
+                    PlayerPrefs.Save();
                 }
             });
         }
