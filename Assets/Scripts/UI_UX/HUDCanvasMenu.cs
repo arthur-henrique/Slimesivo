@@ -29,6 +29,8 @@ public class HUDCanvasMenu : MonoBehaviour
     public Sprite[] starSprite;
     public static bool playerChoosesCountdown = true;
 
+    public GameObject[] hideableUI;
+
 
     //int quantoDeVida = 3; //SUBSTITUIR DEPOIS PELO INT DA VIDA DO PLAYER!!!!
 
@@ -308,12 +310,16 @@ public class HUDCanvasMenu : MonoBehaviour
         WinningPanelBG.SetActive(true);
         if(SceneManager.GetActiveScene().buildIndex == 1)
         {
+            
+            backgroundPanelForWinning.SetActive(true);
+
             backgroundPanelForWinning.SetActive(false);
             backgroundPanelForWinningTutorial.SetActive(true);
-            
+
         }
         else
         {
+            
             backgroundPanelForWinning.SetActive(true);
             backgroundPanelForWinningTutorial.SetActive(false);
         }
@@ -326,7 +332,7 @@ public class HUDCanvasMenu : MonoBehaviour
         nextLevelButton.SetActive(false);
         lifeBar.SetActive(false);
         skipButton.SetActive(true);
-        continueButton.SetActive(true);
+        //continueButton.SetActive(true);
     }
 
     public void OnTutorialEnd()
@@ -336,7 +342,7 @@ public class HUDCanvasMenu : MonoBehaviour
         nextLevelButton.SetActive(true);
         lifeBar.SetActive(true);
         skipButton.SetActive(false);
-        continueButton.SetActive(false);
+        //continueButton.SetActive(false);
         backgroundPanelForWinningTutorial.SetActive(false);
     }
 
