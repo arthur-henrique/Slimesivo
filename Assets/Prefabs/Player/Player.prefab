@@ -218,7 +218,7 @@ MonoBehaviour:
   jumpSameSideTimer: 0.3
   playerSprite: {fileID: 6457546778788927930}
   cameraController: {fileID: 0}
-  wallStickTime: 3
+  wallStickTime: 1
   wallSlideFase1Time: 2
   wallSlideSpeedMin: 1
   wallSlideSpeedMax: 1.5
@@ -235,6 +235,7 @@ MonoBehaviour:
   knockbackForce: 6
   hitCounter: 0
   gravityMultiplyer: 5
+  _validCollision: 0
 --- !u!114 &1620982679027179847
 MonoBehaviour:
   m_ObjectHideFlags: 0
