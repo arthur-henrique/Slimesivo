@@ -5,11 +5,19 @@ using UnityEngine;
 public class LeanTweenAnimations : MonoBehaviour
 {
     [SerializeField] private bool isThisDetailBackgroundForWinning;
-    void Start()
+    
+    private void OnEnable()
+    {
+        WinningRotatingRays();   
+    }
+
+    private void WinningRotatingRays()
     {
         if (isThisDetailBackgroundForWinning)
         {
-            LeanTween.rotateAround(gameObject, Vector3.back, 360, 25f).setLoopClamp();
+            LTDescr tt = LeanTween.rotateAround(gameObject, Vector3.back, 360, 25f).setLoopClamp();
+            tt.setIgnoreTimeScale(true);
+
         }
     }
 }
