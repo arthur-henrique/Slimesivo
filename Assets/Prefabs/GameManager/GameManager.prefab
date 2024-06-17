@@ -23774,6 +23774,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Slider: {fileID: 6551633850530529860}
+  canTrack: 0
 --- !u!1 &3519440780439620911
 GameObject:
   m_ObjectHideFlags: 0
@@ -26408,7 +26409,13 @@ MonoBehaviour:
   - {fileID: 289056645818943071}
   - {fileID: 2147098256802349530}
   - {fileID: 5968781858633383931}
-  starSprite: {fileID: 21300000, guid: 5b89b67f5551f2a41a36a20b8edb6453, type: 3}
+  questStars:
+  - {fileID: 56438145725422496}
+  - {fileID: 494627012399701558}
+  - {fileID: 5687692062926283901}
+  starSprite:
+  - {fileID: 21300000, guid: 39abdac5aa64bf7408275689184da0a0, type: 3}
+  - {fileID: 21300000, guid: 5b89b67f5551f2a41a36a20b8edb6453, type: 3}
 --- !u!95 &6298288397890700480
 Animator:
   serializedVersion: 5

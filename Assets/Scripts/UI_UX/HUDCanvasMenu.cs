@@ -25,7 +25,8 @@ public class HUDCanvasMenu : MonoBehaviour
     private int currentStarNumber = 0;
     private string currentLevelName;
     [SerializeField] private GameObject[] stars;
-    [SerializeField] private Sprite starSprite;
+    [SerializeField] public GameObject[] questStars;
+    public Sprite[] starSprite;
     public static bool playerChoosesCountdown = true;
 
 
@@ -335,7 +336,7 @@ public class HUDCanvasMenu : MonoBehaviour
         nextLevelButton.SetActive(true);
         lifeBar.SetActive(true);
         skipButton.SetActive(false);
-        //continueButton.SetActive(false);
+        continueButton.SetActive(false);
         backgroundPanelForWinningTutorial.SetActive(false);
     }
 
@@ -357,9 +358,14 @@ public class HUDCanvasMenu : MonoBehaviour
 
         for (int i = 0; i < _starsNumber; i++)
         {
-            stars[i].gameObject.GetComponent<Image>().sprite = starSprite;
+            stars[i].gameObject.GetComponent<Image>().sprite = starSprite[1];
             print("aeee");
         }
+    }
+
+    public void UpdateStarSprite(int i, int spriteIndex)
+    {
+        questStars[i].gameObject.GetComponent<Image>().sprite = starSprite[spriteIndex];
     }
 
     /// <summary>

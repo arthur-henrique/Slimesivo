@@ -228,6 +228,7 @@ public class GameManager : MonoBehaviour
             CurrencyManager.instance.currentCoinAmount = 0;
             CurrencyManager.instance.UpdateCoinAmount(0);
             QuestingDictionary.Instance.InitialColorSet();
+            
             livesAmount = 3;
             isAlive = true;
             pauseCanvas.OnNewLevel();
@@ -237,6 +238,10 @@ public class GameManager : MonoBehaviour
             int inputValue = (int)activeInputMode;
             EventsPlayer.OnsetupInputsPlayer(inputValue);
 
+            for (int i = 0; i < HUDCanvasMenu.instance.questStars.Length; i++)
+            {
+                HUDCanvasMenu.instance.UpdateStarSprite(i, 0);
+            }
 
             if (SceneManager.GetActiveScene().name == "Level_Teste")
             {

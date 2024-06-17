@@ -63,6 +63,7 @@ public class QuestManager : MonoBehaviour
         {
             GameObject secondsQuestPrefab = Instantiate(questGameObjects[3], gameObject.transform);
             activeQuests.Add(secondsQuestPrefab);
+            Debug.LogWarning("Awake");
             QuestingDictionary.Instance.pause_TMP_Texts[activeQuestsIndex.Count].text = QuestingDictionary.Instance.questTextDictionary[levelName + "_seconds"];
             QuestingDictionary.Instance.winning_TMP_Texts[activeQuestsIndex.Count].text = QuestingDictionary.Instance.questTextDictionary[levelName + "_seconds"];
             QuestingDictionary.Instance.losing_TMP_Texts[activeQuestsIndex.Count].text = QuestingDictionary.Instance.questTextDictionary[levelName + "_seconds"];
@@ -84,7 +85,7 @@ public class QuestManager : MonoBehaviour
 
         }
 
-        StartCoroutine(ColorQuests());
+        //StartCoroutine(ColorQuests());
     }
     public void CheckQuests()
     {
@@ -95,6 +96,7 @@ public class QuestManager : MonoBehaviour
             if (activeQuests[i].gameObject.GetComponent<IQuestSettable>().CompletedQuest(levelName, activeQuestsIndex[i]))
             {
                 QuestingDictionary.Instance.ColorQuest(i, 1);
+                HUDCanvasMenu.instance.UpdateStarSprite(i, 1);
                 print(questsCompleted);
                 // Call the function to green up / highlight the UI Elements
             }

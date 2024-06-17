@@ -21,7 +21,17 @@ public class QuestingDictionary : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            // If not, set instance to this
+            Instance = this;
+        }
+        // If instance already exists and it's not this:
+        else if (Instance != this)
+        {
+            // Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
+            Destroy(gameObject);
+        }
     }
 
     public void ColorQuest(int textIndex, int colorIndex)
