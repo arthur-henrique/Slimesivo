@@ -35,18 +35,27 @@ public class QuestManager : MonoBehaviour
         {
             GameObject coinsQuestPrefab = Instantiate(questGameObjects[0], gameObject.transform);
             activeQuests.Add(coinsQuestPrefab);
+            QuestingDictionary.Instance.pause_TMP_Texts[activeQuestsIndex.Count].text = QuestingDictionary.Instance.questTextDictionary[levelName + "_coins"];
+            QuestingDictionary.Instance.winning_TMP_Texts[activeQuestsIndex.Count].text = QuestingDictionary.Instance.questTextDictionary[levelName + "_coins"];
+            QuestingDictionary.Instance.losing_TMP_Texts[activeQuestsIndex.Count].text = QuestingDictionary.Instance.questTextDictionary[levelName + "_coins"];
             activeQuestsIndex.Add(activeQuestsIndex.Count + 1);
         }
         if (QuestingDictionary.Instance.questDictionary.ContainsKey(levelName + "_hits"))
         {
             GameObject hitsQuestPrefab = Instantiate(questGameObjects[1], gameObject.transform);
             activeQuests.Add(hitsQuestPrefab);
+            QuestingDictionary.Instance.pause_TMP_Texts[activeQuestsIndex.Count].text = QuestingDictionary.Instance.questTextDictionary[levelName + "_hits"];
+            QuestingDictionary.Instance.winning_TMP_Texts[activeQuestsIndex.Count].text = QuestingDictionary.Instance.questTextDictionary[levelName + "_hits"];
+            QuestingDictionary.Instance.losing_TMP_Texts[activeQuestsIndex.Count].text = QuestingDictionary.Instance.questTextDictionary[levelName + "_hits"];
             activeQuestsIndex.Add(activeQuestsIndex.Count + 1);
         }
         if (QuestingDictionary.Instance.questDictionary.ContainsKey(levelName + "_lives"))
         {
             GameObject livesQuestPrefab = Instantiate(questGameObjects[2], gameObject.transform);
             activeQuests.Add(livesQuestPrefab);
+            QuestingDictionary.Instance.pause_TMP_Texts[activeQuestsIndex.Count].text = QuestingDictionary.Instance.questTextDictionary[levelName + "_lives"];
+            QuestingDictionary.Instance.winning_TMP_Texts[activeQuestsIndex.Count].text = QuestingDictionary.Instance.questTextDictionary[levelName + "_lives"];
+            QuestingDictionary.Instance.losing_TMP_Texts[activeQuestsIndex.Count].text = QuestingDictionary.Instance.questTextDictionary[levelName + "_lives"];
             activeQuestsIndex.Add(activeQuestsIndex.Count + 1);
         }
        
@@ -54,9 +63,16 @@ public class QuestManager : MonoBehaviour
         {
             GameObject secondsQuestPrefab = Instantiate(questGameObjects[3], gameObject.transform);
             activeQuests.Add(secondsQuestPrefab);
+            QuestingDictionary.Instance.pause_TMP_Texts[activeQuestsIndex.Count].text = QuestingDictionary.Instance.questTextDictionary[levelName + "_seconds"];
+            QuestingDictionary.Instance.winning_TMP_Texts[activeQuestsIndex.Count].text = QuestingDictionary.Instance.questTextDictionary[levelName + "_seconds"];
+            QuestingDictionary.Instance.losing_TMP_Texts[activeQuestsIndex.Count].text = QuestingDictionary.Instance.questTextDictionary[levelName + "_seconds"];
             activeQuestsIndex.Add(activeQuestsIndex.Count + 1);
         }
-        
+
+        foreach (var kvp in QuestingDictionary.Instance.questTextDictionary)
+        {
+            Debug.Log($"Key: {kvp.Key}, Value: {kvp.Value}");
+        }
     }
     private void Start()
     {

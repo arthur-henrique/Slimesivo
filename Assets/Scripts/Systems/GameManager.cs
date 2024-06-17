@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     private int maxLivesAmount = 3;
     private float damageCooldown = 2f;
     private bool isAlive = true;
-    private bool canTakeDamage = true;
+    public bool canTakeDamage = true;
     private bool needsToCheckAlive = false;
 
     // Canvases
@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
     public GameObject pauseCanvasGO;
     public GameObject heartsContainer;
     public HUDCanvasMenu pauseCanvas;
+
+    public TMP_Text timerText;
 
     [SerializeField] private MinimapControl minimapControl;
 
@@ -216,10 +218,12 @@ public class GameManager : MonoBehaviour
         {
 
             isInGame = true;
+            canTakeDamage = true;
             mainMenuGO.SetActive(false);
             hideMenuChild.SetActive(false);
             pauseCanvasGO.SetActive(true);
             CurrencyManager.instance.currentCoinAmount = 0;
+            CurrencyManager.instance.UpdateCoinAmount(0);
             livesAmount = 3;
             isAlive = true;
             pauseCanvas.OnNewLevel();

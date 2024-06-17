@@ -335,7 +335,7 @@ public class HUDCanvasMenu : MonoBehaviour
         nextLevelButton.SetActive(true);
         lifeBar.SetActive(true);
         skipButton.SetActive(false);
-        continueButton.SetActive(false);
+        //continueButton.SetActive(false);
         backgroundPanelForWinningTutorial.SetActive(false);
     }
 

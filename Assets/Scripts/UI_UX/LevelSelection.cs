@@ -86,7 +86,7 @@ public class LevelSelection : MonoBehaviour
             questStrings.Add(questsHandles[questIndex[i]]);
             if (!QuestingDictionary.Instance.questDictionary.ContainsKey(gameObject.name + questStrings[i]))
                 QuestingDictionary.Instance.questDictionary.Add(gameObject.name + questStrings[i], activeQuestValue[i]);
-
+            print(gameObject.name + questStrings[i]);
             
         }
 
@@ -148,7 +148,14 @@ public class LevelSelection : MonoBehaviour
         // Forth Quest = Seconds
         conditionsTexts[3].text = "Complete the level in " + questValues[3] + " seconds";
 
-        
+        for (int i = 0; i < questsHandles.Length; i++)
+        {
+            if (!QuestingDictionary.Instance.questTextDictionary.ContainsKey(gameObject.name + questsHandles[i]))
+            {
+                QuestingDictionary.Instance.questTextDictionary.Add(gameObject.name + questsHandles[i], conditionsTexts[i].text);
+                print(conditionsTexts[i].text);
+            }
+        }
 
 
         // PlayerPrefs.SetInt(gameObject.name + "_coins", conditionCoins);

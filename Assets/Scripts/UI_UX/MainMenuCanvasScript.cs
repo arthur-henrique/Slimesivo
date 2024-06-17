@@ -22,7 +22,7 @@ public class MainMenuCanvasScript : MonoBehaviour
         infinityButton.SetActive(false);
         campaignButton.SetActive(true);
         storePagePanel.SetActive(false);
-        settingsButton.SetActive(true);
+        //settingsButton.SetActive(true);
         energyPanel.SetActive(false);
         //leaderboardPanel.SetActive(false);
 

@@ -35,6 +35,7 @@ public class PlayableLevelManager : MonoBehaviour
         if(canCountTime)
         {
             timeSpent += Time.deltaTime;
+            GameManager.instance.timerText.text = timeSpent.ToString("F2");
         }
     }
 
