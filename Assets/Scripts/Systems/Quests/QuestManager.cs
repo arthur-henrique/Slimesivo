@@ -83,6 +83,8 @@ public class QuestManager : MonoBehaviour
                 PlayerPrefs.SetInt(levelName + "_"+ i + "rewarded", 0);
 
         }
+
+        StartCoroutine(ColorQuests());
     }
     public void CheckQuests()
     {
@@ -92,7 +94,7 @@ public class QuestManager : MonoBehaviour
         {
             if (activeQuests[i].gameObject.GetComponent<IQuestSettable>().CompletedQuest(levelName, activeQuestsIndex[i]))
             {
-
+                QuestingDictionary.Instance.ColorQuest(i, 1);
                 print(questsCompleted);
                 // Call the function to green up / highlight the UI Elements
             }
@@ -111,6 +113,17 @@ public class QuestManager : MonoBehaviour
             (PlayerPrefs.GetInt(levelName + "_maxStars"));
         
         //StartCoroutine(GrabTheRewards());
+    }
+
+    public void CheckCompletedQuestsForColor()
+    {
+        for (int i = 0;i < activeQuests.Count;i++)
+        {
+            if (PlayerPrefs.GetInt(levelName + "_" + (i+1)) == 1)
+            {
+                QuestingDictionary.Instance.ColorQuest(i, 1);
+            }
+        }
     }
 
     public void AwardThePlayer()
@@ -177,11 +190,11 @@ public class QuestManager : MonoBehaviour
         
     }
 
-    //IEnumerator GrabTheRewards()
-    //{
-    //    yield return new WaitForSeconds(0.1f);
-    //    AwardThePlayer();
-    //}
+    IEnumerator ColorQuests()
+    {
+        yield return new WaitForSeconds(0.25f);
+        CheckCompletedQuestsForColor();
+    }
 }
 
 

@@ -5,10 +5,24 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class MinimapControl : MonoBehaviour
 {
+    public static MinimapControl instance;
     [SerializeField] private Slider m_Slider;
     private GameObject finishLine;
     private string currentSceneName;
     private string tutorialSceneName = "Level_Teste";
+    public bool canTrack = false;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
     private void Start()
     {
         currentSceneName = SceneManager.GetActiveScene().name;
@@ -22,13 +36,13 @@ public class MinimapControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(currentSceneName != SceneManager.GetSceneByBuildIndex(1).name)
+        if (canTrack && currentSceneName != SceneManager.GetSceneByBuildIndex(1).name)
         {
             m_Slider.value = Player.Instance.gameObject.transform.position.y;
         }
-        else
+        else if (canTrack && currentSceneName == SceneManager.GetSceneByBuildIndex(1).name)
         {
-            m_Slider.value = PlayerTutorial.Instance.gameObject.transform.position.y;
+            m_Slider.value = Player.Instance.gameObject.transform.position.y;
         }
         
     }

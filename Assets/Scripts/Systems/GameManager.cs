@@ -202,6 +202,7 @@ public class GameManager : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "1 - Main Menu")
         {
             isInGame = false;
+            MinimapControl.instance.canTrack = false;
             mainMenuGO.SetActive(true);
             hideMenuChild.SetActive(true);
             pauseCanvasGO.SetActive(false);
@@ -211,6 +212,7 @@ public class GameManager : MonoBehaviour
         else if(SceneManager.GetActiveScene().name == "2 - CampaignMap")
         {
             isInGame = false;
+            MinimapControl.instance.canTrack = false;
             hideMenuChild.SetActive(false);
             pauseCanvasGO.SetActive(false);
         }
@@ -219,11 +221,13 @@ public class GameManager : MonoBehaviour
 
             isInGame = true;
             canTakeDamage = true;
+            MinimapControl.instance.canTrack = true;
             mainMenuGO.SetActive(false);
             hideMenuChild.SetActive(false);
             pauseCanvasGO.SetActive(true);
             CurrencyManager.instance.currentCoinAmount = 0;
             CurrencyManager.instance.UpdateCoinAmount(0);
+            QuestingDictionary.Instance.InitialColorSet();
             livesAmount = 3;
             isAlive = true;
             pauseCanvas.OnNewLevel();
