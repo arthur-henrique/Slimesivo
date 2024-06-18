@@ -111,7 +111,7 @@ public class MainMenuCanvasScript : MonoBehaviour
     {
         if (inventoryPagePanel.activeSelf == true) //exit
         {
-            settingsButton.SetActive(true);
+            GameManagerMainMenuCanvasScript.Instance.settingsButton.SetActive(true);
             inventoryPagePanel.SetActive(false);
             VibrationManager.instance.VibeUI();
             for (int i = 0; i < purchaseSignButtons.Length; i++)
@@ -122,7 +122,7 @@ public class MainMenuCanvasScript : MonoBehaviour
         }
         else //enter
         {
-            settingsButton.SetActive(false);
+            GameManagerMainMenuCanvasScript.Instance.settingsButton.SetActive(false);
             inventoryPagePanel.SetActive(true);
             VibrationManager.instance.VibeUI();
             //InventoryDisplayer.Instance.DisplaySkins(SkinSystemChecker.Instance.allSkins);

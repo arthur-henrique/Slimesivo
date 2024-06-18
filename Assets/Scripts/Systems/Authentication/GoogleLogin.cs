@@ -13,6 +13,14 @@ public class GoogleLogin : MonoBehaviour
     public TextMeshProUGUI TokenText;
     public string Token;
     public string Error;
+
+
+    // Variables to store player info
+    public static string PlayerName { get; private set; }
+    public static string PlayerProfileImageUrl { get; private set; }
+    public static bool isSignedInWithGooglePlayGames { get; private set; }
+
+
     void Awake()
     {
         PlayGamesPlatform.Activate();
@@ -43,6 +51,10 @@ public class GoogleLogin : MonoBehaviour
                     Token = code;
                     TokenText.text = Token;
                     // This token serves as an example to be used for SignInWithGooglePlayGames
+
+                    PlayerName = PlayGamesPlatform.Instance.GetUserDisplayName();
+                    PlayerProfileImageUrl = PlayGamesPlatform.Instance.GetUserImageUrl();
+
                     tcs.SetResult(null);
                 });
             }
@@ -70,6 +82,7 @@ public class GoogleLogin : MonoBehaviour
             {
                 // The player is authenticated
                 // Proceed with the game
+                isSignedInWithGooglePlayGames = true;
                 UAuthentication.Instance.LogIn();
             }
         }

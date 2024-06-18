@@ -25,6 +25,7 @@ public class CurrencyManager : MonoBehaviour
     // Trocar pelo ID da moeda desejada
     public string coinCurrencyID = "TESTCURRENCY";
 
+    public long levelCoinAmount;
     private void Awake()
     {
         if (instance == null)
@@ -83,6 +84,7 @@ public class CurrencyManager : MonoBehaviour
         FetchCoinBalance();
         currentCurrency += currentCoinAmount;
         currentCurrency += questCoinAmount;
+        levelCoinAmount = currentCoinAmount;
         PlayerBalance playerBalance = await EconomyService.Instance.PlayerBalances.SetBalanceAsync(coinCurrencyID, currentCurrency);
         //Debug.Log(currentCurrency);
         currentCoinAmount = 0;
@@ -115,7 +117,9 @@ public class CurrencyManager : MonoBehaviour
 
     public void AdCoinMultiplier()
     {
-        float randMult = Random.Range(1.5f, 2.3f);
-        currentCoinAmount = currentCoinAmount * (long)randMult ;
+        currentCoinAmount = levelCoinAmount;
+        SetBalance();
+        GameManagerMainMenuCanvasScript.Instance.UpdateCoins();
+        levelCoinAmount = 0;
     }
 }

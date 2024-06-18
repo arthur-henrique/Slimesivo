@@ -6,13 +6,30 @@ using UnityEngine.Advertisements;
 
 public class RewardedAdExample : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
 {
-    [SerializeField] Button _showAdButton;
+
+    public static RewardedAdExample instance;
+
+    [SerializeField] public Button _showAdButton;
     [SerializeField] string _androidAdUnitId = "Rewarded_Android";
     [SerializeField] string _iOSAdUnitId = "Rewarded_iOS";
     string _adUnitId = null; // This will remain null for unsupported platforms
 
     void Awake()
     {
+
+        // Check if instance already exists
+        if (instance == null)
+        {
+            // If not, set instance to this
+            instance = this;
+        }
+        // If instance already exists and it's not this:
+        else if (instance != this)
+        {
+            // Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
+            Destroy(gameObject);
+        }
+
         // Get the Ad Unit ID for the current platform:
 #if UNITY_IOS
         _adUnitId = _iOSAdUnitId;
@@ -65,6 +82,7 @@ public class RewardedAdExample : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
             //LeaderboardManager.instance.UpdateScores("Pontuacoes_Mais_Altas", GameManager.instance.playerBestScoreFloat,
             //GameManager.instance.playerBestScoreFloat + 50f);
             CurrencyManager.instance.AdCoinMultiplier();
+            _showAdButton.interactable = false;
         }
     }
 

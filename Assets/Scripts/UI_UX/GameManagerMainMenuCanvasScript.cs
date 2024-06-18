@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -9,10 +10,12 @@ public class GameManagerMainMenuCanvasScript : MonoBehaviour
 {
     public static GameManagerMainMenuCanvasScript Instance;
 
-    [SerializeField] private GameObject storePagePanel, settingsButton, leaderboardPanel, energyPanel, storeButton, leaderboardButton;
+    [SerializeField] public GameObject storePagePanel, settingsButton, leaderboardPanel, energyPanel, storeButton, leaderboardButton;
     [SerializeField] private GameObject[] purchaseSignButtons;
     [SerializeField] private LeaderboardsPage leaderboardPage;
     [SerializeField] public TMP_Text coinText;
+    [SerializeField] public Image profileImage;
+
 
     void Awake()
     {
@@ -32,6 +35,31 @@ public class GameManagerMainMenuCanvasScript : MonoBehaviour
         energyPanel.SetActive(false);
         //leaderboardPanel.SetActive(false);
 
+        if(GoogleLogin.isSignedInWithGooglePlayGames)
+            StartCoroutine(LoadProfileImage(GoogleLogin.PlayerProfileImageUrl));
+
+    }
+
+    private IEnumerator LoadProfileImage(string url)
+    {
+        using (UnityWebRequest uwr = UnityWebRequestTexture.GetTexture(url))
+        {
+            yield return uwr.SendWebRequest();
+
+            if (uwr.result == UnityWebRequest.Result.ConnectionError || uwr.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.LogError("Error loading image: " + uwr.error);
+            }
+            else
+            {
+                Texture2D texture = DownloadHandlerTexture.GetContent(uwr);
+                profileImage.sprite = Sprite.Create(
+                    texture,
+                    new Rect(0, 0, texture.width, texture.height),
+                    new Vector2(0.5f, 0.5f)
+                );
+            }
+        }
     }
     public void EnterExitStorePage()
     {
@@ -107,5 +135,20 @@ public class GameManagerMainMenuCanvasScript : MonoBehaviour
             energyPanel.SetActive(false);
         }
     }
+    public void UpdateCoins()
+    {
+        Debug.LogWarning("CalledUpdateCoins");
+        coinText.text = CurrencyManager.instance.currentCurrency.ToString();
+        //StartCoroutine(FetchCoins());
+    }
+    //IEnumerator FetchCoins()
+    //{
+    //    Debug.LogWarning("StartedCoroutine");
+    //    //CurrencyManager.instance.FetchCoinBalance();
+        
+    //    Debug.LogWarning("EndedCoroutine");
+
+
+    //}
 
 }

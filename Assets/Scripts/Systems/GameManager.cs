@@ -226,9 +226,11 @@ public class GameManager : MonoBehaviour
             hideMenuChild.SetActive(false);
             pauseCanvasGO.SetActive(true);
             CurrencyManager.instance.currentCoinAmount = 0;
+            CurrencyManager.instance.levelCoinAmount = 0;
             CurrencyManager.instance.UpdateCoinAmount(0);
             QuestingDictionary.Instance.InitialColorSet();
-            
+            RewardedAdExample.instance._showAdButton.interactable = true;
+
             livesAmount = 3;
             isAlive = true;
             pauseCanvas.OnNewLevel();

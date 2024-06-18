@@ -304,8 +304,10 @@ public class HUDCanvasMenu : MonoBehaviour
     public void OnWinningLevel()
     {
         pauseButton.SetActive(false);
+        CurrencyManager.instance.SetBalance();
         Time.timeScale = 0f;
         GameManager.instance.mainMenuGO.SetActive(true);
+        GameManagerMainMenuCanvasScript.Instance.UpdateCoins();
         backgroundPanelForGameOver.SetActive(false);
         WinningPanelBG.SetActive(true);
         if(SceneManager.GetActiveScene().buildIndex == 1)
