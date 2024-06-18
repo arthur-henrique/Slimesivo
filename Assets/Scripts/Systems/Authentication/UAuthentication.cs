@@ -131,6 +131,7 @@ public class UAuthentication : MonoBehaviour
     }
     public void LogIn()
     {
+        SyncConfigurationAsync();
         StartCoroutine(LoginIntoTheGame());
     }
     IEnumerator LoginIntoTheGame()

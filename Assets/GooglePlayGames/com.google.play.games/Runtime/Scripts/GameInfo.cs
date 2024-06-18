@@ -38,7 +38,7 @@ namespace GooglePlayGames {
 
         public const string ApplicationId = "384684300316"; // Filled in automatically
         public const string IosClientId = "__IOS_CLIENTID__"; // Filled in automatically
-        public const string WebClientId = "384684300316-c8kgp6qv5b0rrj6b44jjobid1nfg4d2a.apps.googleusercontent.com"; // Filled in automatically
+        public const string WebClientId = "384684300316-pd9mo2o67go78c8lj4fokgo70ojfdaf8.apps.googleusercontent.com"; // Filled in automatically
         public const string NearbyConnectionServiceId = "com.Diverslime.Slimesivo";
 
         public static bool ApplicationIdInitialized() {

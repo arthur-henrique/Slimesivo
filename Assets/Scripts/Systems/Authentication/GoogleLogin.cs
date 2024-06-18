@@ -65,6 +65,13 @@ public class GoogleLogin : MonoBehaviour
             Debug.Log($"PlayerID: {AuthenticationService.Instance.PlayerId}"); // Display the Unity Authentication PlayerID
             DetailsText.text = "SignIn is successful.";
             Debug.Log("SignIn is successful.");
+
+            if (AuthenticationService.Instance.IsSignedIn)
+            {
+                // The player is authenticated
+                // Proceed with the game
+                UAuthentication.Instance.LogIn();
+            }
         }
         catch (AuthenticationException ex)
         {
