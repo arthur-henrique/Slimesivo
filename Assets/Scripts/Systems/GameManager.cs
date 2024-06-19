@@ -260,6 +260,8 @@ public class GameManager : MonoBehaviour
         VibrationManager.instance.VibeWin();
         HUDCanvasMenu.instance.OnWinningLevel();
         QuestManager.Instance.CheckQuests();
+        AdsInitializer.instance.LoadAds();
+        RewardedAdExample.instance.LoadAd();
     }
     
     private IEnumerator DamageCooldown()

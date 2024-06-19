@@ -81,7 +81,7 @@ public class CurrencyManager : MonoBehaviour
             return;
         };
 
-        FetchCoinBalance();
+        //FetchCoinBalance();
         currentCurrency += currentCoinAmount;
         currentCurrency += questCoinAmount;
         levelCoinAmount = currentCoinAmount;

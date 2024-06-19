@@ -4,9 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Advertisements;
 
-public class RewardedAdExample : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
+public class RewardedAdExample : MonoBehaviour, IUnityAdsInitializationListener, IUnityAdsLoadListener, IUnityAdsShowListener
 {
-
     public static RewardedAdExample instance;
 
     [SerializeField] public Button _showAdButton;
@@ -16,17 +15,13 @@ public class RewardedAdExample : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
 
     void Awake()
     {
-
-        // Check if instance already exists
+        // Singleton pattern
         if (instance == null)
         {
-            // If not, set instance to this
             instance = this;
         }
-        // If instance already exists and it's not this:
         else if (instance != this)
         {
-            // Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
             Destroy(gameObject);
         }
 
@@ -38,26 +33,40 @@ public class RewardedAdExample : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
 #endif
 
         // Disable the button until the ad is ready to show:
-       _showAdButton.interactable = false;
+        _showAdButton.interactable = false;
+        _showAdButton.onClick.AddListener(ShowAd);
+
+        // Initialize the Ads service:
+        Advertisement.Initialize("5584203", false, this); // Replace 'your_game_id' with your actual game ID
+    }
+
+    // Initialization callback
+    public void OnInitializationComplete()
+    {
+        Debug.Log("Unity Ads initialization complete.");
+        // Load an ad once initialization is complete
+        LoadAd();
+    }
+
+    public void OnInitializationFailed(UnityAdsInitializationError error, string message)
+    {
+        Debug.Log($"Unity Ads Initialization Failed: {error.ToString()} - {message}");
     }
 
     // Call this public method when you want to get an ad ready to show.
     public void LoadAd()
     {
-        // IMPORTANT! Only load content AFTER initialization (in this example, initialization is handled in a different script).
         Debug.Log("Loading Ad: " + _adUnitId);
         Advertisement.Load(_adUnitId, this);
     }
 
-    // If the ad successfully loads, add a listener to the button and enable it:
+    // If the ad successfully loads, enable the button:
     public void OnUnityAdsAdLoaded(string adUnitId)
     {
         Debug.Log("Ad Loaded: " + adUnitId);
 
         if (adUnitId.Equals(_adUnitId))
         {
-            // Configure the button to call the ShowAd() method when clicked:
-            _showAdButton.onClick.AddListener(ShowAd);
             // Enable the button for users to click:
             _showAdButton.interactable = true;
         }
@@ -66,9 +75,8 @@ public class RewardedAdExample : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
     // Implement a method to execute when the user clicks the button:
     public void ShowAd()
     {
-        // Disable the button:
+        // Disable the button to prevent multiple clicks:
         _showAdButton.interactable = false;
-        // Then show the ad:
         Advertisement.Show(_adUnitId, this);
     }
 
@@ -79,24 +87,23 @@ public class RewardedAdExample : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
         {
             Debug.Log("Unity Ads Rewarded Ad Completed");
             // Grant a reward.
-            //LeaderboardManager.instance.UpdateScores("Pontuacoes_Mais_Altas", GameManager.instance.playerBestScoreFloat,
-            //GameManager.instance.playerBestScoreFloat + 50f);
             CurrencyManager.instance.AdCoinMultiplier();
-            _showAdButton.interactable = false;
         }
+        // Load another ad after showing the current one:
+        LoadAd();
     }
 
     // Implement Load and Show Listener error callbacks:
     public void OnUnityAdsFailedToLoad(string adUnitId, UnityAdsLoadError error, string message)
     {
         Debug.Log($"Error loading Ad Unit {adUnitId}: {error.ToString()} - {message}");
-        // Use the error details to determine whether to try to load another ad.
     }
 
     public void OnUnityAdsShowFailure(string adUnitId, UnityAdsShowError error, string message)
     {
         Debug.Log($"Error showing Ad Unit {adUnitId}: {error.ToString()} - {message}");
-        // Use the error details to determine whether to try to load another ad.
+        // Optionally reload the ad:
+        LoadAd();
     }
 
     public void OnUnityAdsShowStart(string adUnitId) { }

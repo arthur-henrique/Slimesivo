@@ -4,9 +4,11 @@ using UnityEngine.Advertisements;
 
 public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
 {
+    public static AdsInitializer instance;
+
     [SerializeField] string _androidGameId;
     [SerializeField] string _iOSGameId;
-    [SerializeField] bool _testMode = true;
+    [SerializeField] bool _testMode = false;
     private string _gameId;
 
     [SerializeField]
@@ -15,9 +17,27 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
     InterstitialAdExample _interstitialAdExample;
     void Awake()
     {
+
+        // Check if instance already exists
+        if (instance == null)
+        {
+            // If not, set instance to this
+            instance = this;
+        }
+        // If instance already exists and it's not this:
+        else if (instance != this)
+        {
+            // Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
+            Destroy(gameObject);
+        }
         InitializeAds();
     }
     private void Start()
+    {
+        StartCoroutine(LoadTheAds());
+    }
+
+    public void LoadAds()
     {
         StartCoroutine(LoadTheAds());
     }
@@ -51,7 +71,7 @@ public class AdsInitializer : MonoBehaviour, IUnityAdsInitializationListener
 
     IEnumerator LoadTheAds()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(0.5f);
         _example.LoadAd();
         _interstitialAdExample.LoadAd();
     }
