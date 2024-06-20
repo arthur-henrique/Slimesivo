@@ -374,7 +374,7 @@ Transform:
   m_GameObject: {fileID: 4065689498289133902}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.359, y: -0.014, z: 0}
+  m_LocalPosition: {x: 0.451, y: -0.014, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -586,7 +586,7 @@ Transform:
   m_GameObject: {fileID: 6411923482576520277}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
-  m_LocalPosition: {x: 0.397, y: -0.004, z: 0}
+  m_LocalPosition: {x: 0.507, y: -0.004, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -642,14 +642,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldownTime: 2
-  ChargingDamageTime: 1.5
+  ChargingDamageTime: 2
   dealingDamageTime: 1
   crystals:
   - {fileID: 259951738500788923}
   - {fileID: 4082696563497328183}
-  spriteDeActivate: {fileID: -1036272978, guid: 11ece3314cc53de47b9571d30e02a8b4,
-    type: 3}
-  spriteActivate: {fileID: -1498945117, guid: 11ece3314cc53de47b9571d30e02a8b4, type: 3}
   wireCollider: {fileID: 340284956326244643}
   chargingParticleSystem: {fileID: 4363269583719768477, guid: 88441a9f69bc6384b9d143d97678e272,
     type: 3}

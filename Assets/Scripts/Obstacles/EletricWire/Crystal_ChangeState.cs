@@ -13,8 +13,4 @@ public class Crystal_ChangeState : MonoBehaviour
             eletric.ChangeStates();
         }
     }
-    public void OnSpanwParticleCharging()
-    {
-        eletric.SpawnChargingParticles();
-    }
 }

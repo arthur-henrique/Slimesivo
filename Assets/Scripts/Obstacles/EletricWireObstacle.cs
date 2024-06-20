@@ -9,8 +9,6 @@ public class EletricWireObstacle : MonoBehaviour
     [SerializeField] private float dealingDamageTime;
     //Visual Components
     [SerializeField] private GameObject[] crystals;
-    [SerializeField] private Sprite spriteDeActivate;
-    [SerializeField] private Sprite spriteActivate;
     [SerializeField] private BoxCollider2D wireCollider;
     private List<Animator> crystalsAnim = new List<Animator>();
     LineRenderer lineRenderer;
@@ -45,13 +43,12 @@ public class EletricWireObstacle : MonoBehaviour
         switch (wireState)
         {
             case EletricWireStates.Cooldown:
-                ChangeSpriteToDeactivate();
                 StartCoroutine(CooldownTimer());
                 wireCollider.enabled = false;
                 lineRenderer.enabled = false;
                 break;
             case EletricWireStates.Charging:
-                ChangeSpriteToActivate();
+                SpawnChargingParticles();
                 StartCoroutine(ChargingTimer());
                 
                 break;
@@ -102,27 +99,9 @@ public class EletricWireObstacle : MonoBehaviour
         {
             lineRenderer.SetPosition(i, crystals[i].transform.position);
         }
-        float distance = Vector2.Distance(crystals[0].transform.position, crystals[1].transform.position) / 10;
+        float distance = Vector2.Distance(crystals[0].transform.position, crystals[1].transform.position);
 
         wireCollider.size = new Vector2(distance, 0.2f);
-    }
-    private void ChangeSpriteToActivate()
-    {
-        for (int i = 0; i < crystals.Length; i++)
-        {
-            SpriteRenderer atualSprite = crystals[i].GetComponent<SpriteRenderer>();
-            Debug.LogWarning(i);
-            atualSprite.sprite = spriteActivate;
-        }
-    }
-    private void ChangeSpriteToDeactivate()
-    {
-        for (int i = 0; i < crystals.Length; i++)
-        {
-            SpriteRenderer atualSprite = crystals[i].GetComponent<SpriteRenderer>();
-            Debug.LogWarning(i);
-            atualSprite.sprite = spriteDeActivate;
-        }
     }
     private void SetUpParticleSystem()
     {
