@@ -18,6 +18,7 @@ public class QuestManager : MonoBehaviour
     [SerializeField] int energyToAward;
 
     [SerializeField] string achivementToUnlock;
+    [SerializeField] MapIncrementalQuest mIQ;
 
     private void Awake()
     {
@@ -111,6 +112,7 @@ public class QuestManager : MonoBehaviour
 
         AwardThePlayer();
         GrantAchievement();
+
         Debug.Log("The player has completed: " + questsCompleted + " quests.");
         // Call the function to show the Stars to the hud depending on the number of stars
         if (PlayerPrefs.GetInt(levelName + "_maxStars") < questsCompleted)
@@ -204,6 +206,7 @@ public class QuestManager : MonoBehaviour
             PlayerPrefs.GetInt(levelName + "_achieved") == 0)
         {
             PlayerPrefs.SetInt(levelName + "_achieved", 1);
+            mIQ.IncrementalMapQuestAchievement(true);
             AchievementsManager.instance.UnlockAchievement(achivementToUnlock);
         }
     }

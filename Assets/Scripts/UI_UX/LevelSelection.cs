@@ -9,6 +9,7 @@ using Unity.VisualScripting;
 public class LevelSelection : MonoBehaviour
 {
     [SerializeField] private bool unlocked = false;
+    [SerializeField] private bool isTutorial = false;
     [SerializeField] private TMP_Text [] levelTextName;
     [SerializeField] private GameObject popUpPanel;
     [NamedArray(new string[] { "Star Coins", "Star Hits", "Star Lives", "Star Seconds" })]
@@ -53,11 +54,16 @@ public class LevelSelection : MonoBehaviour
     {
         objectsWithTag = GameObject.FindGameObjectsWithTag("UI_Hide_Element_For_Pop_Up"); //TODO: pensar como fazer isso de uma maneira mais otimizada, pois isto esta sendo chamado para todas as instancias
 
-        CheckActiveQuests();
-        UpdateLevelStatus();
-        UpdateLevelImage();
+        if(!isTutorial)
+        {
+            CheckActiveQuests();
+            UpdateLevelStatus();
+            UpdateLevelImage();
+            SetConditions();
+        }
+        
         popUpPanel.SetActive(false);
-        SetConditions();
+        
     }
 
     private void CheckActiveQuests()
