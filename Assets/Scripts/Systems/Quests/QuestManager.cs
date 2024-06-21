@@ -15,6 +15,9 @@ public class QuestManager : MonoBehaviour
     public int questsCompleted = 0;
     // Rewards
     [SerializeField] int coinToAward;
+    [SerializeField] int energyToAward;
+
+    [SerializeField] string achivementToUnlock;
 
     private void Awake()
     {
@@ -107,6 +110,7 @@ public class QuestManager : MonoBehaviour
         }
 
         AwardThePlayer();
+        GrantAchievement();
         Debug.Log("The player has completed: " + questsCompleted + " quests.");
         // Call the function to show the Stars to the hud depending on the number of stars
         if (PlayerPrefs.GetInt(levelName + "_maxStars") < questsCompleted)
@@ -190,6 +194,18 @@ public class QuestManager : MonoBehaviour
             Debug.Log("Received a Token Fragment");
         }
         
+    }
+
+    private void GrantAchievement()
+    {
+        if(PlayerPrefs.GetInt(levelName + "_1rewarded") == 1 &&
+            PlayerPrefs.GetInt(levelName + "_2rewarded") == 1 &&
+            PlayerPrefs.GetInt(levelName + "_3rewarded") == 1 &&
+            PlayerPrefs.GetInt(levelName + "_achieved") == 0)
+        {
+            PlayerPrefs.SetInt(levelName + "_achieved", 1);
+            AchievementsManager.instance.UnlockAchievement(achivementToUnlock);
+        }
     }
 
     IEnumerator ColorQuests()

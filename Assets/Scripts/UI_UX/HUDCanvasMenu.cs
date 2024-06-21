@@ -317,6 +317,7 @@ public class HUDCanvasMenu : MonoBehaviour
 
             backgroundPanelForWinning.SetActive(false);
             backgroundPanelForWinningTutorial.SetActive(true);
+            AchievementsManager.instance.UnlockAchievement(GPGSIds.achievement_tutorial_master);
 
         }
         else
