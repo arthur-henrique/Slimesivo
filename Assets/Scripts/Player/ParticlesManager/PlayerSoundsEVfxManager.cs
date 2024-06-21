@@ -9,6 +9,10 @@ public class PlayerSoundsEVfxManager : MonoBehaviour
     [SerializeField] private ParticleSystem jumpParticles;
     [SerializeField] private ParticleSystem damageParticles;
     [SerializeField] private Transform jumpSameSidePos;
+    [SerializeField] private AudioClip[] jumpSounds;
+    [SerializeField] private AudioClip[] hitSounds;
+
+    private bool inCooldownJumpSound;
 
 
 
@@ -35,6 +39,13 @@ public class PlayerSoundsEVfxManager : MonoBehaviour
     private void SpawnJumpParticles()
     {
         Instantiate(jumpParticles, transform.position, Quaternion.identity);
+        if (!inCooldownJumpSound)
+        {
+            SoundFXManager.Instance.PlayRandomSoundFXClip(jumpSounds, transform, 1f);
+            inCooldownJumpSound = true;
+            StartCoroutine(CooldownTimerToPlayOtherSound());
+        }
+        
     }
     private void SpawnDamageParticles(Collider2D collider, Transform player)
     {
@@ -45,16 +56,23 @@ public class PlayerSoundsEVfxManager : MonoBehaviour
         if(jumpSameSidePos != null)
         {
             Instantiate(jumpParticles, jumpSameSidePos.position, Quaternion.identity);
+            if (!inCooldownJumpSound)
+            {
+                SoundFXManager.Instance.PlayRandomSoundFXClip(jumpSounds, transform, 1f);
+                inCooldownJumpSound = true;
+                StartCoroutine(CooldownTimerToPlayOtherSound());
+            }
+
         }
-       
-    }
 
-    private void SpawnWallParticle()
-    {
 
     }
-    private void SpawnPosWallParticle()
+
+    IEnumerator CooldownTimerToPlayOtherSound()
     {
+        float getSoundLength = jumpSounds[0].length;
+        yield return new WaitForSeconds(getSoundLength);
+        inCooldownJumpSound = false;
 
     }
 }

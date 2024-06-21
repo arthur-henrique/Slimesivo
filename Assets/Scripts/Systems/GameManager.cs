@@ -54,6 +54,9 @@ public class GameManager : MonoBehaviour
     }
     public InputMode activeInputMode = InputMode.Tap_Performed;
     private bool isInGame;
+
+    //Sounds
+    [SerializeField] private AudioClip loseSound;
     void Awake()
     {
         // Check if instance already exists
@@ -116,6 +119,7 @@ public class GameManager : MonoBehaviour
                 // Calls the function that initializes the death sequence
                 Debug.Log("Player has Died");
                 Time.timeScale = 0f;
+                SoundFXManager.Instance.PlaySoundFXClip(loseSound, transform, 1f);
                 pauseCanvas.OnDeath();
             }
         }

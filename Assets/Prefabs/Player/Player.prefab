@@ -49,6 +49,11 @@ MonoBehaviour:
   damageParticles: {fileID: 1104731915954917304, guid: f6e6b725de250c445979bb4a5f84afc0,
     type: 3}
   jumpSameSidePos: {fileID: 3623052421927086798}
+  jumpSounds:
+  - {fileID: 8300000, guid: 9ca18d04e4c7f8d49968d4399908b15d, type: 3}
+  - {fileID: 8300000, guid: 722d704e5f93a374eb95a4e061d31257, type: 3}
+  - {fileID: 8300000, guid: e785606de3e10784d8d7d91c88c7491a, type: 3}
+  hitSounds: []
 --- !u!1 &2607770926949867868
 GameObject:
   m_ObjectHideFlags: 0
