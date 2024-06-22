@@ -57,6 +57,7 @@ public class GameManager : MonoBehaviour
 
     //Sounds
     [SerializeField] private AudioClip loseSound;
+    [SerializeField] private AudioClip victorySound;
     void Awake()
     {
         // Check if instance already exists
@@ -266,6 +267,7 @@ public class GameManager : MonoBehaviour
         QuestManager.Instance.CheckQuests();
         AdsInitializer.instance.LoadAds();
         RewardedAdExample.instance.LoadAd();
+        SoundFXManager.Instance.PlaySoundFXClip(victorySound, transform, 1f);
     }
     
     private IEnumerator DamageCooldown()
