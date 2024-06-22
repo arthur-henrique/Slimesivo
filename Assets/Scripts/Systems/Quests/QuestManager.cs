@@ -86,7 +86,13 @@ public class QuestManager : MonoBehaviour
         {
             if(!PlayerPrefs.HasKey(levelName + "_" + i + "rewarded"))
                 PlayerPrefs.SetInt(levelName + "_"+ i + "rewarded", 0);
+            
 
+        }
+
+        if (!PlayerPrefs.HasKey(levelName + "_achieved"))
+        {
+            PlayerPrefs.SetInt(levelName + "_achieved", 0);
         }
 
         //StartCoroutine(ColorQuests());
@@ -202,12 +208,17 @@ public class QuestManager : MonoBehaviour
     {
         if(PlayerPrefs.GetInt(levelName + "_1rewarded") == 1 &&
             PlayerPrefs.GetInt(levelName + "_2rewarded") == 1 &&
-            PlayerPrefs.GetInt(levelName + "_3rewarded") == 1 &&
-            PlayerPrefs.GetInt(levelName + "_achieved") == 0)
+            PlayerPrefs.GetInt(levelName + "_3rewarded") == 1)
         {
             PlayerPrefs.SetInt(levelName + "_achieved", 1);
-            mIQ.IncrementalMapQuestAchievement(true);
             AchievementsManager.instance.UnlockAchievement(achivementToUnlock);
+            if(PlayerPrefs.GetInt(levelName + "_achieved") == 0)
+            {
+                PlayerPrefs.SetInt(levelName + "_achieved", 1);
+                mIQ.IncrementalMapQuestAchievement(true);
+                //AchievementsManager.instance.UnlockAchievement(achivementToUnlock);
+            }
+            
         }
     }
 
