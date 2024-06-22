@@ -6074,6 +6074,7 @@ MonoBehaviour:
   coinToAward: 15
   energyToAward: 0
   achivementToUnlock: CgkInLDih5kLEAIQBQ
+  mIQ: {fileID: 0}
 --- !u!4 &1598611147
 Transform:
   m_ObjectHideFlags: 0
@@ -6816,29 +6817,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2682705831866685873, guid: c81d557d2fcf8b14984c989be23dd044,
         type: 3}
-      propertyPath: firstJumpForce
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 2682705831866685873, guid: c81d557d2fcf8b14984c989be23dd044,
-        type: 3}
       propertyPath: cameraController
       value: 
       objectReference: {fileID: 1706197710}
-    - target: {fileID: 2682705831866685873, guid: c81d557d2fcf8b14984c989be23dd044,
-        type: 3}
-      propertyPath: jumpSameSideTimer
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2682705831866685873, guid: c81d557d2fcf8b14984c989be23dd044,
-        type: 3}
-      propertyPath: wallSlideSpeedMax
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2682705831866685873, guid: c81d557d2fcf8b14984c989be23dd044,
-        type: 3}
-      propertyPath: wallSlideFase1Time
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 4714799398433791889, guid: c81d557d2fcf8b14984c989be23dd044,
         type: 3}
       propertyPath: m_Name
@@ -7657,7 +7638,7 @@ PrefabInstance:
     - target: {fileID: 117412478424319839, guid: 1b31a9b7f09796b4880b8757f0daa30b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.384922
+      value: 4.384395
       objectReference: {fileID: 0}
     - target: {fileID: 117412478424319839, guid: 1b31a9b7f09796b4880b8757f0daa30b,
         type: 3}
@@ -77710,7 +77691,7 @@ PrefabInstance:
     - target: {fileID: 7480416109408571177, guid: 339acbf382c1ada438f07df34c5760da,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.384922
+      value: -4.384395
       objectReference: {fileID: 0}
     - target: {fileID: 7480416109408571177, guid: 339acbf382c1ada438f07df34c5760da,
         type: 3}

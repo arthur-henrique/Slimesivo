@@ -773,6 +773,7 @@ MonoBehaviour:
   coinToAward: 15
   energyToAward: 0
   achivementToUnlock: CgkInLDih5kLEAIQBg
+  mIQ: {fileID: 0}
 --- !u!4 &107857647
 Transform:
   m_ObjectHideFlags: 0
@@ -7068,21 +7069,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 11
       objectReference: {fileID: 0}
-    - target: {fileID: 4735764983895169955, guid: c81d557d2fcf8b14984c989be23dd044,
-        type: 3}
-      propertyPath: inputMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4735764983895169955, guid: c81d557d2fcf8b14984c989be23dd044,
-        type: 3}
-      propertyPath: minimunDistance
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4735764983895169955, guid: c81d557d2fcf8b14984c989be23dd044,
-        type: 3}
-      propertyPath: directionThreshold
-      value: 0.5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10695,7 +10681,7 @@ Transform:
   m_GameObject: {fileID: 2118619762255139302}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.864922, y: 7.2, z: 0}
+  m_LocalPosition: {x: -3.8643951, y: 7.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -18578,7 +18564,7 @@ Transform:
   m_GameObject: {fileID: 8454351750522947989}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.894922, y: 7.2, z: 0}
+  m_LocalPosition: {x: 3.894395, y: 7.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
