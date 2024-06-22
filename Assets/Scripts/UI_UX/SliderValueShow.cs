@@ -13,6 +13,7 @@ public class SliderValueShow : MonoBehaviour
     {
         sliderComponent.onValueChanged.AddListener((v) =>
         {
+            v = v * 10;
             sliderText.text = v.ToString("0");
         });
     }
