@@ -132,16 +132,23 @@ public class UAuthentication : MonoBehaviour
     public void LogIn()
     {
         SyncConfigurationAsync();
-        StartCoroutine(LoginIntoTheGame());
+        StartCoroutine(LoginIntoTheGame(1.5f));
     }
-    IEnumerator LoginIntoTheGame()
+
+    public void OfflineLogin()
+    {
+        AuthenticationService.Instance.SignOut();
+        StartCoroutine(LoginIntoTheGame(.25f));
+
+    }
+    IEnumerator LoginIntoTheGame(float time)
     {
         //while (!AuthenticationService.Instance.IsSignedIn)
         //{
         //    print("WaitingToSignIn");
         //    yield return null;
         //}
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(time);
 
         if(PlayerPrefs.GetInt("Level_Teste_completed") != 1)
         {
