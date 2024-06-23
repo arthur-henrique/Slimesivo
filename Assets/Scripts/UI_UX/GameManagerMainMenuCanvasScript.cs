@@ -10,7 +10,7 @@ public class GameManagerMainMenuCanvasScript : MonoBehaviour
 {
     public static GameManagerMainMenuCanvasScript Instance;
 
-    [SerializeField] public GameObject storePagePanel, settingsButton, leaderboardPanel, energyPanel, storeButton, leaderboardButton;
+    [SerializeField] public GameObject storePagePanel, settingsButton, leaderboardPanel, energyPanel, storeButton, leaderboardButton, settingsPanel;
     [SerializeField] private GameObject[] purchaseSignButtons;
     [SerializeField] private LeaderboardsPage leaderboardPage;
     [SerializeField] public TMP_Text coinText;
@@ -33,11 +33,24 @@ public class GameManagerMainMenuCanvasScript : MonoBehaviour
         storePagePanel.SetActive(false);
         settingsButton.SetActive(true);
         energyPanel.SetActive(false);
+        settingsPanel.SetActive(false);
         //leaderboardPanel.SetActive(false);
 
         if(GoogleLogin.isSignedInWithGooglePlayGames)
             StartCoroutine(LoadProfileImage(GoogleLogin.PlayerProfileImageUrl));
 
+    }
+
+    public void EnterExitSettingsPanel()
+    {
+        if (settingsPanel.activeSelf == true)
+        {
+            settingsPanel.SetActive(false);
+        }
+        else
+        {
+            settingsPanel.SetActive(true);
+        }
     }
 
     private IEnumerator LoadProfileImage(string url)
