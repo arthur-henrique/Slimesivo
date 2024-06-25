@@ -106,7 +106,7 @@ public class CurrencyManager : MonoBehaviour
     {
         currentCoinAmount += coinAmount;
         coinText.text = currentCoinAmount.ToString();
-        tutorialCoinText.text = currentCoinAmount.ToString();
+        //tutorialCoinText.text = currentCoinAmount.ToString();
         Debug.Log("Current Coin Amount is: " +currentCoinAmount);
     }
     public void QuestCoinReward(int coinAmount)

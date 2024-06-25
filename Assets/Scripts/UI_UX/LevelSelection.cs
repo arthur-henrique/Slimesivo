@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 
 public class LevelSelection : MonoBehaviour
 {
@@ -49,6 +51,23 @@ public class LevelSelection : MonoBehaviour
 
     [SerializeField] private Sprite starFullSprite;
     private GameObject[] objectsWithTag;
+
+    // 1st Quest Localization
+    public LocalizedString allCoinsText;
+    public LocalizedString someCoinsText;
+
+    // 2nd Quest Localization
+    public LocalizedString noDamageText;
+    public LocalizedString oneDamageText;
+    public LocalizedString someDamageText;
+
+    // 3rd Quest Localization
+    public LocalizedString threeLivesText;
+    public LocalizedString twoLivesText;
+    public LocalizedString oneLifeText;
+
+    // 4th Quest Localization
+    public LocalizedString timeTotalText;
 
     private void Start()
     {
@@ -114,45 +133,86 @@ public class LevelSelection : MonoBehaviour
         // Texts Aspects
 
         // First Quest = Coins
+
         if (isItAllCoins)
         {
-            conditionsTexts[0].text = "Complete the level collecting all " + questValues[0] + " coins"; //"all"
+            // Fetch and format the localized "all_coins" string
+            allCoinsText.Arguments = new object[] { questValues[0] };
+            allCoinsText.StringChanged += (localizedString) =>
+            {
+                conditionsTexts[0].text = localizedString;
+            };
         }
         else
         {
-            conditionsTexts[0].text = "Complete the level collecting " + questValues[0] + " coins";
+            // Fetch and format the localized "some_coins" string
+            someCoinsText.Arguments = new object[] { questValues[0] };
+            someCoinsText.StringChanged += (localizedString) =>
+            {
+                conditionsTexts[0].text = localizedString;
+            };
         }
+        //if (isItAllCoins)
+        //{
+        //    conditionsTexts[0].text = "Complete the level collecting all " + questValues[0] + " coins"; //"all"
+        //}
+        //else
+        //{
+        //    conditionsTexts[0].text = "Complete the level collecting " + questValues[0] + " coins";
+        //}
 
         // Second Quest = Hits
         if (questValues[1] == 0)
         {
-            conditionsTexts[1].text = "Complete the level without taking damage"; //"without"
+            conditionsTexts[1].text = noDamageText.GetLocalizedString();
         }
         else if (questValues[1] == 1)
         {
-            conditionsTexts[1].text = "Complete the level without taking more than 1 hit"; //"singular"
+            // Fetch and format the localized "some_coins" string
+            conditionsTexts[1].text = oneDamageText.GetLocalizedString();
         }
         else
         {
-            conditionsTexts[1].text = "Complete the level without taking more than " + questValues[1] + "hits"; //"plural"
+            someDamageText.Arguments = new object[] { questValues[1] };
+            someDamageText.StringChanged += (localizedString) =>
+            {
+                conditionsTexts[1].text = localizedString;
+            };
         }
+
+        //if (questValues[1] == 0)
+        //{
+        //    conditionsTexts[1].text = "Complete the level without taking damage"; //"without"
+        //}
+        //else if (questValues[1] == 1)
+        //{
+        //    conditionsTexts[1].text = "Complete the level without taking more than 1 hit"; //"singular"
+        //}
+        //else
+        //{
+        //    conditionsTexts[1].text = "Complete the level without taking more than " + questValues[1] + "hits"; //"plural"
+        //}
 
         // Third Quest = Lives
         if (questValues[2] >= 3)
         {
-            conditionsTexts[2].text = "Complete the level with full life"; //"full"
+            conditionsTexts[2].text = threeLivesText.GetLocalizedString(); //"full"
         }
         else if (questValues[2] == 2)
         {
-            conditionsTexts[2].text = "Complete the level with at least 2 lives"; //"plural"
+            conditionsTexts[2].text = twoLivesText.GetLocalizedString(); //"plural"
         }
         else if (questValues[2] == 1)
         {
-            conditionsTexts[2].text = "Complete the level with at least 1 life"; //"singular"
+            conditionsTexts[2].text = oneLifeText.GetLocalizedString(); //"singular"
         }
 
         // Forth Quest = Seconds
-        conditionsTexts[3].text = "Complete the level in " + questValues[3] + " seconds";
+        timeTotalText.Arguments = new object[] { questValues[3] };
+        timeTotalText.StringChanged += (localizedString) =>
+        {
+            conditionsTexts[3].text = localizedString;
+        };
 
         for (int i = 0; i < questsHandles.Length; i++)
         {
