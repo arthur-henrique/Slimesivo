@@ -8,6 +8,8 @@ using UnityEngine.EventSystems;
 using PlayerEvents;
 using System;
 using UnityEngine.InputSystem;
+using System.Diagnostics.Contracts;
+//using UnityEngine.UIElements;
 
 public class HUDCanvasMenu : MonoBehaviour
 {
@@ -30,6 +32,8 @@ public class HUDCanvasMenu : MonoBehaviour
     public static bool playerChoosesCountdown = true;
 
     public GameObject[] hideableUI;
+    public GameObject minimapSlider;
+    public bool canShowMinimap = true;
 
 
     //int quantoDeVida = 3; //SUBSTITUIR DEPOIS PELO INT DA VIDA DO PLAYER!!!!
@@ -59,6 +63,13 @@ public class HUDCanvasMenu : MonoBehaviour
     {
         // Subscribe to the sceneLoaded event
         SceneManager.sceneLoaded += OnSceneLoaded;
+        
+    }
+
+    
+    private void LateUpdate()
+    {
+        HideShowMinimapSlider();
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -89,8 +100,16 @@ public class HUDCanvasMenu : MonoBehaviour
         heart2.SetActive(true);
         heart3.SetActive(true);
         currentLevelName = SceneManager.GetActiveScene().name;
-    }
+        minimapSlider.SetActive(false);
+        canShowMinimap = true;
+        minimapSlider.GetComponent<MinimapControl>().currentSceneName = "";
+        if (minimapSlider.activeSelf)
+            minimapSlider.SetActive(false);
 
+    }
+    public void OnEnable()
+    {
+    }
     public void PauseGame()
     {
         pauseButton.SetActive(false);
@@ -353,6 +372,31 @@ public class HUDCanvasMenu : MonoBehaviour
             PlayerPrefs.SetInt("Level_Teste_completed", 1); 
     }
 
+    public void HideShowMinimapSlider()
+    {
+        if(canShowMinimap && !minimapSlider.activeSelf)
+        {
+            
+            if (currentLevelName != "Level_Teste")
+            {
+                if(Player.Instance.gameObject.transform.position.y > Player.Instance.initialY + 10)
+                {
+                    minimapSlider.SetActive(true);
+                    canShowMinimap = false;
+                }
+                
+            }
+            else if (currentLevelName == "Level_Teste")
+            {
+                if (PlayerTutorial.Instance.gameObject.transform.position.y > PlayerTutorial.Instance.initialY + 10)
+                {
+                    minimapSlider.SetActive(true);
+                    canShowMinimap = false;
+                }
+            }
+        }
+    }
+
     #region Mostra quantas estrelas o Player conseguiu no nivel (principalmente visualmente)
     public void PressStarsButton(int _starsNumber)
     {
@@ -381,6 +425,14 @@ public class HUDCanvasMenu : MonoBehaviour
     public void ResetStarsButton() //TODO: deletar esta funcao
     {
         PlayerPrefs.DeleteKey(currentLevelName);
+    }
+
+    IEnumerator SetShowMinimap()
+    {
+        yield return new WaitForSeconds(.5f);
+        canShowMinimap = true;
+        if (minimapSlider.activeSelf)
+            minimapSlider.SetActive(false);
     }
 
     #endregion

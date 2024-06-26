@@ -8,7 +8,8 @@ public class MinimapControl : MonoBehaviour
     public static MinimapControl instance;
     [SerializeField] private Slider m_Slider;
     private GameObject finishLine;
-    private string currentSceneName;
+    [SerializeField]
+    public string currentSceneName;
     private string tutorialSceneName = "Level_Teste";
     public bool canTrack = false;
 
@@ -20,11 +21,12 @@ public class MinimapControl : MonoBehaviour
         }
         else
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
     }
     private void Start()
     {
+        currentSceneName = null;
         currentSceneName = SceneManager.GetActiveScene().name;
     }
     public void GetFinishLine()
@@ -34,16 +36,19 @@ public class MinimapControl : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
-        if (canTrack && currentSceneName != SceneManager.GetSceneByBuildIndex(1).name)
+        if (canTrack /*&& currentSceneName == tutorialSceneName*/)
         {
-            m_Slider.value = Player.Instance.gameObject.transform.position.y;
+            if(Player.Instance != null)
+                m_Slider.value = Player.Instance.gameObject.transform.position.y;
+            if(PlayerTutorial.Instance != null)
+                m_Slider.value = PlayerTutorial.Instance.gameObject.transform.position.y;
         }
-        else if (canTrack && currentSceneName == SceneManager.GetSceneByBuildIndex(1).name)
-        {
-            m_Slider.value = Player.Instance.gameObject.transform.position.y;
-        }
+        //else if (canTrack && currentSceneName != tutorialSceneName)
+        //{
+        //    m_Slider.value = PlayerTutorial.Instance.gameObject.transform.position.y;
+        //}
         
     }
 }

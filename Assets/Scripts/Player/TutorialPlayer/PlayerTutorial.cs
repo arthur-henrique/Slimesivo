@@ -84,6 +84,8 @@ public class PlayerTutorial : MonoBehaviour
     private bool getHit;
     public float hitCounter;
 
+    // Initial Y
+    public float initialY;
 
     //Gravity variables
     private float originalGravity;
@@ -101,6 +103,7 @@ public class PlayerTutorial : MonoBehaviour
         Components();
         DefinePlayerSpeed();
         initialJumpForce = firstJumpForce;
+        initialY = transform.position.y;
     }
     private void OnEnable()
     {

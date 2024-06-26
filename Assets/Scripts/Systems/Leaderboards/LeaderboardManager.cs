@@ -72,7 +72,7 @@ public class LeaderboardManager : MonoBehaviour
             playersNick[i].gameObject.SetActive(true);
             playerScore[i].gameObject.SetActive(true);
             playersNick[i].text = nameEntries[i].Substring(0, 6) + "...";
-            playerScore[i].text = scoreEntries[i].ToString();
+            playerScore[i].text = scoreEntries[i].ToString() + "pts";
             print(playersNick[i].text);
         }
         
