@@ -41,6 +41,12 @@ public class GameManagerMainMenuCanvasScript : MonoBehaviour
 
     }
 
+    public void Start()
+    {
+        if (GoogleLogin.isSignedInWithGooglePlayGames)
+            StartCoroutine(LoadProfileImage(GoogleLogin.PlayerProfileImageUrl));
+    }
+
     public void EnterExitSettingsPanel()
     {
         if (settingsPanel.activeSelf == true)

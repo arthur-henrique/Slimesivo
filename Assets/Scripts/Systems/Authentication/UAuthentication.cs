@@ -132,7 +132,7 @@ public class UAuthentication : MonoBehaviour
     public void LogIn()
     {
         SyncConfigurationAsync();
-        StartCoroutine(LoginIntoTheGame(1.5f));
+        StartCoroutine(LoginIntoTheGame(.25f));
     }
 
     public void OfflineLogin()
