@@ -3,7 +3,7 @@ using System;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
-using UnityEngine.Networking;
+using UnityEngine.Localization;
 
 public class EnergyManager : MonoBehaviour
 {
@@ -21,73 +21,105 @@ public class EnergyManager : MonoBehaviour
 
     private bool isRestoring = false;
 
+    // Localized strings
+    public LocalizedString energyFullLocalized;
+    public LocalizedString energyReplenishLocalized;
+
+    private string currentLocalizedReplenishString;
+    private bool isEnergyFull;
+
     private void Awake()
     {
         if (Instance == null)
         {
-            // If not, set instance to this
             Instance = this;
         }
-        // If instance already exists and it's not this:
         else if (Instance != this)
         {
-            // Then destroy this. This enforces our singleton pattern, meaning there can only ever be one instance of a GameManager.
             Destroy(gameObject);
         }
     }
+
     private void Start()
     {
+        Debug.Log("Subscribing to localized string events.");
+        energyFullLocalized.StringChanged += OnEnergyFullStringChanged;
+        energyReplenishLocalized.StringChanged += OnEnergyReplenishStringChanged;
+
         if (!PlayerPrefs.HasKey("currentEnergy"))
         {
             PlayerPrefs.SetInt("currentEnergy", maxEnergy);
-            Load();
-            StartCoroutine(RestoreEnergy());
         }
 
-        else
+        Load();
+        UpdateEnergy();
+        StartCoroutine(RestoreEnergy());
+
+        if (currentEnergy >= maxEnergy)
         {
-            Load();
-            StartCoroutine(RestoreEnergy());
+            isEnergyFull = true;
+            timerText.text = energyFullLocalized.GetLocalizedString();
         }
-
     }
 
-    #region Internet Start
-    //private IEnumerator Start()
-    //{
-    //    if (!PlayerPrefs.HasKey("currentEnergy"))
-    //    {
-    //        PlayerPrefs.SetInt("currentEnergy", maxEnergy);
-    //        if (Application.internetReachability != NetworkReachability.NotReachable)
-    //        {
-    //            yield return StartCoroutine(GetInternetTime());
-    //        }
-    //        else
-    //        {
-    //            // Fallback to local time
-    //            lastEnergyTime = DateTime.Now;
-    //            nextEnergyTime = AddDuration(lastEnergyTime, energyRechargeTime);
-    //            NotifyPlayerNoInternet();
-    //        }
-    //        StartCoroutine(RestoreEnergy());
-    //    }
-    //    else
-    //    {
-    //        Load();
-    //        StartCoroutine(RestoreEnergy());
-    //    }
-    //}
+    private void Update()
+    {
+        UpdateTimerText();
+    }
 
-    #endregion
+    private void OnEnergyFullStringChanged(string localizedString)
+    {
+        if (currentEnergy >= maxEnergy)
+        {
+            isEnergyFull = true;
+            timerText.text = localizedString;
+        }
+    }
+
+    private void OnEnergyReplenishStringChanged(string localizedString)
+    {
+        currentLocalizedReplenishString = localizedString;
+        if (currentEnergy < maxEnergy)
+        {
+            isEnergyFull = false;
+            UpdateTimerText();
+        }
+    }
+
+    private void UpdateTimerText()
+    {
+        if (isEnergyFull)
+        {
+            return;
+        }
+
+        TimeSpan timeToRecharge = nextEnergyTime - DateTime.Now;
+        string timeText = string.Format(currentLocalizedReplenishString, $"{timeToRecharge.Minutes:D2}:{timeToRecharge.Seconds:D2}");
+        timerText.text = timeText;
+    }
+
+    private void UpdateEnergyTimer()
+    {
+        if (currentEnergy >= maxEnergy)
+        {
+            isEnergyFull = true;
+            energyFullLocalized.GetLocalizedString();
+            return;
+        }
+
+        isEnergyFull = false;
+        energyReplenishLocalized.GetLocalizedString();
+    }
+
     public bool UseEnergy(int amount)
     {
-        if(currentEnergy >= amount)
+        if (currentEnergy >= amount)
         {
             currentEnergy -= amount;
             UpdateEnergy();
-            if(!isRestoring)
+            if (!isRestoring)
             {
-                if(currentEnergy + 1 == maxEnergy)
+                if (currentEnergy + 1 == maxEnergy)
                 {
                     nextEnergyTime = AddDuration(DateTime.Now, energyRechargeTime);
                 }
@@ -95,11 +127,10 @@ public class EnergyManager : MonoBehaviour
             StartCoroutine(RestoreEnergy());
             return true;
         }
-
         else
         {
             Debug.Log("Not enough energy");
-            GameManagerMainMenuCanvasScript.Instance.ShowOrHideEnergyPopUpPanel();
+            // GameManagerMainMenuCanvasScript.Instance.ShowOrHideEnergyPopUpPanel();
             return false;
         }
     }
@@ -107,14 +138,9 @@ public class EnergyManager : MonoBehaviour
     public void AddEnergy(int amount)
     {
         currentEnergy += amount;
-        
-
         UpdateEnergy();
         Save();
     }
-
-
-
 
     private DateTime AddDuration(DateTime datetime, int duration)
     {
@@ -133,7 +159,7 @@ public class EnergyManager : MonoBehaviour
 
             while (currentDatetime > nextDatetime)
             {
-                if(currentEnergy < maxEnergy)
+                if (currentEnergy < maxEnergy)
                 {
                     isEnergyAdding = true;
                     currentEnergy++;
@@ -141,14 +167,13 @@ public class EnergyManager : MonoBehaviour
                     DateTime timeToAdd = lastEnergyTime > nextDatetime ? lastEnergyTime : nextDatetime;
                     nextDatetime = AddDuration(timeToAdd, energyRechargeTime);
                 }
-
                 else
                 {
                     break;
                 }
             }
 
-            if(isEnergyAdding)
+            if (isEnergyAdding)
             {
                 lastEnergyTime = DateTime.Now;
                 nextEnergyTime = nextDatetime;
@@ -164,14 +189,11 @@ public class EnergyManager : MonoBehaviour
         isRestoring = false;
     }
 
-    #region Save&Load
-
     private void Save()
     {
         PlayerPrefs.SetInt("currentEnergy", currentEnergy);
         PlayerPrefs.SetString("nextEnergyTime", nextEnergyTime.ToString());
         PlayerPrefs.SetString("lastEnergyTime", lastEnergyTime.ToString());
-
     }
 
     private void Load()
@@ -179,36 +201,18 @@ public class EnergyManager : MonoBehaviour
         currentEnergy = PlayerPrefs.GetInt("currentEnergy");
         nextEnergyTime = StringToDate(PlayerPrefs.GetString("nextEnergyTime"));
         lastEnergyTime = StringToDate(PlayerPrefs.GetString("lastEnergyTime"));
-
     }
 
     private DateTime StringToDate(string datetime)
     {
-        if(String.IsNullOrEmpty(datetime))
+        if (String.IsNullOrEmpty(datetime))
         {
             return DateTime.Now;
         }
-
         else
         {
             return DateTime.Parse(datetime);
         }
-    }
-    #endregion
-
-    #region UpdateUI and Timer
-    private void UpdateEnergyTimer()
-    {
-        if (currentEnergy >= maxEnergy)
-        {
-            //timerText.text = "Full";
-            timerText.text = "Your current Energy bar is full now. Do you want to buy more Energy?"; //can the value exceede the "maximum" energy count?
-            return;
-        }
-
-        TimeSpan timeToRecharge = nextEnergyTime - DateTime.Now;
-        string timeText = "Wait for " + string.Format("{0:D2}:{1:D2}", timeToRecharge.Minutes, timeToRecharge.Seconds) + " minutes to replenish 1 Energy. Do you want to buy more now?";
-        timerText.text = timeText;
     }
 
     private void UpdateEnergy()
@@ -216,38 +220,14 @@ public class EnergyManager : MonoBehaviour
         energyText.text = currentEnergy + "/" + maxEnergy;
         energySlider.value = currentEnergy;
         energySlider.maxValue = maxEnergy;
+
+        // Check and update the localized string based on the current energy level
+        UpdateEnergyTimer();
     }
 
-    #endregion
-
-    #region InternetTimer
-    private IEnumerator GetInternetTime()
+    private void OnDestroy()
     {
-        UnityWebRequest request = UnityWebRequest.Get("http://worldtimeapi.org/api/timezone/Etc/UTC");
-        yield return request.SendWebRequest();
-
-        if (request.isNetworkError || request.isHttpError)
-        {
-            Debug.LogError("Error getting time from internet: " + request.error);
-            // Fallback to local time
-            lastEnergyTime = DateTime.Now;
-            nextEnergyTime = AddDuration(lastEnergyTime, energyRechargeTime);
-            NotifyPlayerNoInternet();
-        }
-        else
-        {
-            string date = request.GetResponseHeader("date");
-            DateTime time = DateTime.Parse(date).ToUniversalTime();
-            lastEnergyTime = time;
-            nextEnergyTime = AddDuration(lastEnergyTime, energyRechargeTime);
-        }
+        energyFullLocalized.StringChanged -= OnEnergyFullStringChanged;
+        energyReplenishLocalized.StringChanged -= OnEnergyReplenishStringChanged;
     }
-
-    private void NotifyPlayerNoInternet()
-    {
-        // Implement a notification system to inform the player
-        Debug.Log("No internet connection. Time may not be accurate.");
-    }
-
-    #endregion
 }

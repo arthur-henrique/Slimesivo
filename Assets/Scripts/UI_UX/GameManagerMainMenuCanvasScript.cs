@@ -157,7 +157,7 @@ public class GameManagerMainMenuCanvasScript : MonoBehaviour
     public void UpdateCoins()
     {
         Debug.LogWarning("CalledUpdateCoins");
-        coinText.text = CurrencyManager.instance.currentCurrency.ToString();
+        coinText.text = CurrencyManager.instance.UpdateMainMenuCoins();
         //StartCoroutine(FetchCoins());
     }
     //IEnumerator FetchCoins()

@@ -7,6 +7,7 @@ using Unity.Services.Core;
 using Unity.Services.Economy.Model;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System;
 
 public class CurrencyManager : MonoBehaviour
 {
@@ -20,12 +21,15 @@ public class CurrencyManager : MonoBehaviour
 
     // Currency Related Variables
     public long currentCoinAmount; // The amount of coinCurrency the player currently holds in a match
+    public long tutorialCoinAmount;
     public long questCoinAmount;
     public long currentCurrency; // The quantity of coinCurrency the player current has
     // Trocar pelo ID da moeda desejada
     public string coinCurrencyID = "TESTCURRENCY";
 
     public long levelCoinAmount;
+
+    public long offLineCoinAmount;
     private void Awake()
     {
         if (instance == null)
@@ -74,21 +78,51 @@ public class CurrencyManager : MonoBehaviour
         
     }
 
+    public string UpdateMainMenuCoins()
+    {
+        if (!IsAuthenticationSignedIn())
+        {
+            return offLineCoinAmount.ToString();
+        }
+        else
+        {
+            return currentCurrency.ToString();
+        }
+        
+    }
+
     public async void SetBalance()
     {
         if (!IsAuthenticationSignedIn())
         {
-            return;
-        };
-
-        //FetchCoinBalance();
-        currentCurrency += currentCoinAmount;
-        currentCurrency += questCoinAmount;
-        levelCoinAmount = currentCoinAmount;
-        PlayerBalance playerBalance = await EconomyService.Instance.PlayerBalances.SetBalanceAsync(coinCurrencyID, currentCurrency);
-        //Debug.Log(currentCurrency);
+            offLineCoinAmount += currentCoinAmount;
+            offLineCoinAmount += questCoinAmount;
+        }
+        else
+        {
+            //FetchCoinBalance();
+            currentCurrency += currentCoinAmount;
+            currentCurrency += questCoinAmount;
+            levelCoinAmount = currentCoinAmount;
+            PlayerBalance playerBalance = await EconomyService.Instance.PlayerBalances.SetBalanceAsync(coinCurrencyID, currentCurrency);
+            //Debug.Log(currentCurrency);
+        }
         currentCoinAmount = 0;
         questCoinAmount = 0;
+    }
+
+    public void TutorialCoinHold()
+    {
+        if (!IsAuthenticationSignedIn())
+        {
+            tutorialCoinAmount += currentCoinAmount;
+            currentCoinAmount = 0;
+            questCoinAmount = 0;
+        }
+        else
+        {
+            SetBalance();
+        }
     }
 
     static bool IsAuthenticationSignedIn()

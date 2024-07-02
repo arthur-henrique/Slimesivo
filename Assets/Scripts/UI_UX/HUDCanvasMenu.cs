@@ -323,28 +323,26 @@ public class HUDCanvasMenu : MonoBehaviour
     public void OnWinningLevel()
     {
         pauseButton.SetActive(false);
-        CurrencyManager.instance.SetBalance();
-        Time.timeScale = 0f;
-        GameManager.instance.mainMenuGO.SetActive(true);
-        GameManagerMainMenuCanvasScript.Instance.UpdateCoins();
-        backgroundPanelForGameOver.SetActive(false);
-        WinningPanelBG.SetActive(true);
         if(SceneManager.GetActiveScene().buildIndex == 1)
         {
-            
-            backgroundPanelForWinning.SetActive(true);
-
             backgroundPanelForWinning.SetActive(false);
             backgroundPanelForWinningTutorial.SetActive(true);
+            CurrencyManager.instance.TutorialCoinHold();
             AchievementsManager.instance.UnlockAchievement(GPGSIds.achievement_tutorial_master);
 
         }
         else
         {
-            
             backgroundPanelForWinning.SetActive(true);
             backgroundPanelForWinningTutorial.SetActive(false);
+            CurrencyManager.instance.SetBalance();
+            GameManagerMainMenuCanvasScript.Instance.UpdateCoins();
         }
+        Time.timeScale = 0f;
+        GameManager.instance.mainMenuGO.SetActive(true);
+        
+        backgroundPanelForGameOver.SetActive(false);
+        WinningPanelBG.SetActive(true);
     }
 
     public void OnTutorialStart()

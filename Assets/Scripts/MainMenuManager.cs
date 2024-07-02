@@ -27,10 +27,12 @@ public class MainMenuManager : MonoBehaviour
     IEnumerator FetchCoins()
     {
         yield return new WaitForSeconds(0.5f);
-        GameManagerMainMenuCanvasScript.Instance.coinText.text = CurrencyManager.instance.currentCurrency.ToString();
+        GameManagerMainMenuCanvasScript.Instance.coinText.text = CurrencyManager.instance.UpdateMainMenuCoins();
         print("HasFetchedCoins");
         print(GameManagerMainMenuCanvasScript.Instance.coinText.text);
         print(CurrencyManager.instance.currentCurrency.ToString());
+
+        //CurrencyManager.instance.currentCurrency.ToString()
     }
     IEnumerator FetchLeaderScores()
     {

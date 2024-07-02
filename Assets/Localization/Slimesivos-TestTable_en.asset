@@ -75,8 +75,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 13645879353344
-    m_Localized: Wait for X minutes to replenish Y Stamina. Do you want to buy more
-      now?
+    m_Localized: Wait for {0} to replenish 1 Stamina. Do you want to buy more now?
     m_Metadata:
       m_Items: []
   - m_Id: 13677219192832
@@ -211,6 +210,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 33559759462400
     m_Localized: Complete the level in {0} seconds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2597014592987136
+    m_Localized: Your current Energy bar is full now. Do you want to buy more Energy?
     m_Metadata:
       m_Items: []
   references:
