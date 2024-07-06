@@ -10,7 +10,7 @@ public class MapIncrementalQuest : MonoBehaviour
     {
         if (condition && mapIndex == 1)
         {
-            AchievementsManager.instance.IncrementAchievement(GPGSIds.achievement_first_world_master, 1);
+            //AchievementsManager.instance.IncrementAchievement(GPGSIds.achievement_first_world_master, 1);
         }
     }
 }

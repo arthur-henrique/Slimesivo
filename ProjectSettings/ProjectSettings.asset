@@ -139,8 +139,9 @@ PlayerSettings:
   loadStoreDebugModeEnabled: 0
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
-  bundleVersion: 0.0.2
-  preloadedAssets: []
+  bundleVersion: 0.0.1
+  preloadedAssets:
+  - {fileID: 11400000, guid: 6229efdc64eabc342a2cccc578f868c6, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -161,16 +162,16 @@ PlayerSettings:
   androidSupportedAspectRatio: 2
   androidMaxAspectRatio: 8900
   applicationIdentifier:
-    Android: com.Diverslime.Slimesivo
+    Android: com.BouncyByteStudio.Slimesivos
   buildNumber:
     Standalone: 0
     VisionOS: 0
     iPhone: 0
     tvOS: 0
-  overrideDefaultApplicationIdentifier: 1
-  AndroidBundleVersionCode: 8
+  overrideDefaultApplicationIdentifier: 0
+  AndroidBundleVersionCode: 2
   AndroidMinSdkVersion: 30
-  AndroidTargetSdkVersion: 33
+  AndroidTargetSdkVersion: 34
   AndroidPreferredInstallLocation: 1
   aotOptions: 
   stripEngineCode: 1

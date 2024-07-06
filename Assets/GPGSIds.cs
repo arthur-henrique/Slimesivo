@@ -24,14 +24,13 @@
 
 public static class GPGSIds
 {
-        public const string achievement_level_five_master = "CgkInLDih5kLEAIQBw"; // <GPGSID>
-        public const string achievement_tutorial_master = "CgkInLDih5kLEAIQAw"; // <GPGSID>
-        public const string achievement_level_four_master = "CgkInLDih5kLEAIQBg"; // <GPGSID>
-        public const string achievement_level_six_master = "CgkInLDih5kLEAIQCA"; // <GPGSID>
-        public const string achievement_level_one_master = "CgkInLDih5kLEAIQAg"; // <GPGSID>
-        public const string achievement_first_world_master = "CgkInLDih5kLEAIQCQ"; // <GPGSID>
-        public const string achievement_level_two_master = "CgkInLDih5kLEAIQBA"; // <GPGSID>
-        public const string achievement_level_three_master = "CgkInLDih5kLEAIQBQ"; // <GPGSID>
+        public const string achievement_level_five_master = "CgkIzczH8PQNEAIQBw"; // <GPGSID>
+        public const string achievement_tutorial_master = "CgkIzczH8PQNEAIQAg"; // <GPGSID>
+        public const string achievement_level_four_master = "CgkIzczH8PQNEAIQBg"; // <GPGSID>
+        public const string achievement_level_six_master = "CgkIzczH8PQNEAIQCA"; // <GPGSID>
+        public const string achievement_level_one_master = "CgkIzczH8PQNEAIQAw"; // <GPGSID>
+        public const string achievement_level_two_master = "CgkIzczH8PQNEAIQBA"; // <GPGSID>
+        public const string achievement_level_three_master = "CgkIzczH8PQNEAIQBQ"; // <GPGSID>
 
 }
 

@@ -50,6 +50,7 @@ public class GoogleLogin : MonoBehaviour
                     Debug.Log("Authorization code: " + code);
                     Token = code;
                     TokenText.text = Token;
+                    Debug.LogWarning(Token);
                     // This token serves as an example to be used for SignInWithGooglePlayGames
 
                     PlayerName = PlayGamesPlatform.Instance.GetUserDisplayName();
