@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     private float damageCooldown = 2f;
     private bool isAlive = true;
     public bool canTakeDamage = true;
+    public bool canCollect = true;
     private bool needsToCheckAlive = false;
 
     // Canvases
@@ -226,6 +227,7 @@ public class GameManager : MonoBehaviour
 
             isInGame = true;
             canTakeDamage = true;
+            canCollect = true;
             minimapControl.canTrack = true;
             mainMenuGO.SetActive(false);
             hideMenuChild.SetActive(false);
@@ -273,6 +275,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator DamageCooldown()
     {
         canTakeDamage = false;
+        canCollect = false;
         yield return new WaitForSeconds(damageCooldown);
         canTakeDamage = true;
     }

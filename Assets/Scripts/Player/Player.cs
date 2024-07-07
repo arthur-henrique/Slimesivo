@@ -310,6 +310,7 @@ public class Player : MonoBehaviour
                 anim.SetInteger("AnimParameter", 3);
                 isWallSliding = true;
                 isJumping = false;
+                GameManager.instance.canCollect = true;
                 switch (wallSlideStates)
                 {
                     case WallSlideStates.WallStick:

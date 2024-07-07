@@ -14,7 +14,7 @@ public class CoinCollectible : MonoBehaviour, ICurrencyCollectible
 
     public void Collect()
     {
-        if(!_isCollected && GameManager.instance.canTakeDamage)
+        if(!_isCollected && GameManager.instance.canCollect)
         {
             _isCollected = true;
             Debug.Log("Collected Coin");
