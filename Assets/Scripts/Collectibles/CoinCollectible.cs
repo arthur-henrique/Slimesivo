@@ -5,6 +5,7 @@ using UnityEngine;
 public class CoinCollectible : MonoBehaviour, ICurrencyCollectible
 {
     private bool _isCollected = false;
+    [SerializeField]
     public int Value => 1;
     public string CurrencyId => "TESTCURRENCY";
     [SerializeField] private AudioClip[] collectSounds;
