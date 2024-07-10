@@ -14,7 +14,7 @@ public class EnergyManager : MonoBehaviour
     [SerializeField] private Slider energySlider;
     private int maxEnergy = 10;
     private int currentEnergy;
-    private int energyRechargeTime = 2;
+    private int energyRechargeTime = 4;
 
     private DateTime nextEnergyTime;
     private DateTime lastEnergyTime;
