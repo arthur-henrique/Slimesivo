@@ -25,7 +25,10 @@
 public static class GPGSIds
 {
         public const string achievement_level_five_master = "CgkIzczH8PQNEAIQBw"; // <GPGSID>
+        public const string achievement_level_nine_master = "CgkIzczH8PQNEAIQCw"; // <GPGSID>
         public const string achievement_tutorial_master = "CgkIzczH8PQNEAIQAg"; // <GPGSID>
+        public const string achievement_level_eight_master = "CgkIzczH8PQNEAIQCg"; // <GPGSID>
+        public const string achievement_level_seven_master = "CgkIzczH8PQNEAIQCQ"; // <GPGSID>
         public const string achievement_level_four_master = "CgkIzczH8PQNEAIQBg"; // <GPGSID>
         public const string achievement_level_six_master = "CgkIzczH8PQNEAIQCA"; // <GPGSID>
         public const string achievement_level_one_master = "CgkIzczH8PQNEAIQAw"; // <GPGSID>

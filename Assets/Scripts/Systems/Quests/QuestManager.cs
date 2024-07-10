@@ -181,7 +181,7 @@ public class QuestManager : MonoBehaviour
         if (PlayerPrefs.GetInt(levelName + "_2rewarded") == 0)
         {
             PlayerPrefs.SetInt(levelName + "_2rewarded", 1);
-            EnergyManager.Instance.AddEnergy(1);
+            EnergyManager.Instance.AddEnergy(energyToAward);
             //activeQuests[1].gameObject.GetComponent<IQuestSettable>().SetQuestCompleteToPrefs(levelName, 2);
 
             // Call the necessary EnergySystem.Replenish function
@@ -195,7 +195,7 @@ public class QuestManager : MonoBehaviour
         if (PlayerPrefs.GetInt(levelName + "_3rewarded") == 0)
         {
             PlayerPrefs.SetInt(levelName + "_3rewarded", 1);
-            EnergyManager.Instance.AddEnergy(1);
+            //EnergyManager.Instance.AddEnergy(energyToAward);
             //activeQuests[2].gameObject.GetComponent<IQuestSettable>().SetQuestCompleteToPrefs(levelName, 3);
 
             // Call the necessary Token Fragment function
