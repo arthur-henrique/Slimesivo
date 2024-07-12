@@ -59,6 +59,8 @@ public class GameManager : MonoBehaviour
     //Sounds
     [SerializeField] private AudioClip loseSound;
     [SerializeField] private AudioClip victorySound;
+
+    [SerializeField] private SoundMixerManager soundMixerManager;
     void Awake()
     {
         // Check if instance already exists
@@ -205,6 +207,7 @@ public class GameManager : MonoBehaviour
 
     public void SceneLoad()
     {
+        soundMixerManager.SetElements();
         if (SceneManager.GetActiveScene().name == "1 - Main Menu")
         {
             isInGame = false;

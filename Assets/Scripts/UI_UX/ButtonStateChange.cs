@@ -47,8 +47,8 @@ public class ButtonStateChange : MonoBehaviour, /*IPointerEnterHandler,*/ IPoint
 
     void Update() //REMOVER ISSO DEPOIS
     {
-        Debug.Log(buttonTextObject.transform.position);
-        Debug.Log(initialTextPosition);
+        //Debug.Log(buttonTextObject.transform.position);
+        //Debug.Log(initialTextPosition);
     }
 
     public void Resize(float scaleFactor)

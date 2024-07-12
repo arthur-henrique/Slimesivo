@@ -10,7 +10,7 @@ public class GameManagerMainMenuCanvasScript : MonoBehaviour
 {
     public static GameManagerMainMenuCanvasScript Instance;
 
-    [SerializeField] public GameObject storePagePanel, settingsButton, leaderboardPanel, energyPanel, storeButton, leaderboardButton, settingsPanel;
+    [SerializeField] public GameObject storePagePanel, settingsButton, leaderboardPanel, energyPanel, storeButton, leaderboardButton, settingsPanel, optionPanel;
     [SerializeField] private GameObject[] purchaseSignButtons;
     [SerializeField] private LeaderboardsPage leaderboardPage;
     [SerializeField] public TMP_Text coinText;

@@ -71,7 +71,7 @@ public class MainMenuCanvasScript : MonoBehaviour
     }
     public void InfinityMode()
     {
-        print("carrega modo infinito - descomentar linha");
+        //print("carrega modo infinito - descomentar linha");
         VibrationManager.instance.VibeUI();
         //SceneManager.LoadScene(/*Index da cena do modo Infinito*/);
 
