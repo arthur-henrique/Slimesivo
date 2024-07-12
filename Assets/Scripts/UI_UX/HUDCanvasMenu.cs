@@ -145,7 +145,7 @@ public class HUDCanvasMenu : MonoBehaviour
 
         //Reativar
 
-        if (EnergyManager.Instance.UseEnergy(1))
+        if (EnergyManager.Instance.UseEnergy(0))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
@@ -156,7 +156,7 @@ public class HUDCanvasMenu : MonoBehaviour
 
     public void NextLevel()
     {
-        if (EnergyManager.Instance.UseEnergy(1))
+        if (EnergyManager.Instance.UseEnergy(0))
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         else
             Debug.Log("Not enough energy to go to the next level");
