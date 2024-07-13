@@ -7,6 +7,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
+using System.Threading.Tasks;
 
 public class LevelSelection : MonoBehaviour
 {
@@ -69,15 +70,15 @@ public class LevelSelection : MonoBehaviour
     // 4th Quest Localization
     public LocalizedString timeTotalText;
 
-    private void Start()
+    private async void Start()
     {
         objectsWithTag = GameObject.FindGameObjectsWithTag("UI_Hide_Element_For_Pop_Up"); //TODO: pensar como fazer isso de uma maneira mais otimizada, pois isto esta sendo chamado para todas as instancias
 
         if(!isTutorial)
         {
             CheckActiveQuests();
-            UpdateLevelStatus();
-            UpdateLevelImage();
+            await UpdateLevelStatusAsync();
+            await UpdateLevelImageAsync();
             SetConditions();
         }
         
@@ -118,6 +119,9 @@ public class LevelSelection : MonoBehaviour
         print(QuestingDictionary.Instance.questDictionary.Values);
         // QuestCompleteToPlayerPrefs
         // PlayerPrefs(String, [0 = false, 1 = true])
+
+        InitializeGameObjectData(gameObject.name);
+
         if (!PlayerPrefs.HasKey(gameObject.name + "_completed"))
             PlayerPrefs.SetInt(gameObject.name + "_completed", 0);
         if(!PlayerPrefs.HasKey(gameObject.name + "_maxStars"))
@@ -231,7 +235,7 @@ public class LevelSelection : MonoBehaviour
     /// <summary>
     /// Status of the locked/unlocked level
     /// </summary>
-    private void UpdateLevelStatus()
+    private async Task UpdateLevelStatusAsync()
     {
         #region Get the name of the previous level based on the name of this gameObject
 
@@ -240,13 +244,14 @@ public class LevelSelection : MonoBehaviour
             string[] objectNameNumber = gameObject.name.Split('_');
             int previousLevelIndex = int.Parse(objectNameNumber[1]) - 1;
             previousLevelName = objectNameNumber[0] + "_" + previousLevelIndex.ToString("000");
+            Debug.LogWarning(previousLevelName);
             //levelTextName[0].text = objectNameNumber[0] + " " + int.Parse(objectNameNumber[1]);
             levelTextName[0].text = objectNameNumber[1].TrimStart('0'); //numero do nivel que aparece no mapa
             levelTextName[1].text = objectNameNumber[0] + " " + int.Parse(objectNameNumber[1]); //nome e numero do nivel que aparecem no pop up
 
             #endregion
 
-            if (PlayerPrefs.GetInt(previousLevelName) > 0 || previousLevelName == "Level_000") //o OR eh para o nivel 1 somente
+            if (await CloudSaveManager.Instance.GetGameData(previousLevelName) > 0 || previousLevelName == "Level_000") //o OR eh para o nivel 1 somente
             {
                 unlocked = true;
             }
@@ -262,7 +267,7 @@ public class LevelSelection : MonoBehaviour
     /// <summary>
     /// Shows if the level is locked or not
     /// </summary>
-    private void UpdateLevelImage()
+    private async Task UpdateLevelImageAsync()
     {
         if (unlocked == false)
         {
@@ -281,7 +286,7 @@ public class LevelSelection : MonoBehaviour
             {
                 starsShownInMap[i].gameObject.SetActive(true);
             }
-            for (int i = 0; i < PlayerPrefs.GetInt(gameObject.name); i++)
+            for (int i = 0; i < await CloudSaveManager.Instance.GetGameData(gameObject.name); i++)
             {
                 starsShownInMap[i].gameObject.GetComponent<Image>().sprite = starFullSprite;
                 starsPopUp[i].gameObject.GetComponent<Image>().sprite = starFullSprite;
@@ -289,23 +294,29 @@ public class LevelSelection : MonoBehaviour
         }
 
         #region Para o Pop Up
-
-        if (PlayerPrefs.GetInt(gameObject.name + "_completed") == 1)
+        int completedValue = await CloudSaveManager.Instance.GetGameData(gameObject.name + "_completed");
+        //int completedValue = PlayerPrefs.GetInt(gameObject.name + "_completed");
+        if (completedValue == 1) /**/
         {
             levelCompletedIndicator.GetComponent<Image>().color = new Color(1, 1, 1, 1); //(Red, Green, Blue, Alpha) ou new Color32(255,255,255,100)
         }
-        //if (PlayerPrefs.GetInt(gameObject.name + "_Completed") == 1)
-
-        for (int i = 0; i < questIndex.Count; i++)
+        if (completedValue == 1)
         {
-            int extra = i + 1;
-            if (PlayerPrefs.GetInt(gameObject.name + "_" + extra) > 0)
+            for (int i = 0; i < questIndex.Count; i++)
             {
-                print(questIndex[i]);
-                starEmptySprites[questIndex[i]].gameObject.GetComponent<Image>().sprite = starFullSprite;
-            }
+                int extra = i + 1;
+                int keyToGet = await CloudSaveManager.Instance.GetGameData(gameObject.name + "_" + extra);
+                print("Key to Get is: " + keyToGet);
+                if (keyToGet > 0)
+                {
+                    print("Key to Get is: " + keyToGet);
+                    Debug.LogWarning(questIndex[i]);
+                    starEmptySprites[questIndex[i]].gameObject.GetComponent<Image>().sprite = starFullSprite;
+                }
 
+            }
         }
+        
 
         #endregion
     }
@@ -365,6 +376,22 @@ public class LevelSelection : MonoBehaviour
     {
             SceneManager.LoadScene(gameObject.name);
     }
- }
+
+    private async void InitializeGameObjectData(string gameObjectName)
+    {
+        string completedKey = gameObjectName + "_completed";
+        string maxStarsKey = gameObjectName + "_maxStars";
+        string key1 = gameObjectName + "_1";
+        string key2 = gameObjectName + "_2";
+        string key3 = gameObjectName + "_3";
+
+        await CloudSaveManager.Instance.GetGameData(completedKey);
+        await CloudSaveManager.Instance.GetGameData(maxStarsKey);
+        await CloudSaveManager.Instance.GetGameData(key1);
+        await CloudSaveManager.Instance.GetGameData(key2);
+        await CloudSaveManager.Instance.GetGameData(key3);
+    }
+
+}
 
 //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
