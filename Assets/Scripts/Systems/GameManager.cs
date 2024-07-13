@@ -214,6 +214,7 @@ public class GameManager : MonoBehaviour
             minimapControl.canTrack = false;
             mainMenuGO.SetActive(true);
             hideMenuChild.SetActive(true);
+            GameManagerMainMenuCanvasScript.Instance.ShowPurchaseSigns();
             pauseCanvasGO.SetActive(false);
             pauseCanvas.OnTutorialEnd();
             Time.timeScale = 1f;
@@ -223,6 +224,7 @@ public class GameManager : MonoBehaviour
             isInGame = false;
             minimapControl.canTrack = false;
             hideMenuChild.SetActive(false);
+            GameManagerMainMenuCanvasScript.Instance.HidePurchaseSigns();
             pauseCanvasGO.SetActive(false);
         }
         else
@@ -234,6 +236,7 @@ public class GameManager : MonoBehaviour
             minimapControl.canTrack = true;
             mainMenuGO.SetActive(false);
             hideMenuChild.SetActive(false);
+            GameManagerMainMenuCanvasScript.Instance.HidePurchaseSigns();
             pauseCanvasGO.SetActive(true);
             CurrencyManager.instance.currentCoinAmount = 0;
             CurrencyManager.instance.levelCoinAmount = 0;

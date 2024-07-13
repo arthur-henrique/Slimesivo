@@ -160,11 +160,27 @@ public class GameManagerMainMenuCanvasScript : MonoBehaviour
         coinText.text = CurrencyManager.instance.UpdateMainMenuCoins();
         //StartCoroutine(FetchCoins());
     }
+
+    public void HidePurchaseSigns()
+    {
+        for (int i = 0; i < purchaseSignButtons.Length; i++)
+        {
+            purchaseSignButtons[i].SetActive(false);
+        }
+    }
+
+    public void ShowPurchaseSigns()
+    {
+        for (int i = 0; i < purchaseSignButtons.Length; i++)
+        {
+            purchaseSignButtons[i].SetActive(true);
+        }
+    }
     //IEnumerator FetchCoins()
     //{
     //    Debug.LogWarning("StartedCoroutine");
     //    //CurrencyManager.instance.FetchCoinBalance();
-        
+
     //    Debug.LogWarning("EndedCoroutine");
 
 

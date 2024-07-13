@@ -183,4 +183,19 @@ public class MainMenuCanvasScript : MonoBehaviour
         SceneManager.LoadScene("Level_Teste");
     }
 
+    public void HidePurchaseSigns()
+    {
+        for (int i = 0; i < purchaseSignButtons.Length; i++)
+        {
+            purchaseSignButtons[i].SetActive(false);
+        }
+    }
+
+    public void ShowPurchaseSigns()
+    {
+        for (int i = 0; i < purchaseSignButtons.Length; i++)
+        {
+            purchaseSignButtons[i].SetActive(true);
+        }
+    }
 }
