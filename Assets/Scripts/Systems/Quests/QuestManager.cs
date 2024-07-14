@@ -79,21 +79,28 @@ public class QuestManager : MonoBehaviour
             Debug.Log($"Key: {kvp.Key}, Value: {kvp.Value}");
         }
     }
-    private async void Start()
+    private void Start()
     {
         questsCompleted = 0;
         for (int i = 1; i < activeQuests.Count+1; i++)
         {
-            await CloudSaveManager.Instance.GetGameData(levelName + "_" + i + "rewarded");
+            if(!PlayerPrefs.HasKey(levelName + "_" + i + "rewarded"))
+                PlayerPrefs.SetInt(levelName + "_"+ i + "rewarded", 0);
+            
+
         }
 
-        await CloudSaveManager.Instance.GetGameData(levelName + "_achieved");
+        if (!PlayerPrefs.HasKey(levelName + "_achieved"))
+        {
+            PlayerPrefs.SetInt(levelName + "_achieved", 0);
+        }
+
         //StartCoroutine(ColorQuests());
     }
-    public async void CheckQuests()
+    public void CheckQuests()
     {
-        if(await CloudSaveManager.Instance.GetGameData(levelName + "_completed") == 0)
-                await CloudSaveManager.Instance.SaveGameData(levelName + "_completed", 1);
+        if(PlayerPrefs.GetInt(levelName + "_completed") == 0)
+                PlayerPrefs.SetInt(levelName + "_completed", 1);
         for (int i = 0; i < activeQuests.Count; i++)
         {
             if (activeQuests[i].gameObject.GetComponent<IQuestSettable>().CompletedQuest(levelName, activeQuestsIndex[i]))
@@ -114,29 +121,29 @@ public class QuestManager : MonoBehaviour
 
         Debug.Log("The player has completed: " + questsCompleted + " quests.");
         // Call the function to show the Stars to the hud depending on the number of stars
-        if (await CloudSaveManager.Instance.GetGameData(levelName + "_maxStars") < questsCompleted)
-            await CloudSaveManager.Instance.SaveGameData(levelName + "_maxStars", questsCompleted);
+        if (PlayerPrefs.GetInt(levelName + "_maxStars") < questsCompleted)
+            PlayerPrefs.SetInt(levelName + "_maxStars", questsCompleted);
         GameManager.instance.pauseCanvas.PressStarsButton
-            (await CloudSaveManager.Instance.GetGameData(levelName + "_maxStars"));
+            (PlayerPrefs.GetInt(levelName + "_maxStars"));
         
         //StartCoroutine(GrabTheRewards());
     }
 
-    public async void CheckCompletedQuestsForColor()
+    public void CheckCompletedQuestsForColor()
     {
         for (int i = 0;i < activeQuests.Count;i++)
         {
-            if (await CloudSaveManager.Instance.GetGameData(levelName + "_" + (i+1)) == 1)
+            if (PlayerPrefs.GetInt(levelName + "_" + (i+1)) == 1)
             {
                 QuestingDictionary.Instance.ColorQuest(i, 1);
             }
         }
     }
 
-    public async void AwardThePlayer()
+    public void AwardThePlayer()
     {
         print("Checking Results");
-        if (questsCompleted > await CloudSaveManager.Instance.GetGameData(levelName + "maxStars"))
+        if (questsCompleted > PlayerPrefs.GetInt(levelName + "maxStars"))
         {
             switch (questsCompleted)
             {
@@ -157,11 +164,11 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    private async void OneStarReward()
+    private void OneStarReward()
     {
-        if(await CloudSaveManager.Instance.GetGameData(levelName+ "_1rewarded") == 0)
+        if(PlayerPrefs.GetInt(levelName+ "_1rewarded") == 0)
         {
-            await CloudSaveManager.Instance.SaveGameData(levelName + "_1rewarded", 1);
+            PlayerPrefs.SetInt(levelName + "_1rewarded", 1);
             CurrencyManager.instance.UpdateCoinAmount(coinToAward);
             //activeQuests[0].gameObject.GetComponent<IQuestSettable>().SetQuestCompleteToPrefs(levelName, 1);
             Debug.Log("Received: " + coinToAward);
@@ -169,11 +176,11 @@ public class QuestManager : MonoBehaviour
         
     }
 
-    private async void TwoStarReward()
+    private void TwoStarReward()
     {
-        if (await CloudSaveManager.Instance.GetGameData(levelName + "_2rewarded") == 0)
+        if (PlayerPrefs.GetInt(levelName + "_2rewarded") == 0)
         {
-            await CloudSaveManager.Instance.SaveGameData(levelName + "_2rewarded", 1);
+            PlayerPrefs.SetInt(levelName + "_2rewarded", 1);
             EnergyManager.Instance.AddEnergy(energyToAward);
             //activeQuests[1].gameObject.GetComponent<IQuestSettable>().SetQuestCompleteToPrefs(levelName, 2);
 
@@ -183,11 +190,11 @@ public class QuestManager : MonoBehaviour
         
     }
 
-    private async void ThreeStarReward()
+    private void ThreeStarReward()
     {
-        if (await CloudSaveManager.Instance.GetGameData(levelName + "_3rewarded") == 0)
+        if (PlayerPrefs.GetInt(levelName + "_3rewarded") == 0)
         {
-            await CloudSaveManager.Instance.SaveGameData(levelName + "_3rewarded", 1);
+            PlayerPrefs.SetInt(levelName + "_3rewarded", 1);
             //EnergyManager.Instance.AddEnergy(energyToAward);
             //activeQuests[2].gameObject.GetComponent<IQuestSettable>().SetQuestCompleteToPrefs(levelName, 3);
 
@@ -197,17 +204,17 @@ public class QuestManager : MonoBehaviour
         
     }
 
-    private async void GrantAchievement()
+    private void GrantAchievement()
     {
-        if(await CloudSaveManager.Instance.GetGameData(levelName + "_1rewarded") == 1 &&
-            await CloudSaveManager.Instance.GetGameData(levelName + "_2rewarded") == 1 &&
-            await CloudSaveManager.Instance.GetGameData(levelName + "_3rewarded") == 1)
+        if(PlayerPrefs.GetInt(levelName + "_1rewarded") == 1 &&
+            PlayerPrefs.GetInt(levelName + "_2rewarded") == 1 &&
+            PlayerPrefs.GetInt(levelName + "_3rewarded") == 1)
         {
-            await CloudSaveManager.Instance.SaveGameData(levelName + "_achieved", 1);
+            PlayerPrefs.SetInt(levelName + "_achieved", 1);
             AchievementsManager.instance.UnlockAchievement(achivementToUnlock);
-            if(await CloudSaveManager.Instance.GetGameData(levelName + "_achieved") == 0)
+            if(PlayerPrefs.GetInt(levelName + "_achieved") == 0)
             {
-                await CloudSaveManager.Instance.SaveGameData(levelName + "_achieved", 1);
+                PlayerPrefs.SetInt(levelName + "_achieved", 1);
                 mIQ.IncrementalMapQuestAchievement(true);
                 //AchievementsManager.instance.UnlockAchievement(achivementToUnlock);
             }

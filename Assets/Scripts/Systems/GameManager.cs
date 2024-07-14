@@ -83,9 +83,10 @@ public class GameManager : MonoBehaviour
     }
 
     // Other functions of the GameManager
-    private void Start()
+    private async void Start()
     {
         livesAmount = 3;
+        await CloudSaveManager.Instance.LoadDataFromCloud();
         //if (SceneManager.GetActiveScene().name == "1 - Main Menu" || SceneManager.GetActiveScene().name == "SystemTesting")
         //{
         //    pauseCanvasGO.SetActive(false);

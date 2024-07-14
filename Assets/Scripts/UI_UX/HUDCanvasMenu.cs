@@ -399,8 +399,9 @@ public class HUDCanvasMenu : MonoBehaviour
     public async void PressStarsButton(int _starsNumber)
     {
         currentStarNumber = _starsNumber;
-        if (currentStarNumber > await CloudSaveManager.Instance.GetGameData(currentLevelName)) //vai salvar a pontuacao (estrelas) somente se for maior que a anterior
+        if (currentStarNumber > PlayerPrefs.GetInt(currentLevelName)) //vai salvar a pontuacao (estrelas) somente se for maior que a anterior
         {
+            PlayerPrefs.SetInt(currentLevelName, _starsNumber);
             await CloudSaveManager.Instance.SaveGameData(currentLevelName, _starsNumber);
         }
         //print(PlayerPrefs.GetInt(currentLevelName, _starsNumber));
