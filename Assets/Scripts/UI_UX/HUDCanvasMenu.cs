@@ -364,10 +364,10 @@ public class HUDCanvasMenu : MonoBehaviour
         backgroundPanelForWinningTutorial.SetActive(false);
     }
 
-    public async void SkipedTutorial()
+    public void SkipedTutorial()
     {
-        if(await CloudSaveManager.Instance.GetGameData("Level_Teste_completed") != 1)
-            await CloudSaveManager.Instance.SaveGameData("Level_Teste_completed", 1); 
+        if (PlayerPrefs.GetInt("Level_Teste_completed") != 1)
+            PlayerPrefs.SetInt("Level_Teste_completed", 1); ;
     }
 
     public void HideShowMinimapSlider()
@@ -396,13 +396,12 @@ public class HUDCanvasMenu : MonoBehaviour
     }
 
     #region Mostra quantas estrelas o Player conseguiu no nivel (principalmente visualmente)
-    public async void PressStarsButton(int _starsNumber)
+    public void PressStarsButton(int _starsNumber)
     {
         currentStarNumber = _starsNumber;
         if (currentStarNumber > PlayerPrefs.GetInt(currentLevelName)) //vai salvar a pontuacao (estrelas) somente se for maior que a anterior
         {
             PlayerPrefs.SetInt(currentLevelName, _starsNumber);
-            await CloudSaveManager.Instance.SaveGameData(currentLevelName, _starsNumber);
         }
         //print(PlayerPrefs.GetInt(currentLevelName, _starsNumber));
 

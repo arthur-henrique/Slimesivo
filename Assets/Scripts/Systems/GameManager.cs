@@ -56,6 +56,8 @@ public class GameManager : MonoBehaviour
     public InputMode activeInputMode = InputMode.Tap_Performed;
     private bool isInGame;
 
+    private bool needsToSyncDataToCloud = false;
+
     //Sounds
     [SerializeField] private AudioClip loseSound;
     [SerializeField] private AudioClip victorySound;
@@ -86,7 +88,7 @@ public class GameManager : MonoBehaviour
     private async void Start()
     {
         livesAmount = 3;
-        await CloudSaveManager.Instance.LoadDataFromCloud();
+        await CloudSaveManager.Instance.LoadGameDataFromCloud();
         //if (SceneManager.GetActiveScene().name == "1 - Main Menu" || SceneManager.GetActiveScene().name == "SystemTesting")
         //{
         //    pauseCanvasGO.SetActive(false);
@@ -206,7 +208,7 @@ public class GameManager : MonoBehaviour
         playerRank.text = _playerRank;
     }
 
-    public void SceneLoad()
+    public async void SceneLoad()
     {
         soundMixerManager.SetElements();
         if (SceneManager.GetActiveScene().name == "1 - Main Menu")
@@ -218,6 +220,12 @@ public class GameManager : MonoBehaviour
             pauseCanvasGO.SetActive(false);
             pauseCanvas.OnTutorialEnd();
             Time.timeScale = 1f;
+
+            if(needsToSyncDataToCloud)
+            {
+                needsToSyncDataToCloud = false;
+                await CloudSaveManager.Instance.SyncGameDataToCloud();
+            }
         }
         else if(SceneManager.GetActiveScene().name == "2 - CampaignMap")
         {
@@ -274,6 +282,7 @@ public class GameManager : MonoBehaviour
         AdsInitializer.instance.LoadAds();
         RewardedAdExample.instance.LoadAd();
         SoundFXManager.Instance.PlaySoundFXClip(victorySound, transform, 1f);
+        needsToSyncDataToCloud = true;
     }
     
     private IEnumerator DamageCooldown()
