@@ -210,6 +210,11 @@ public class GameManager : MonoBehaviour
 
     public async void SceneLoad()
     {
+        if (needsToSyncDataToCloud)
+        {
+            needsToSyncDataToCloud = false;
+            await CloudSaveManager.Instance.SyncGameDataToCloud();
+        }
         soundMixerManager.SetElements();
         if (SceneManager.GetActiveScene().name == "1 - Main Menu")
         {
@@ -221,11 +226,7 @@ public class GameManager : MonoBehaviour
             pauseCanvas.OnTutorialEnd();
             Time.timeScale = 1f;
 
-            if(needsToSyncDataToCloud)
-            {
-                needsToSyncDataToCloud = false;
-                await CloudSaveManager.Instance.SyncGameDataToCloud();
-            }
+            
         }
         else if(SceneManager.GetActiveScene().name == "2 - CampaignMap")
         {
