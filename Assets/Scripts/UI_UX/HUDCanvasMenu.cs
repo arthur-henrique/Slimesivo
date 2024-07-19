@@ -366,8 +366,8 @@ public class HUDCanvasMenu : MonoBehaviour
 
     public void SkipedTutorial()
     {
-        if(PlayerPrefs.GetInt("Level_Teste_completed") != 1)
-            PlayerPrefs.SetInt("Level_Teste_completed", 1); 
+        if (PlayerPrefs.GetInt("Level_Teste_completed") != 1)
+            PlayerPrefs.SetInt("Level_Teste_completed", 1); ;
     }
 
     public void HideShowMinimapSlider()
@@ -403,7 +403,7 @@ public class HUDCanvasMenu : MonoBehaviour
         {
             PlayerPrefs.SetInt(currentLevelName, _starsNumber);
         }
-        print(PlayerPrefs.GetInt(currentLevelName, _starsNumber));
+        //print(PlayerPrefs.GetInt(currentLevelName, _starsNumber));
 
         for (int i = 0; i < _starsNumber; i++)
         {
