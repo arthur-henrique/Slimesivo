@@ -285,10 +285,10 @@ public class GameManager : MonoBehaviour
     public void Victory()
     {
         VibrationManager.instance.VibeWin();
-        HUDCanvasMenu.instance.OnWinningLevel();
         QuestManager.Instance.CheckQuests();
         AdsInitializer.instance.LoadAds();
         RewardedAdExample.instance.LoadAd();
+        HUDCanvasMenu.instance.OnWinningLevel();
         SoundFXManager.Instance.PlaySoundFXClip(victorySound, transform, 1f);
 
         //if (PlayableLevelManager.Instance != null)

@@ -15,7 +15,7 @@ public class HUDCanvasMenu : MonoBehaviour
 {
     public static HUDCanvasMenu instance;
 
-    [SerializeField] private GameObject pausePanel, optionsPanel, backgroundPanelForPause, backgroundPanelForPlaying, pauseButton, WinningPanelBG, backgroundPanelForWinning, backgroundPanelForWinningTutorial, backgroundPanelForGameOver, timerObject, heart1, heart2, heart3, clapperboardIcon;
+    [SerializeField] private GameObject pausePanel, optionsPanel, backgroundPanelForPause, backgroundPanelForPlaying, pauseButton, WinningPanelBG, backBackgroundForWinning, backgroundPanelForWinning, backgroundPanelForWinningTutorial, backgroundPanelForGameOver, timerObject, heart1, heart2, heart3, clapperboardIcon;
     [SerializeField] private TMP_Text timerText;
     [SerializeField] private Button retryButton/*TODO: optionsButton*/;
     [SerializeField] private GameObject mainMenuButton, winningMainMenuButton, nextLevelButton, lifeBar, skipButton;
@@ -92,6 +92,7 @@ public class HUDCanvasMenu : MonoBehaviour
         backgroundPanelForPause.SetActive(false);
         backgroundPanelForGameOver.SetActive(false);
         WinningPanelBG.SetActive(false);
+        backBackgroundForWinning.SetActive(false);
         backgroundPanelForWinning.SetActive(false);
         backgroundPanelForWinningTutorial.SetActive(false);
         backgroundPanelForPlaying.SetActive(true);
@@ -129,6 +130,7 @@ public class HUDCanvasMenu : MonoBehaviour
     {
         pausePanel.SetActive(false);
         StartCoroutine(StartCountdownCoroutine(0f));
+        backBackgroundForWinning.SetActive(false);
         backgroundPanelForGameOver.SetActive(false);
         backgroundPanelForWinning.SetActive(false);
         Time.timeScale = 1f;
@@ -315,7 +317,8 @@ public class HUDCanvasMenu : MonoBehaviour
         heart1.SetActive(true);
         heart2.SetActive(true);
         heart3.SetActive(true);
-        
+
+        backBackgroundForWinning.SetActive(false);
         backgroundPanelForWinning.SetActive(false);
         backgroundPanelForGameOver.SetActive(false);
     }
@@ -323,6 +326,8 @@ public class HUDCanvasMenu : MonoBehaviour
     public void OnWinningLevel()
     {
         pauseButton.SetActive(false);
+        backgroundPanelForPlaying.SetActive(false);
+        backBackgroundForWinning.SetActive(true);
         if(SceneManager.GetActiveScene().buildIndex == 1)
         {
             backgroundPanelForWinning.SetActive(false);
