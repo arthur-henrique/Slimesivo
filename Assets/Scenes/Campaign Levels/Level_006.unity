@@ -15186,6 +15186,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2121099070}
   - component: {fileID: 2121099069}
+  - component: {fileID: 2121099071}
   m_Layer: 0
   m_Name: PlayableLevelManager
   m_TagString: Untagged
@@ -15205,6 +15206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 286f6ea7bb3ff034fbe9080e978fb4ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreManager: {fileID: 2121099071}
   canCountTime: 1
   timeSpent: 0
   timesHit: 0
@@ -15224,6 +15226,35 @@ Transform:
   m_Children: []
   m_Father: {fileID: 766891254}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2121099071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2121099068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c7fce8dd122144ba8e7665fb7f9ca0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coinScoreMultiplier: 10
+  maxTimeThreshold: 120
+  timeScoreMultiplier: 5
+  livesScoreMultiplier: 100
+  level_name: Level_006
+  scoreString:
+    m_TableReference:
+      m_TableCollectionName: GUID:7cfe05036c440354ca840dfe86ecd6d9
+    m_TableEntryReference:
+      m_KeyId: 11237926986489856
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1001 &4307591158657161130
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15235,7 +15266,7 @@ PrefabInstance:
     - target: {fileID: 117412478424319839, guid: 1b31a9b7f09796b4880b8757f0daa30b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.395304
+      value: 3.9
       objectReference: {fileID: 0}
     - target: {fileID: 117412478424319839, guid: 1b31a9b7f09796b4880b8757f0daa30b,
         type: 3}
@@ -85726,7 +85757,7 @@ PrefabInstance:
     - target: {fileID: 7480416109408571177, guid: 339acbf382c1ada438f07df34c5760da,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.395304
+      value: -3.9
       objectReference: {fileID: 0}
     - target: {fileID: 7480416109408571177, guid: 339acbf382c1ada438f07df34c5760da,
         type: 3}

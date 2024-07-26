@@ -27,13 +27,18 @@ public class LeaderboardManager : MonoBehaviour
         }
     }
 
-    public async void UpdateScores(string levelLeaderboardID, float playersBestScore, float playersLatestScore)
+    public async void UpdateScores(string levelLeaderboardID, int playersBestScore, int playersLatestScore)
     {
         if(playersLatestScore > playersBestScore)
         {
             var playerEntry = await LeaderboardsService.Instance.AddPlayerScoreAsync(levelLeaderboardID, playersLatestScore);
             Debug.Log(JsonConvert.SerializeObject(playerEntry));
         }
+    }
+    public async void AddLevelScore(int scoreToAdd)
+    {
+        var scoresResponse = await LeaderboardsService.Instance.GetPlayerScoreAsync("Pontuacoes_Mais_Altas");
+        var playerEntry = await LeaderboardsService.Instance.AddPlayerScoreAsync("Pontuacoes_Mais_Altas", (int)scoresResponse.Score + scoreToAdd);
     }
 
     public async void NewScore(string levelLeaderboardID)
@@ -82,7 +87,7 @@ public class LeaderboardManager : MonoBehaviour
     {
         var scoresResponse = await LeaderboardsService.Instance.GetPlayerScoreAsync(levelLeaderboardID);
         GameManager.instance._playerNick = scoresResponse.PlayerName.Substring(0, 6) + "...";
-        GameManager.instance.playerBestScoreFloat = (float)scoresResponse.Score;
+        GameManager.instance.playerBestScoreFloat = (int)scoresResponse.Score;
         GameManager.instance._playerBestScore = scoresResponse.Score.ToString();
         GameManager.instance._playerRank = (scoresResponse.Rank + 1).ToString();
     }

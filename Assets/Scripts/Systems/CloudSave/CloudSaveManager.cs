@@ -296,6 +296,7 @@ public class CloudSaveManager : MonoBehaviour
                 gameData[$"{levelPrefix}_completed"] = LocalCacheManager.GetLocalData($"{levelPrefix}_completed");
                 gameData[$"{levelPrefix}_achieved"] = LocalCacheManager.GetLocalData($"{levelPrefix}_achieved");
                 gameData[$"{levelPrefix}_maxStars"] = LocalCacheManager.GetLocalData($"{levelPrefix}_maxStars");
+                gameData[$"{levelPrefix}_score"] = LocalCacheManager.GetLocalData($"{levelPrefix}_score");
             }
             gameData["Level_Teste_completed"] = LocalCacheManager.GetLocalData("Level_Teste_completed");
 

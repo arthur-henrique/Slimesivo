@@ -24,7 +24,7 @@ public class TouchManagerTutorial : MonoBehaviour
     private float startTime;
     private Vector2 endPosition;
     private float endTime;
-
+    public bool hasStarted = false;
     //Input
     private float screenSideX;
     [HideInInspector] public PlayerTouchControls inputActions;
@@ -64,6 +64,7 @@ public class TouchManagerTutorial : MonoBehaviour
     }
     private void Start()
     {
+        hasStarted = false;
         Components();
     }
     private void OnEnable()
@@ -206,7 +207,8 @@ public class TouchManagerTutorial : MonoBehaviour
 
         if (!PointerIsUIHit(value))
         {
-
+            if (!hasStarted)
+                hasStarted = true;
             //Dai checa pra ver se foi esquerda ou direita, maior q 0.5 direita menor esquerda
             if (screenSideX > 0.5)
             {

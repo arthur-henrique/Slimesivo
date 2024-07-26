@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     public HUDCanvasMenu pauseCanvas;
 
     public TMP_Text timerText;
+    public TMP_Text scoreText;
 
     [SerializeField] private MinimapControl minimapControl;
 
@@ -253,6 +254,7 @@ public class GameManager : MonoBehaviour
             CurrencyManager.instance.UpdateCoinAmount(0);
             QuestingDictionary.Instance.InitialColorSet();
             RewardedAdExample.instance._showAdButton.interactable = true;
+            timerText.text = "0.00";
 
             livesAmount = 3;
             isAlive = true;
@@ -262,6 +264,8 @@ public class GameManager : MonoBehaviour
             heartsContainer.SetActive(true);
             int inputValue = (int)activeInputMode;
             EventsPlayer.OnsetupInputsPlayer(inputValue);
+
+            
 
             for (int i = 0; i < HUDCanvasMenu.instance.questStars.Length; i++)
             {
@@ -286,6 +290,12 @@ public class GameManager : MonoBehaviour
         AdsInitializer.instance.LoadAds();
         RewardedAdExample.instance.LoadAd();
         SoundFXManager.Instance.PlaySoundFXClip(victorySound, transform, 1f);
+
+        if (PlayableLevelManager.Instance != null)
+        {
+            PlayableLevelManager.Instance.CheckForScores();
+        }
+
         needsToSyncDataToCloud = true;
     }
     

@@ -7,6 +7,8 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
+using System.Security;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class LevelSelection : MonoBehaviour
 {
@@ -69,6 +71,9 @@ public class LevelSelection : MonoBehaviour
     // 4th Quest Localization
     public LocalizedString timeTotalText;
 
+    public TMP_Text highScoreText;
+    public LocalizedString scoreText;
+
     private void Start()
     {
         objectsWithTag = GameObject.FindGameObjectsWithTag("UI_Hide_Element_For_Pop_Up"); //TODO: pensar como fazer isso de uma maneira mais otimizada, pois isto esta sendo chamado para todas as instancias
@@ -122,6 +127,8 @@ public class LevelSelection : MonoBehaviour
             PlayerPrefs.SetInt(gameObject.name + "_completed", 0);
         if(!PlayerPrefs.HasKey(gameObject.name + "_maxStars"))
             PlayerPrefs.SetInt(gameObject.name + "_maxStars", 0);
+        if (!PlayerPrefs.HasKey(gameObject.name + "_score"))
+            PlayerPrefs.SetInt(gameObject.name + "_score", 0);
         if (!PlayerPrefs.HasKey(gameObject.name + "_1"))
             PlayerPrefs.SetInt(gameObject.name + "_1", 0);
         if (!PlayerPrefs.HasKey(gameObject.name + "_2"))
@@ -222,6 +229,13 @@ public class LevelSelection : MonoBehaviour
                 print(conditionsTexts[i].text);
             }
         }
+
+        //highScoreText.text = PlayerPrefs.GetInt(gameObject.name + "_score").ToString();
+        scoreText.Arguments = new object[] { PlayerPrefs.GetInt(gameObject.name + "_score") };
+        scoreText.StringChanged += (localizedString) =>
+        {
+            highScoreText.text = localizedString;
+        };
 
 
         // PlayerPrefs.SetInt(gameObject.name + "_coins", conditionCoins);

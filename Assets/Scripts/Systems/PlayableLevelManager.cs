@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayableLevelManager : MonoBehaviour
 {
     public static PlayableLevelManager Instance;
+    public ScoreManager scoreManager;
     
     // Questing Variables
         // TimeLimitQuest
@@ -21,22 +22,32 @@ public class PlayableLevelManager : MonoBehaviour
     // Start is called before the first frame update
     public void Start()
     {   
-        //canCountTime = false;
         timesHit = 0;
         coinsCollected = 0;
         timeSpent = 0;
-        print("HasZeroed");
         GameManager.instance.SceneLoad();
     }
  
 
     public void FixedUpdate()
     {
-        if(canCountTime)
+        if(TouchManager.instance != null && TouchManager.instance.hasStarted)
         {
             timeSpent += Time.deltaTime;
             GameManager.instance.timerText.text = timeSpent.ToString("F2");
         }
+        else if(TouchManagerTutorial.instance != null && TouchManagerTutorial.instance.hasStarted)
+        {
+            timeSpent += Time.deltaTime;
+            GameManager.instance.timerText.text = timeSpent.ToString("F2");
+        }
+        
+    }
+
+    public void CheckForScores()
+    {
+        int score = scoreManager.CalculateScore(coinsCollected, timeSpent, GameManager.instance.livesAmount);
+        scoreManager.SaveScore(score);
     }
 
     public void CountBegins()

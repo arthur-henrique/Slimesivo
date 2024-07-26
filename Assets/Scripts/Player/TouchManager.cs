@@ -19,13 +19,12 @@ public class TouchManager : MonoBehaviour
     [SerializeField] private float maximumTime = 1f;
     [Tooltip("O quão errado a linha vai detectar, tipo 0 vc pode fazer na maior diagonal que vai e 1 tem que ser perfeitamente na horizontal e vertical")]
     [SerializeField, Range(0f, 1f)] private float directionThreshold = .9f;
-
     //Swipe Variables hide
     private Vector2 startPosition;
     private float startTime;
     private Vector2 endPosition;
     private float endTime;
-
+    public bool hasStarted = false;
     //Input
     private float screenSideX;
     [HideInInspector] public PlayerTouchControls inputActions;
@@ -51,7 +50,7 @@ public class TouchManager : MonoBehaviour
         set { _worldWidth = value; }
     }
    
-
+    
 
     private void Awake()
     {
@@ -65,6 +64,7 @@ public class TouchManager : MonoBehaviour
     }
     private void Start()
     {
+        hasStarted = false;
         Components();
     }
     private void OnEnable()
@@ -207,7 +207,8 @@ public class TouchManager : MonoBehaviour
 
         if (!PointerIsUIHit(value))
         {
-
+            if(!hasStarted)
+                hasStarted = true;
             //Dai checa pra ver se foi esquerda ou direita, maior q 0.5 direita menor esquerda
             if (screenSideX > 0.5)
             {

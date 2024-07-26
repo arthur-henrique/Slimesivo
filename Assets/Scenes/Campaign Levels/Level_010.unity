@@ -13178,6 +13178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1449066964}
   - component: {fileID: 1449066963}
+  - component: {fileID: 1449066965}
   m_Layer: 0
   m_Name: PlayableLevelManager
   m_TagString: Untagged
@@ -13197,6 +13198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 286f6ea7bb3ff034fbe9080e978fb4ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreManager: {fileID: 1449066965}
   canCountTime: 1
   timeSpent: 0
   timesHit: 0
@@ -13216,6 +13218,35 @@ Transform:
   m_Children: []
   m_Father: {fileID: 660782232}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1449066965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1449066962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57c7fce8dd122144ba8e7665fb7f9ca0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coinScoreMultiplier: 10
+  maxTimeThreshold: 120
+  timeScoreMultiplier: 5
+  livesScoreMultiplier: 100
+  level_name: Level_010
+  scoreString:
+    m_TableReference:
+      m_TableCollectionName: GUID:7cfe05036c440354ca840dfe86ecd6d9
+    m_TableEntryReference:
+      m_KeyId: 11237926986489856
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!4 &1451770908 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3695265219351896574, guid: 71e31b6bf9e2c0140a2ee93f808edc48,
@@ -19355,7 +19386,7 @@ Transform:
   m_GameObject: {fileID: 2118619762255139302}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.8670354, y: 7.2, z: 0}
+  m_LocalPosition: {x: -3.38, y: 7.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -21995,7 +22026,7 @@ Transform:
   m_GameObject: {fileID: 8454351750522947989}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.8970354, y: 7.2, z: 0}
+  m_LocalPosition: {x: 3.41, y: 7.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
