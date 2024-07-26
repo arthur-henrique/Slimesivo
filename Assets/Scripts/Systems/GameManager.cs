@@ -291,10 +291,10 @@ public class GameManager : MonoBehaviour
         RewardedAdExample.instance.LoadAd();
         SoundFXManager.Instance.PlaySoundFXClip(victorySound, transform, 1f);
 
-        if (PlayableLevelManager.Instance != null)
-        {
-            PlayableLevelManager.Instance.CheckForScores();
-        }
+        //if (PlayableLevelManager.Instance != null)
+        //{
+        //    PlayableLevelManager.Instance.CheckForScores();
+        //}
 
         needsToSyncDataToCloud = true;
     }

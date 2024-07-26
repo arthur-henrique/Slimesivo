@@ -337,6 +337,11 @@ public class HUDCanvasMenu : MonoBehaviour
             backgroundPanelForWinningTutorial.SetActive(false);
             CurrencyManager.instance.SetBalance();
             GameManagerMainMenuCanvasScript.Instance.UpdateCoins();
+
+            if (PlayableLevelManager.Instance != null)
+            {
+                PlayableLevelManager.Instance.CheckForScores();
+            }
         }
         Time.timeScale = 0f;
         GameManager.instance.mainMenuGO.SetActive(true);
