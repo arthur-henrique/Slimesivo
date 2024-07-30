@@ -5,6 +5,8 @@ using UnityEngine;
 public class VibrationManager : MonoBehaviour
 {
     public static VibrationManager instance;
+    public bool canVibrate = true;
+
     private void Awake()
     {
         Vibration.Init();
@@ -18,24 +20,54 @@ public class VibrationManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        if (PlayerPrefs.HasKey("Vibration"))
+        {
+            canVibrate = PlayerPrefs.GetInt("Vibration") == 1;
+        }
+        else
+        {
+            canVibrate = true;
+            PlayerPrefs.SetInt("Vibration", 1);
+        }
+    }
+
     public void VibeUI()
     {
-        Vibration.VibrateAndroid(15);
+        if (canVibrate)
+            Vibration.VibrateAndroid(15);
     }
+
     public void VibeDamage()
     {
-        Vibration.VibrateAndroid(50);
+        if (canVibrate)
+            Vibration.VibrateAndroid(50);
     }
+
     public void VibeCollectible()
     {
-        Vibration.VibrateAndroid(5);
+        if (canVibrate)
+            Vibration.VibrateAndroid(5);
     }
+
     public void VibeDeath()
     {
-        Vibration.VibrateAndroid(100);
+        if (canVibrate)
+            Vibration.VibrateAndroid(100);
     }
+
     public void VibeWin()
     {
-        Vibration.VibrateAndroid(200);
+        if (canVibrate)
+            Vibration.VibrateAndroid(200);
+    }
+
+    public void ToggleVibe()
+    {
+        canVibrate = !canVibrate;
+        PlayerPrefs.SetInt("Vibration", canVibrate ? 1 : 0);
+        PlayerPrefs.Save();
+        print(canVibrate);
     }
 }

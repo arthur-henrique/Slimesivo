@@ -1,73 +1,66 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ToggleForOptions : MonoBehaviour
 {
-    [SerializeField] private Toggle toggleCountdown, toggleVibration;          // Reference to the Toggle component
-    [SerializeField] private GameObject checkedAssetCountdown, uncheckedAssetCountdown, checkedAssetVibration, uncheckedAssetVibration; // Reference to the GameObject to hide/show
+    [SerializeField] private Toggle toggleCountdown, toggleVibration;
+    [SerializeField] private GameObject checkedAssetCountdown, uncheckedAssetCountdown, checkedAssetVibration, uncheckedAssetVibration;
     [SerializeField] private bool isThisCountdown, isThisVibration;
 
-    private void Start()
+    private void OnEnable()
     {
-
-        if (isThisCountdown == true)
+        if (isThisCountdown)
         {
-            if (HUDCanvasMenu.playerChoosesCountdown = Convert.ToBoolean(PlayerPrefs.GetInt("OptionsPreferences")) == true)
-            {
-                checkedAssetCountdown.SetActive(true);
-                uncheckedAssetCountdown.SetActive(false);
-            }
-            else if (HUDCanvasMenu.playerChoosesCountdown = Convert.ToBoolean(PlayerPrefs.GetInt("OptionsPreferences")) == false)
-            {
-                checkedAssetCountdown.SetActive(false);
-                uncheckedAssetCountdown.SetActive(true);
-            }
+            // Temporarily disable the listener
+            toggleCountdown.onValueChanged.RemoveAllListeners();
 
-            toggleCountdown.onValueChanged.AddListener((v) =>
-            {
-                if (uncheckedAssetCountdown.activeSelf == true)
-                {
-                    checkedAssetCountdown.SetActive(true);
-                    uncheckedAssetCountdown.SetActive(false);
-                    HUDCanvasMenu.playerChoosesCountdown = true;
-                    PlayerPrefs.SetInt("OptionsPreferences", Convert.ToInt32(HUDCanvasMenu.playerChoosesCountdown));
-                    PlayerPrefs.Save();
-                }
-                else if (checkedAssetCountdown.activeSelf == true)
-                {
-                    checkedAssetCountdown.SetActive(false);
-                    uncheckedAssetCountdown.SetActive(true);
-                    HUDCanvasMenu.playerChoosesCountdown = false;
+            bool countdownPref = Convert.ToBoolean(PlayerPrefs.GetInt("OptionsPreferences"));
+            HUDCanvasMenu.playerChoosesCountdown = countdownPref;
+            UpdateCountdownUI(countdownPref);
+            toggleCountdown.isOn = countdownPref;
 
-                    PlayerPrefs.SetInt("OptionsPreferences", Convert.ToInt32(HUDCanvasMenu.playerChoosesCountdown));
-                    PlayerPrefs.Save();
-                }
-            });
+            // Register the listener
+            toggleCountdown.onValueChanged.AddListener(OnCountdownToggleValueChanged);
         }
 
-        if (isThisVibration == true)
+        if (isThisVibration)
         {
-            checkedAssetVibration.SetActive(true);
-            uncheckedAssetVibration.SetActive(false);
+            // Temporarily disable the listener
+            toggleVibration.onValueChanged.RemoveAllListeners();
 
-            toggleVibration.onValueChanged.AddListener((v) =>
-            {
-                if (toggleVibration.isOn)
-                {
-                    checkedAssetVibration.SetActive(true);
-                    uncheckedAssetVibration.SetActive(false);
-                }
-                else
-                {
-                    checkedAssetVibration.SetActive(false);
-                    uncheckedAssetVibration.SetActive(true);
-                }
-            });
+            bool vibrationPref = PlayerPrefs.GetInt("Vibration", 1) == 1;
+            UpdateVibrationUI(vibrationPref);
+            toggleVibration.isOn = vibrationPref;
+
+            // Register the listener
+            toggleVibration.onValueChanged.AddListener(OnVibrationToggleValueChanged);
         }
     }
-}
 
-//playerChoosesCountdown
+    private void OnCountdownToggleValueChanged(bool value)
+    {
+        HUDCanvasMenu.playerChoosesCountdown = value;
+        PlayerPrefs.SetInt("OptionsPreferences", Convert.ToInt32(value));
+        PlayerPrefs.Save();
+        UpdateCountdownUI(value);
+    }
+
+    private void OnVibrationToggleValueChanged(bool value)
+    {
+        VibrationManager.instance.ToggleVibe(); // Update the VibrationManager's state
+        UpdateVibrationUI(value);
+    }
+
+    private void UpdateCountdownUI(bool isOn)
+    {
+        checkedAssetCountdown.SetActive(isOn);
+        uncheckedAssetCountdown.SetActive(!isOn);
+    }
+
+    private void UpdateVibrationUI(bool isOn)
+    {
+        checkedAssetVibration.SetActive(isOn);
+        uncheckedAssetVibration.SetActive(!isOn);
+    }
+}
