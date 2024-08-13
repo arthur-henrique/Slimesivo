@@ -6,7 +6,7 @@ public class WallCollision : MonoBehaviour
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private float maxAngle = 45;
     [SerializeField] private bool isRightLocation;
-    [SerializeField] private float impulseForce = 10;
+    private float impulseForce = 3f;
     private float _worldWidth;
 
     private void Start()
@@ -32,35 +32,41 @@ public class WallCollision : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Vector2 contactNormal = collision.contacts[0].normal;
-        Rigidbody2D rig = collision.gameObject.GetComponent<Rigidbody2D>();
-        //float angle = Vector2.SignedAngle(Vector2.right, contactNormal);
+        Vector3 contactNormal = collision.contacts[0].normal;
+        GameObject player = collision.gameObject;
+        Rigidbody2D rigPlayer = player.gameObject.GetComponent<Rigidbody2D>();
         if (((1 << collision.gameObject.layer) & playerLayer) != 0)
         {
+            
+                       
             if (isRightLocation)
             {
-                if (contactNormal == Vector2.right)
+                if (contactNormal == Vector3.right)
                 {
                     EventsPlayer.OnWallStick(true);
                 }
                 else
                 {
+                    Debug.LogWarning(contactNormal);
+                    rigPlayer.AddForce(new Vector2(player.transform.position.x, 0) * impulseForce, ForceMode2D.Impulse);
                     EventsPlayer.OnWallStick(false);
-                }
-
+                }              
             }
             else
             {
-                
-                if (contactNormal == Vector2.left)
+
+                if (contactNormal == Vector3.left)
                 {
                     EventsPlayer.OnWallStick(true);
                 }
                 else
                 {
+                    Debug.LogWarning(contactNormal);
+                    rigPlayer.AddForce(new Vector2(player.transform.position.x, 0) * impulseForce, ForceMode2D.Impulse);
                     EventsPlayer.OnWallStick(false);
-                }                      
+                }
             }
+            
         }
 
     }

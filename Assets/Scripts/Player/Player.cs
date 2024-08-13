@@ -16,7 +16,6 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float jumpSameSideTimer = 1f;
-    private bool isJumping;
     private float initialJumpForce;
     private float jumpWallForce;
 
@@ -276,7 +275,7 @@ public class Player : MonoBehaviour
             playerStatsScript.isRepawning = false;
         }
 
-        isJumping = true;
+
         StopAllCoroutines();
         ResetPlayerRotation();
         rig.gravityScale = originalGravity;
@@ -309,7 +308,7 @@ public class Player : MonoBehaviour
                 doubleJumpCounter = 0;
                 anim.SetInteger("AnimParameter", 3);
                 isWallSliding = true;
-                isJumping = false;
+
                 GameManager.instance.canCollect = true;
                 switch (wallSlideStates)
                 {
@@ -476,7 +475,7 @@ public class Player : MonoBehaviour
         {
             canApplyGravity = false;
             rig.gravityScale = 1;
-            isJumping = false;
+
             _touchManager.inputActions.Disable();
             hitCounter++;
             PlayerCollision.Instance.DamageCollision(obstacleCollision);
