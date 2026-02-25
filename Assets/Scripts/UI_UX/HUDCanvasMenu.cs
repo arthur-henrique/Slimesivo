@@ -15,7 +15,7 @@ public class HUDCanvasMenu : MonoBehaviour
 {
     public static HUDCanvasMenu instance;
 
-    [SerializeField] private GameObject pausePanel, optionsPanel, backgroundPanelForPause, backgroundPanelForPlaying, pauseButton, WinningPanelBG, backBackgroundForWinning, backgroundPanelForWinning, backgroundPanelForWinningTutorial, backgroundPanelForGameOver, timerObject, heart1, heart2, heart3, clapperboardIcon;
+    [SerializeField] private GameObject pausePanel, optionsPanel, backgroundPanelForPause, backgroundPanelForPlaying, pauseButton, WinningPanelBG, backBackgroundForWinning, backgroundPanelForWinning, backgroundPanelForWinningTutorial, backgroundPanelForPauseTutorial, backgroundPanelForGameOver, timerObject, heart1, heart2, heart3, clapperboardIcon;
     [SerializeField] private TMP_Text timerText;
     [SerializeField] private Button retryButton/*TODO: optionsButton*/;
     [SerializeField] private GameObject mainMenuButton, winningMainMenuButton, nextLevelButton, lifeBar, skipButton;
@@ -95,6 +95,7 @@ public class HUDCanvasMenu : MonoBehaviour
         backBackgroundForWinning.SetActive(false);
         backgroundPanelForWinning.SetActive(false);
         backgroundPanelForWinningTutorial.SetActive(false);
+        backgroundPanelForPauseTutorial.SetActive(false);
         backgroundPanelForPlaying.SetActive(true);
         pauseButton.SetActive(true);
         heart1.SetActive(true);
@@ -118,9 +119,20 @@ public class HUDCanvasMenu : MonoBehaviour
         //TODO: optionsButton.enabled = true;
         //canHidePanels = true;
         //animacao de pausar
-        backgroundPanelForPause.SetActive(true);
-        pausePanel.SetActive(true);
-        Time.timeScale = 0f;
+        if(SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            backgroundPanelForPause.SetActive(false);
+            backgroundPanelForPauseTutorial.SetActive(true);
+            pausePanel.SetActive(true);
+        }
+        else
+        {
+            backgroundPanelForPauseTutorial.SetActive(false);
+            backgroundPanelForPause.SetActive(true);
+            pausePanel.SetActive(true);
+        }
+
+            Time.timeScale = 0f;
         gameIsPaused = true;
 
         //if player tocar background, esconde ele
@@ -182,6 +194,7 @@ public class HUDCanvasMenu : MonoBehaviour
             else
                 timer = 0f;
             pausePanel.SetActive(false);
+            backgroundPanelForPauseTutorial.SetActive(false);
             StartCoroutine(StartCountdownCoroutine(timer));//countdown
         }
     }

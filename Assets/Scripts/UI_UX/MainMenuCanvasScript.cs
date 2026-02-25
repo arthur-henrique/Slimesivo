@@ -27,7 +27,7 @@ public class MainMenuCanvasScript : MonoBehaviour
             Destroy(gameObject);
         }
         leftChangeButton.SetActive(false);
-        rightChangeButton.SetActive(true);
+        rightChangeButton.SetActive(false);
         infinityButton.SetActive(false);
         campaignButton.SetActive(true);
         storePagePanel.SetActive(false);
